@@ -42,7 +42,7 @@ namespace APIProject.Util
                 _config["jwt:issuer"],
                 _config["jwt:audience"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(10),
+                expires: DateTime.UtcNow.AddMinutes(0),
                 signingCredentials: signIn);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
