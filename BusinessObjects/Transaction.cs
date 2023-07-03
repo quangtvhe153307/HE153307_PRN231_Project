@@ -14,7 +14,7 @@ namespace BusinessObjects
         public int TransactionId { get; set; }
         public string TransactionDescription { get; set; }
         public DateTime TransactionDate { get; set; }
-        public string TransactionType { get; set; }
+        public TransactionType TransactionType { get; set; }
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }

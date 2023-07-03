@@ -4,6 +4,7 @@ using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObjects.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230703172942_update db")]
+    partial class updatedb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,6 +121,24 @@ namespace BusinessObjects.Migrations
                     b.ToTable("MovieEpisodes");
                 });
 
+            modelBuilder.Entity("BusinessObjects.MoviePurchased", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("PurchasedTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MovieId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MoviePurchaseds");
+                });
+
             modelBuilder.Entity("BusinessObjects.MovieRated", b =>
                 {
                     b.Property<int>("MovieId")
@@ -167,24 +187,6 @@ namespace BusinessObjects.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("MovieSeasons");
-                });
-
-            modelBuilder.Entity("BusinessObjects.PurchasedMovies", b =>
-                {
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("PurchasedTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("MovieId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PurchasedMovies");
                 });
 
             modelBuilder.Entity("BusinessObjects.RefreshToken", b =>
@@ -347,6 +349,25 @@ namespace BusinessObjects.Migrations
                     b.Navigation("MovieSeason");
                 });
 
+            modelBuilder.Entity("BusinessObjects.MoviePurchased", b =>
+                {
+                    b.HasOne("BusinessObjects.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BusinessObjects.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BusinessObjects.MovieRated", b =>
                 {
                     b.HasOne("BusinessObjects.Movie", "Movie")
@@ -375,25 +396,6 @@ namespace BusinessObjects.Migrations
                         .IsRequired();
 
                     b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("BusinessObjects.PurchasedMovies", b =>
-                {
-                    b.HasOne("BusinessObjects.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BusinessObjects.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BusinessObjects.RefreshToken", b =>
