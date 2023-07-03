@@ -8,16 +8,15 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects
 {
-    public class User
+    public class Transaction
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int TransactionId { get; set; }
+        public string TransactionDescription { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public string TransactionType { get; set; }
         public int UserId { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public virtual List<RefreshToken> RefreshTokens{ get; set; }
-        public int RoleId { get; set; }
-        [ForeignKey("RoleId")]
-        public virtual Role Role { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
     }
 }

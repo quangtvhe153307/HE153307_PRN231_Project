@@ -4,6 +4,7 @@ using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObjects.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230703171612_generate database")]
+    partial class generatedatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace BusinessObjects.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("BusinessObjects.Comment", b =>
@@ -57,7 +59,7 @@ namespace BusinessObjects.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("BusinessObjects.Movie", b =>
@@ -87,7 +89,7 @@ namespace BusinessObjects.Migrations
 
                     b.HasKey("MovieId");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movie");
                 });
 
             modelBuilder.Entity("BusinessObjects.MovieEpisode", b =>
@@ -116,7 +118,7 @@ namespace BusinessObjects.Migrations
 
                     b.HasIndex("MovieSeasonId");
 
-                    b.ToTable("MovieEpisodes");
+                    b.ToTable("MovieEpisode");
                 });
 
             modelBuilder.Entity("BusinessObjects.MoviePurchased", b =>
@@ -134,7 +136,7 @@ namespace BusinessObjects.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("MoviePurchaseds");
+                    b.ToTable("MoviePurchased");
                 });
 
             modelBuilder.Entity("BusinessObjects.MovieRated", b =>
@@ -155,7 +157,7 @@ namespace BusinessObjects.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("MovieRateds");
+                    b.ToTable("MovieRated");
                 });
 
             modelBuilder.Entity("BusinessObjects.MovieSeason", b =>
@@ -184,7 +186,7 @@ namespace BusinessObjects.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MovieSeasons");
+                    b.ToTable("MovieSeason");
                 });
 
             modelBuilder.Entity("BusinessObjects.RefreshToken", b =>
@@ -245,36 +247,7 @@ namespace BusinessObjects.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("BusinessObjects.Transaction", b =>
-                {
-                    b.Property<int>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"), 1L, 1);
-
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TransactionDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TransactionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Transactions");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("BusinessObjects.User", b =>
@@ -401,17 +374,6 @@ namespace BusinessObjects.Migrations
                 {
                     b.HasOne("BusinessObjects.User", "User")
                         .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BusinessObjects.Transaction", b =>
-                {
-                    b.HasOne("BusinessObjects.User", "User")
-                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
