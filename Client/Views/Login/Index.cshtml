@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_LoginLayout";
+}
+@model LoginViewModel
+<div class="login-panel">
+    <form asp-controller="Login" asp-action="Index" method="post">
+        @Html.AntiForgeryToken()
+        <div class="item-container flex flex-column">
+            <div class="title text-primary">
+                <span>Book Stores Login</span>
+            </div>
+            <div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+            <div class="input-fields">
+                <div class="input-parent">
+                    <div class="flex flex-row">
+                        <label asp-for="Email">EmailAddress</label>
+                        <input asp-for="Email" type="text" placeholder="Email address" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="input-fields">
+                <div class="input-parent">
+
+                    <div class="flex flex-row">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" type="password" placeholder="Password" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="action">
+                <div class="btn-action">
+                    <div class="flex-1">
+                    </div>
+                    <button class="btn-primary login-btn" type="submit">Login</button>
+                </div>
+                <div class="btn-action">
+                    <a class="text-primary sign-up-btn" href="/Register/">Sign up</a>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</div>

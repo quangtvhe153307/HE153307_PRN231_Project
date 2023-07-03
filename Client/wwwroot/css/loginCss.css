@@ -1,0 +1,95 @@
+﻿.background-container {
+    width: 100%;
+    /* height: 100vh; */
+    height: 100%;
+}
+.background-container img {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+body{
+    margin-bottom: 0 !important;
+}
+.flex{
+    display: flex;
+}
+.flex-column{
+    flex-direction: column;
+}
+.flex-row{
+    flex-direction: row;
+}
+.flex-1{
+    flex: 1;
+}
+main {
+    position: absolute;
+    background: #fff;
+    width: 45vw;
+    height: 50vh;
+    top: 20%;
+    right: 10%;
+    border-radius: 10px;
+    box-shadow: 5px 2px 8px #888888;
+}
+.title {
+    text-align: center;
+}
+.title span {
+    font-weight: bold;
+    font-size: 125%;
+}
+.item-container.flex.flex-column > div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.input-fields input {
+    width: 80%;
+    border: 1px solid #00000040;
+    padding-left: 10px;
+    margin-right: 20px;
+}
+.input-fields {
+    height: 35px;
+    line-height: 35px;
+}
+.input-parent {
+    text-align: center;
+}
+span.text-danger.field-validation-error {
+    font-weight: bold;
+    font-size: 75%;
+    display: block;
+    text-align: left;
+    margin-left: 20px;
+}
+.action {
+    display: flex;
+}
+.btn-action {
+    width: 50%;
+    display: flex;
+}
+.login-btn, .sign-up-btn {
+    width: 100px;
+    height: 35px;
+}
+button.btn-primary.login-btn {
+    margin-right: 10px;
+}
+.sign-up-btn {
+    margin-left: 10px;
+    text-decoration: none;
+    border: 1px solid;
+    border-color: #000;
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+}
+.input-parent label {
+    width: 200px;
+    text-align: left;
+    padding-left: 20px;
+    font-weight: bold;
+}

@@ -88,7 +88,7 @@ namespace api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public IActionResult Authenticate([FromBody]AuthenticateRequest model)
         {
             var user = _repository.Authenticate(model.Email, model.Password);
             if(user == null)
