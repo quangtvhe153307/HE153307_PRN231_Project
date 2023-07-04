@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects
 {
-    public class PurchasedMovies
+    public class PurchasedMovie
     {
         public int UserId { get; set; }
         public int MovieId { get; set; }

@@ -22,7 +22,7 @@ namespace BusinessObjects
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieEpisode> MovieEpisodes { get; set; }
-        public DbSet<PurchasedMovies> PurchasedMovies { get; set; }
+        public DbSet<PurchasedMovie> PurchasedMovies { get; set; }
         public DbSet<MovieRated> MovieRateds { get; set; }
         public DbSet<MovieSeason> MovieSeasons { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
@@ -35,7 +35,7 @@ namespace BusinessObjects
                 .HasForeignKey(b => b.UserId);
             modelBuilder.Entity<Comment>()
                     .HasKey(c => new { c.MovieId, c.UserId, c.CommentedDate });            
-            modelBuilder.Entity<PurchasedMovies>()
+            modelBuilder.Entity<PurchasedMovie>()
                     .HasKey(c => new { c.MovieId, c.UserId});
             modelBuilder.Entity<MovieRated>()
                     .HasKey(c => new { c.MovieId, c.UserId});
