@@ -11,17 +11,18 @@ using Repository.Repository;
 
 namespace APIProject.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class CategoriesController : ODataController
     {
-        private ICategoryRepository repository = new CategoryRepository();
+        private ICategoryRepository repository;
         private readonly IMapper _mapper;
 
-        public CategoriesController(IMapper mapper)
+        public CategoriesController(IMapper mapper, ICategoryRepository categoryRepository)
         {
             _mapper = mapper;
+            repository = categoryRepository;
         }
-        [EnableQuery(PageSize = 10)]
+        [EnableQuery]
         public ActionResult<IQueryable<GetCategoryResponseDTO>> Get()
         {
             List<Category> categorys = repository.GetCategories();

@@ -11,15 +11,16 @@ using Repository.Repository;
 
 namespace APIProject.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class RolesController : ODataController
     {
-        private IRoleRepository repository = new RoleRepository();
+        private IRoleRepository repository;
         private readonly IMapper _mapper;
 
-        public RolesController(IMapper mapper)
+        public RolesController(IMapper mapper, IRoleRepository roleRepository)
         {
             _mapper = mapper;
+            repository = roleRepository;
         }
         [EnableQuery]
         public ActionResult<IQueryable<GetRoleResponseDTO>> Get()

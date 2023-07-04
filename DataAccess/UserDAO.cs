@@ -13,6 +13,8 @@ namespace DataAccess
                 using (var context = new MyDbContext())
                 {
                     listUsers = context.Users
+                        .Include(x => x.Role)
+                        .Include(x => x.PurchasedMovies)
                         .ToList();
                 }
             }
@@ -30,7 +32,26 @@ namespace DataAccess
                 using (var context = new MyDbContext())
                 {
                     user = context.Users
+                        .Include(x => x.Role)
+                        .Include(x => x.PurchasedMovies)
                         .SingleOrDefault(x => x.UserId == prodId);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return user;
+        }        
+        public static User FindUserWithEmail(string email)
+        {
+            User user = null;
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    user = context.Users
+                        .SingleOrDefault(x => x.Email.Equals(email));
                 }
             }
             catch (Exception ex)
@@ -95,6 +116,7 @@ namespace DataAccess
                 {
                     user = context.Users
                         .Include(x => x.RefreshTokens)
+                        .Include(x => x.Role)
                         .SingleOrDefault(x => x.Email.Equals(email) && x.Password.Equals(password));
                 }
             } catch(Exception ex)
@@ -111,6 +133,7 @@ namespace DataAccess
                 {
                     user = context.Users
                         .Include(x => x.RefreshTokens)
+                        .Include(x => x.Role)
                         .SingleOrDefault(x => x.RefreshTokens.Select(r => r.Token).Contains(token));
                 }
             }

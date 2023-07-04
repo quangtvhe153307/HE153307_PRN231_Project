@@ -40,6 +40,11 @@ namespace BusinessObjects
             modelBuilder.Entity<MovieRated>()
                     .HasKey(c => new { c.MovieId, c.UserId});
 
+            //add unique
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
         }
     }
 }

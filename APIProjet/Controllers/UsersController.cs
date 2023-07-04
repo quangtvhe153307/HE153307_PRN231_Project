@@ -16,7 +16,7 @@ using System.Net;
 
 namespace api.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class UsersController : ODataController
     {
         private IUserRepository _repository;
@@ -53,6 +53,11 @@ namespace api.Controllers
         [EnableQuery]
         public IActionResult Post([FromBody] CreateUserRequestDTO createUserRequestDTO)
         {
+            User existUser = _repository.GetUserByEmail(createUserRequestDTO.Email);
+            if(existUser != null)
+            {
+                return BadRequest(new {message = "User already exist!"});
+            }
             User user = _mapper.Map<User>(createUserRequestDTO);
             _repository.SaveUser(user);
 
@@ -72,9 +77,9 @@ namespace api.Controllers
                 return NotFound();
             }
             User user = _mapper.Map<User>(updateUserRequestDTO);
-            user.UserId = tempUser.UserId;
-            _repository.UpdateUser(user);
-            return Updated(user);
+            tempUser.Email= user.Email;
+            _repository.UpdateUser(tempUser);
+            return Updated(tempUser);
         }
         [EnableQuery]
         public ActionResult Delete([FromRoute] int key)

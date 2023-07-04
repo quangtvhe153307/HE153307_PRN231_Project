@@ -10,13 +10,10 @@ namespace Repository.Repository
         public void UpdateUser(User user) => UserDAO.UpdateUser(user);
         public List<User> GetUsers() => UserDAO.GetUsers();
         public User GetUserById(int id) => UserDAO.FindUserById(id);
-
         public void DeleteUser(User user) => UserDAO.DeleteUser(user);
-
         public User Authenticate(string email, string password) => UserDAO.Authenticate(email, password);
-
         public bool ContainRefreshToken(string token) => RefreshtokenDAO.ContainRefreshToken(token);
-
         public User GetUserByRefreshToken(string token) => UserDAO.GetUserByRefreshToken(token);
+        public User GetUserByEmail(string email) => UserDAO.FindUserWithEmail(email);
     }
 }

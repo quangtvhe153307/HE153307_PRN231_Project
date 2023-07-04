@@ -32,6 +32,7 @@ namespace APIProject.Util
                         new Claim(JwtRegisteredClaimNames.Sub, _config["jwt:Subject"]),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                        new Claim(ClaimTypes.Role, user.Role.RoleName),
                         new Claim("UserId", user.UserId.ToString()),
                         new Claim("Email", user.Email)
                     };
@@ -73,6 +74,26 @@ namespace APIProject.Util
 
                 return token;
             }
+        }
+
+        public static void SetRefreshToken(string refreshToken, HttpResponse response)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7),
+                IsEssential = true
+            };
+            response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+        }
+        public static void SetAccessToken(HttpResponse response, string accessToken)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.UtcNow.AddDays(7),
+                IsEssential = true
+            };
+            response.Cookies.Append("accessToken", accessToken, cookieOptions);
         }
     }
 }

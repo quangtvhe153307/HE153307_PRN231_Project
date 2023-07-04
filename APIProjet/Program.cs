@@ -16,9 +16,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OData.UriParser;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Linq;
 using Repository.IRepository;
 using Repository.Repository;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -36,13 +38,41 @@ namespace APIProjet
 
             builder.Services.AddControllers()
                 .AddOData(options
-                => options.Select().Filter().OrderBy().Expand().SetMaxTop(null)
+                => options.Select().Filter().Count().OrderBy().Expand().SetMaxTop(null)
                 .AddRouteComponents("odata", GetEdmModel()));
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(
+                option =>
+                {
+                    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                    {
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer",
+                        BearerFormat = "JWT",
+                        In = ParameterLocation.Header,
+                        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+                    });
+                    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                     {
+                         {
+                               new OpenApiSecurityScheme
+                                 {
+                                     Reference = new OpenApiReference
+                                     {
+                                         Type = ReferenceType.SecurityScheme,
+                                         Id = "Bearer"
+                                     }
+                                 },
+                                 new string[] {}
+                         }
+                     });
+                });
 
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
+            builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
+            builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
             builder.Services.AddSingleton<IRefreshtokenRepository, RefreshtokenRepository>();
             builder.Services.AddSingleton<IJWTUtils, JWTUtils>();
             var mapperConfig = new MapperConfiguration(mc =>
@@ -63,70 +93,79 @@ namespace APIProjet
                     ValidateAudience = true,
                     ValidAudience = builder.Configuration["Jwt:Audience"],
                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                    //ValidateLifetime = true,
+                    ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:secret"]))
                 };
 
                 // Set the event handler for token validation failure
                 options.Events = new JwtBearerEvents
                 {
-                    OnTokenValidated = async context =>
+                    OnMessageReceived = async context =>
                     {
-                        if (context.SecurityToken.ValidTo < DateTime.UtcNow)
+                        var header = context.Request.Headers["Authorization"];
+                        if (!header.ToString().Equals(""))
                         {
-                            string refreshToken = context.Request.Cookies["refreshToken"];
-
-                            // Create an instance of HttpClientHandler
-                            var handler = new HttpClientHandler();
-
-                            // Configure the HttpClientHandler to use cookies
-                            handler.UseCookies = true;
-                            handler.CookieContainer = new CookieContainer();
-
-                            // Get the cookies from the client's request
-                            var clientCookies = context.Request.Cookies;
-                            foreach (var cookie in clientCookies)
+                            //get access token
+                            var headerString = header.ToString().Replace("{", "").Replace("}", "").Substring(7);
+                            // handle token
+                            var tokenHandler = new JwtSecurityTokenHandler();
+                            var jsonToken = tokenHandler.ReadToken(headerString);
+                            var tokenS = jsonToken as JwtSecurityToken;
+                            //check if expire
+                            if (tokenS.ValidTo < DateTime.UtcNow)
                             {
-                                // Add each cookie to the CookieContainer
-                                handler.CookieContainer.Add(new Uri("https://localhost:7038"), new Cookie(cookie.Key, cookie.Value));
-                            }
+                                string refreshToken = context.Request.Cookies["refreshToken"];
 
-                            // Make a request to your API's refresh token endpoint
-                            HttpClient httpClient = new HttpClient(handler);
-                            var response = await httpClient.PostAsync("https://localhost:7038/refresh-token", null);
+                                // Create an instance of HttpClientHandler
+                                var handler = new HttpClientHandler();
 
-                            if (response.IsSuccessStatusCode)
-                            {
-                                //update refresh token to cookie
-                                var refreshTokenCookie = response.Headers.GetValues("Set-Cookie");
-                                string cookie = Uri.UnescapeDataString(refreshTokenCookie.ToArray()[0]);
-                                int indexOfFirstSemiColon = cookie.IndexOf(";");
-                                int indexOfFirstEqual = cookie.IndexOf("=");
+                                // Configure the HttpClientHandler to use cookies
+                                handler.UseCookies = true;
+                                handler.CookieContainer = new CookieContainer();
 
-                                string token = cookie.Substring(indexOfFirstEqual + 1, indexOfFirstSemiColon - indexOfFirstEqual - 1);
-
-                                Console.WriteLine("success");
-                                // append cookie with refresh token to the http response
-                                var cookieOptions = new CookieOptions
+                                // Get the cookies from the client's request
+                                var clientCookies = context.Request.Cookies;
+                                foreach (var cookie in clientCookies)
                                 {
-                                    HttpOnly = true,
-                                    Expires = DateTime.UtcNow.AddDays(7),
-                                    IsEssential = true
-                                };
-                                context.Response.Cookies.Append("refreshToken", token, cookieOptions);
+                                    // Add each cookie to the CookieContainer
+                                    handler.CookieContainer.Add(new Uri("https://localhost:7038"), new Cookie(cookie.Key, cookie.Value));
+                                }
 
+                                // Make a request to your API's refresh token endpoint
+                                HttpClient httpClient = new HttpClient(handler);
+                                var response = await httpClient.PostAsync("https://localhost:7038/refresh-token", null);
 
-                                // Extract the new access token and refresh token from the response
-                                var responseString = await response.Content.ReadAsStringAsync();
-                                System.Text.Json.JsonElement anonymousObject = (System.Text.Json.JsonElement)JsonSerializer.Deserialize<object>(responseString);
-                                string newAccessToken = anonymousObject.GetString("accessToken");
-                            } else
-                            {
-                                context.Fail("Failed to refresh access token");
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    //update refresh token to cookie
+                                    var refreshTokenCookie = response.Headers.GetValues("Set-Cookie");
+                                    string cookie = Uri.UnescapeDataString(refreshTokenCookie.ToArray()[0]);
+                                    int indexOfFirstSemiColon = cookie.IndexOf(";");
+                                    int indexOfFirstEqual = cookie.IndexOf("=");
+
+                                    string token = cookie.Substring(indexOfFirstEqual + 1, indexOfFirstSemiColon - indexOfFirstEqual - 1);
+
+                                    Console.WriteLine("success");
+                                    //set new refresh token
+                                    JWTUtils.SetRefreshToken(token, context.Response);
+
+                                    // Extract the new access token and refresh token from the response
+                                    var responseString = await response.Content.ReadAsStringAsync();
+                                    System.Text.Json.JsonElement anonymousObject = (System.Text.Json.JsonElement)JsonSerializer.Deserialize<object>(responseString);
+                                    string newAccessToken = anonymousObject.GetString("accessToken");
+                                    Console.WriteLine(newAccessToken);
+                                    context.Request.Headers.Remove("Authorization");
+                                    context.Request.Headers.Add("Authorization", new Microsoft.Extensions.Primitives.StringValues("Bearer "+ newAccessToken));
+
+                                    //set new access token
+                                    JWTUtils.SetAccessToken(context.Response, newAccessToken);
+                                }
+                                else
+                                {
+                                    context.Fail("Failed to refresh access token");
+                                }
                             }
-
                         }
-
                     }
                 };
             });
@@ -142,31 +181,9 @@ namespace APIProjet
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors();
-            //app.Use(async (context, next) =>
-            //{
-            //    await next();
 
-            //    Console.WriteLine("quang");
-            //    if (context.Response.StatusCode == 401 && context.Request.Headers.TryGetValue("Authorization", out var authorizationHeader))
-            //    {
-            //        var refreshToken = context.Response.Body;
-
-            //        //// Use the token refresh service to refresh the access token
-            //        //var newAccessToken = await _tokenRefreshService.RefreshAccessToken(refreshToken);
-
-            //        //if (newAccessToken != null)
-            //        //{
-            //        //    // Update the access token in the response headers
-            //        //    context.Response.Headers["Authorization"] = $"Bearer {newAccessToken}";
-
-            //        //    // Retry the original request with the new access token
-            //        //    await next(context);
-            //        //}
-            //    }
-            //});
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
