@@ -1,11 +1,20 @@
+using APIProject.DTO.Category;
+using APIProject.DTO.Comment;
+using APIProject.DTO.Movie;
+using APIProject.DTO.Role;
+using APIProject.DTO.Transaction;
+using APIProject.DTO.User;
 using APIProject.Mapping;
 using APIProject.Util;
 using AutoMapper;
 using BusinessObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.OData;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 using Microsoft.OData.UriParser;
 using Newtonsoft.Json.Linq;
 using Repository.IRepository;
@@ -25,7 +34,10 @@ namespace APIProjet
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddOData(options
+                => options.Select().Filter().OrderBy().Expand().SetMaxTop(null)
+                .AddRouteComponents("odata", GetEdmModel()));
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -162,6 +174,17 @@ namespace APIProjet
             //app.MapControllers();
 
             app.Run();
+        }
+        private static IEdmModel GetEdmModel()
+        {
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<GetUserResponseDTO>("Users");
+            builder.EntitySet<GetCategoryResponseDTO>("Categories");
+            builder.EntitySet<GetCommentResponseDTO>("Comments");
+            builder.EntitySet<GetMovieResponseDTO>("Movies");
+            builder.EntitySet<GetRoleResponseDTO>("Roles");
+            builder.EntitySet<GetTransactionResponseDTO>("Transactions");
+            return builder.GetEdmModel();
         }
     }
 }

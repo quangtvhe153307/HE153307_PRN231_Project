@@ -1,10 +1,12 @@
 ﻿using APIProject.DTO;
+using APIProject.DTO.User;
 using APIProject.Util;
 using AutoMapper;
 using BusinessObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.UriParser;
@@ -30,70 +32,70 @@ namespace api.Controllers
             _config = configuration;
             _refreshtokenRepository = refreshtokenRepository;
         }
-        //[EnableQuery(PageSize = 10)]
-        //public ActionResult<IQueryable<GetUserResponseDTO>> Get()
-        //{
-        //    List<User> users = repository.GetUsers();
-        //    List<GetUserResponseDTO> getUserResponseDTOs = _mapper.Map<List<GetUserResponseDTO>>(users);
-        //    return Ok(getUserResponseDTOs);
-        //}
-        //[EnableQuery]
-        //public ActionResult<GetUserResponseDTO> Get([FromRoute] int key)
-        //{
-        //    User user = repository.GetUserById(key);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    GetUserResponseDTO getUserResponseDTO = _mapper.Map<GetUserResponseDTO>(user);
-        //    return Ok(getUserResponseDTO);
-        //}
-        //[EnableQuery]
-        //public IActionResult Post([FromBody] CreateUserRequestDTO createUserRequestDTO)
-        //{
-        //    User user = _mapper.Map<User>(createUserRequestDTO);
-        //    repository.SaveUser(user);
+        [EnableQuery(PageSize = 10)]
+        public ActionResult<IQueryable<GetUserResponseDTO>> Get()
+        {
+            List<User> users = _repository.GetUsers();
+            List<GetUserResponseDTO> getUserResponseDTOs = _mapper.Map<List<GetUserResponseDTO>>(users);
+            return Ok(getUserResponseDTOs);
+        }
+        [EnableQuery]
+        public ActionResult<GetUserResponseDTO> Get([FromRoute] int key)
+        {
+            User user = _repository.GetUserById(key);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            GetUserResponseDTO getUserResponseDTO = _mapper.Map<GetUserResponseDTO>(user);
+            return Ok(getUserResponseDTO);
+        }
+        [EnableQuery]
+        public IActionResult Post([FromBody] CreateUserRequestDTO createUserRequestDTO)
+        {
+            User user = _mapper.Map<User>(createUserRequestDTO);
+            _repository.SaveUser(user);
 
-        //    GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
-        //    return Created(responseDTO);
-        //}
-        //[EnableQuery]
-        //public ActionResult Put([FromRoute] int key, [FromBody] UpdateUserRequestDTO updateUserRequestDTO)
-        //{
-        //    if (key != updateUserRequestDTO.UserId)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    User tempUser = repository.GetUserById(key);
-        //    if (tempUser == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    User user = _mapper.Map<User>(updateUserRequestDTO);
-        //    user.UserId = tempUser.UserId;
-        //    repository.UpdateUser(user);
-        //    return Updated(user);
-        //}
-        //[EnableQuery]
-        //public ActionResult Delete([FromRoute] int key)
-        //{
-        //    User tempUser = repository.GetUserById(key);
-        //    if (tempUser == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    repository.DeleteUser(tempUser);
-        //    return NoContent();
-        //}
+            GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
+            return Created(responseDTO);
+        }
+        [EnableQuery]
+        public ActionResult Put([FromRoute] int key, [FromBody] UpdateUserRequestDTO updateUserRequestDTO)
+        {
+            if (key != updateUserRequestDTO.UserId)
+            {
+                return BadRequest();
+            }
+            User tempUser = _repository.GetUserById(key);
+            if (tempUser == null)
+            {
+                return NotFound();
+            }
+            User user = _mapper.Map<User>(updateUserRequestDTO);
+            user.UserId = tempUser.UserId;
+            _repository.UpdateUser(user);
+            return Updated(user);
+        }
+        [EnableQuery]
+        public ActionResult Delete([FromRoute] int key)
+        {
+            User tempUser = _repository.GetUserById(key);
+            if (tempUser == null)
+            {
+                return NotFound();
+            }
+            _repository.DeleteUser(tempUser);
+            return NoContent();
+        }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateRequest model)
+        public IActionResult Authenticate([FromBody] AuthenticateRequest model)
         {
             var user = _repository.Authenticate(model.Email, model.Password);
-            if(user == null)
+            if (user == null)
             {
-                return BadRequest(new {message = "Username or password is incorrect" });
+                return BadRequest(new { message = "Username or password is incorrect" });
             }
 
             //Generate access Token and refresh Token
@@ -111,13 +113,14 @@ namespace api.Controllers
                 {
                     refreshToken
                 };
-            } else
+            }
+            else
             {
                 user.RefreshTokens.Add(refreshToken);
             }
 
             RemoveOldRefreshToken(user);
-            
+
             //update user
             _repository.UpdateUser(user);
 

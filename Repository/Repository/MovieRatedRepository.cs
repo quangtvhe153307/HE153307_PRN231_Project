@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Repository
 {
-    public class MovieRatedRepository : IMovieratedRepository
+    public class MovieRatedRepository : IMovieRatedRepository
     {
         public void SaveMovieRated(MovieRated movierated) => MovieratedDAO.SaveMovierated(movierated);
         public void UpdateMovieRated(MovieRated movierated) => MovieratedDAO.UpdateMovierated(movierated);
