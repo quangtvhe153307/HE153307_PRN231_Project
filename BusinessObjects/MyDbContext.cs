@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Text.RegularExpressions;
 
 namespace BusinessObjects
 {
@@ -44,7 +45,22 @@ namespace BusinessObjects
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.User)
+                .WithMany(t => t.Transactions)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.ModifiedUser)
+                .WithMany()
+                .HasForeignKey(t => t.ModifiedBy)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.CreatedUser)
+                .WithMany()
+                .HasForeignKey(t => t.CreatedBy)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

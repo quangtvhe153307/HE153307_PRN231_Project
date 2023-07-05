@@ -42,39 +42,73 @@ namespace APIProject.Controllers
         [EnableQuery]
         public IActionResult Post([FromBody] CreateTransactionRequestDTO createTransactionRequestDTO)
         {
-            Transaction transaction = _mapper.Map<Transaction>(createTransactionRequestDTO);
-            repository.SaveTransaction(transaction);
+            try
+            {
+                Transaction transaction = _mapper.Map<Transaction>(createTransactionRequestDTO);
+                transaction.CreatedBy = LoggedUserId();
+                repository.SaveTransaction(transaction);
 
-            GetTransactionResponseDTO responseDTO = _mapper.Map<GetTransactionResponseDTO>(transaction);
-            return Created(responseDTO);
+                GetTransactionResponseDTO responseDTO = _mapper.Map<GetTransactionResponseDTO>(transaction);
+                return Created(responseDTO);
+            } catch(Exception ex)
+            {
+                return BadRequest(new {message = "error"});
+            }
         }
         [EnableQuery]
         public ActionResult Put([FromRoute] int key, [FromBody] UpdateTransactionRequestDTO updateTransactionRequestDTO)
         {
-            if (key != updateTransactionRequestDTO.TransactionId)
+            try
             {
-                return BadRequest();
-            }
-            Transaction tempTransaction = repository.GetTransactionById(key);
-            if (tempTransaction == null)
+                var userId = LoggedUserId();
+                if (key != updateTransactionRequestDTO.TransactionId)
+                {
+                    return BadRequest();
+                }
+                Transaction tempTransaction = repository.GetTransactionById(key);
+                if (tempTransaction == null)
+                {
+                    return NotFound();
+                }
+                //Transaction transaction = _mapper.Map<Transaction>(updateTransactionRequestDTO);
+                tempTransaction.TransactionDescription = updateTransactionRequestDTO.TransactionDescription;
+                tempTransaction.ModifiedBy= LoggedUserId();
+                tempTransaction.ModifiedDate = DateTime.Now;
+                repository.UpdateTransaction(tempTransaction);
+                return Updated(tempTransaction);
+            } catch(Exception ex)
             {
-                return NotFound();
+                return BadRequest(new { message = "error" });
             }
-            Transaction transaction = _mapper.Map<Transaction>(updateTransactionRequestDTO);
 
-            repository.UpdateTransaction(transaction);
-            return Updated(transaction);
         }
         [EnableQuery]
         public ActionResult Delete([FromRoute] int key)
         {
-            Transaction tempTransaction = repository.GetTransactionById(key);
-            if (tempTransaction == null)
+            try
             {
-                return NotFound();
+                int LoggedUser = LoggedUserId();
+                Transaction tempTransaction = repository.GetTransactionById(key);
+                if (tempTransaction == null)
+                {
+                    return NotFound();
+                }
+                tempTransaction.IsDelete = true;
+                tempTransaction.ModifiedDate= DateTime.Now;
+                tempTransaction.ModifiedBy = LoggedUser;
+                repository.UpdateTransaction(tempTransaction);
+                return NoContent();
+            } catch(Exception ex)
+            {
+                return BadRequest(new { message = "error" });
             }
-            repository.DeleteTransaction(tempTransaction);
-            return NoContent();
+
+        }
+        private int LoggedUserId()
+        {
+            var userIdString = User.Claims.ToList()[4].Value;
+            int userId = Int32.Parse(userIdString);
+            return userId;
         }
     }
 }

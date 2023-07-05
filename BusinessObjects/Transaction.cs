@@ -16,7 +16,12 @@ namespace BusinessObjects
         public DateTime TransactionDate { get; set; }
         public TransactionType TransactionType { get; set; }
         public int UserId { get; set; }
-        [ForeignKey("UserId")]
         public User User { get; set; }
+        public bool IsDelete { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public User ModifiedUser { get; set; }
+        public int CreatedBy { get; set; }
+        public User CreatedUser { get; set; }
     }
 }

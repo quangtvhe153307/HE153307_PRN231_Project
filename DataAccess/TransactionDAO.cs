@@ -49,6 +49,7 @@ namespace DataAccess
             {
                 using (var context = new MyDbContext())
                 {
+                    transaction.TransactionDate = DateTime.Now;
                     context.Transactions.Add(transaction);
                     context.SaveChanges();
                 }

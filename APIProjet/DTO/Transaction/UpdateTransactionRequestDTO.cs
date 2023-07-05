@@ -6,10 +6,9 @@ namespace APIProject.DTO.Transaction
 {
     public class UpdateTransactionRequestDTO
     {
+        [Required]
         public int TransactionId { get; set; }
+        [Required]
         public string TransactionDescription { get; set; }
-        public DateTime TransactionDate { get; set; }
-        public int TransactionType { get; set; }
-        public int UserId { get; set; }
     }
 }

@@ -14,5 +14,11 @@ namespace APIProject.DTO.Transaction
         public int TransactionType { get; set; }
         public int UserId { get; set; }
         public GetUserResponseDTO User { get; set; }
+        public bool IsDelete { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public GetUserResponseDTO ModifiedUser { get; set; }
+        public int CreatedBy { get; set; }
+        public GetUserResponseDTO CreatedUser { get; set; }
     }
 }
