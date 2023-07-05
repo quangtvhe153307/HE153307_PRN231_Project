@@ -14,5 +14,6 @@ namespace Repository.IRepository
         void DeleteMovieRated(MovieRated movierated);
         void UpdateMovieRated(MovieRated movierated);
         List<MovieRated> GetMovieRateds();
+        MovieRated GetMovieRated(int movieId, int userId);
     }
 }

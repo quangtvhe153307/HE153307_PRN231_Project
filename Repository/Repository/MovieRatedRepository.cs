@@ -17,5 +17,7 @@ namespace Repository.Repository
         public double GetMovieAverageRatedById(int movieId) => MovieratedDAO.FindMovieAverageRatedById(movieId);
 
         public void DeleteMovieRated(MovieRated movierated) => MovieratedDAO.DeleteMovierated(movierated);
+
+        public MovieRated GetMovieRated(int movieId, int userId) => MovieratedDAO.GetMovieRated(movieId,userId);
     }
 }

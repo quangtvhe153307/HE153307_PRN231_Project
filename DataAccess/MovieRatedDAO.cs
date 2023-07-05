@@ -88,5 +88,20 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
         }
+        public static MovieRated GetMovieRated(int movieId, int userId)
+        {
+            MovieRated movieRated = null;
+            try
+            {
+                using var context = new MyDbContext();
+                movieRated = context.MovieRateds
+                    .SingleOrDefault(x => x.MovieId == movieId && x.UserId == userId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return movieRated;
+        }
     }
 }

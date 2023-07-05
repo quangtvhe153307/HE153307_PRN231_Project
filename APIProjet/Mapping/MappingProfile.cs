@@ -4,6 +4,7 @@ using APIProject.DTO.CategoryMovie;
 using APIProject.DTO.Comment;
 using APIProject.DTO.Movie;
 using APIProject.DTO.MovieEpisode;
+using APIProject.DTO.MovieRated;
 using APIProject.DTO.MovieSeason;
 using APIProject.DTO.Role;
 using APIProject.DTO.Transaction;
@@ -56,6 +57,11 @@ namespace APIProject.Mapping
             CreateMap<CreateCommentRequestDTO, Comment>();
             CreateMap<UpdateCommentRequestDTO, Comment>();
             CreateMap<Comment, GetCommentResponseDTO>();
+            
+            //MovieRate
+            CreateMap<CreateMovieRatedRequestDTO, MovieRated>();
+            CreateMap<UpdateMovieRatedRequestDTO, MovieRated>();
+            CreateMap<MovieRated, GetMovieRatedResponseDTO>();
         }
     }
 }
