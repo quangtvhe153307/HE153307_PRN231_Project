@@ -46,7 +46,7 @@ namespace APIProject.Controllers
             MovieSeason movieseason = _mapper.Map<MovieSeason>(createMovieseasonRequestDTO);
             repository.SaveMovieSeason(movieseason);
 
-            CreateMovieSeasonRequestDTO responseDTO = _mapper.Map<CreateMovieSeasonRequestDTO>(movieseason);
+            GetMovieSeasonResponseDTO responseDTO = _mapper.Map<GetMovieSeasonResponseDTO>(movieseason);
             return Created(responseDTO);
         }
         [EnableQuery]

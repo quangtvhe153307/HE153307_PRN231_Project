@@ -1,6 +1,7 @@
 using APIProject.DTO.Category;
 using APIProject.DTO.Comment;
 using APIProject.DTO.Movie;
+using APIProject.DTO.MovieSeason;
 using APIProject.DTO.Role;
 using APIProject.DTO.Transaction;
 using APIProject.DTO.User;
@@ -201,6 +202,7 @@ namespace APIProjet
             builder.EntitySet<GetMovieResponseDTO>("Movies");
             builder.EntitySet<GetRoleResponseDTO>("Roles");
             builder.EntitySet<GetTransactionResponseDTO>("Transactions");
+            builder.EntitySet<GetMovieSeasonResponseDTO>("MovieSeasons");
             return builder.GetEdmModel();
         }
     }

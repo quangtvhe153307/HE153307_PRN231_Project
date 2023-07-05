@@ -45,8 +45,10 @@ namespace APIProject.Mapping
             CreateMap<UpdateMovieRequestDTO, Movie>();
             CreateMap<Movie, GetMovieResponseDTO>();
             CreateMap<CreateMovieSeasonRequestDTO, MovieSeason>();
+            CreateMap<UpdateMovieSeasonRequestDTO, MovieSeason>();
             CreateMap<MovieSeason, GetMovieSeasonResponseDTO>();
             CreateMap<CreateMovieEpisodeRequestDTO, MovieEpisode>();
+            CreateMap<UpdateMovieEpisodeRequestDTO, MovieEpisode>();
             CreateMap<MovieEpisode, GetMovieEpisodeResponseDTO>();
         }
     }

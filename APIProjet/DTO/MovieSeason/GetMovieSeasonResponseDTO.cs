@@ -6,6 +6,7 @@ namespace APIProject.DTO.MovieSeason
 {
     public class GetMovieSeasonResponseDTO
     {
+        [Key]
         public int MovieSeasonId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

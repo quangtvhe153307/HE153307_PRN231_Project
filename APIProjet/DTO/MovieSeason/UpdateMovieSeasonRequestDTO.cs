@@ -8,12 +8,15 @@ namespace APIProject.DTO.MovieSeason
     {
         [Required]
         public int MovieSeasonId { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public DateTime? ReleasedDate { get; set; }
         [Required]
         public int MovieId { get; set; }
-        [Required]
-        public virtual ICollection<CreateMovieEpisodeRequestDTO> MovieEpisodes { get; set; }
+        //[Required]
+        //public virtual ICollection<CreateMovieEpisodeRequestDTO> MovieEpisodes { get; set; }
     }
 }
