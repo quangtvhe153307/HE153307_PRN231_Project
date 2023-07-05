@@ -5,6 +5,7 @@ namespace APIProject.DTO.MovieEpisode
 {
     public class GetMovieEpisodeResponseDTO
     {
+        [Key]
         public int EpisodeId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
