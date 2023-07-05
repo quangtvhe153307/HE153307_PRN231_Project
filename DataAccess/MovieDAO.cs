@@ -49,6 +49,15 @@ namespace DataAccess
             {
                 using (var context = new MyDbContext())
                 {
+                    List<Category> categories = (List<Category>)movie.Categories;
+                    List<int> categoryIds = new List<int>();
+                    foreach (var item in categories)
+                    {
+                        categoryIds.Add(item.CategoryId);
+                    }
+                    List<Category> categoryFromDb = context.Categories.Where(c => categoryIds.Contains(c.CategoryId)).ToList();
+
+                    movie.Categories = categoryFromDb;
                     context.Movies.Add(movie);
                     context.SaveChanges();
                 }

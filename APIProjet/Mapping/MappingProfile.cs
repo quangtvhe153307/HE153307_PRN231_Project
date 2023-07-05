@@ -1,5 +1,9 @@
 ﻿using APIProject.DTO;
 using APIProject.DTO.Category;
+using APIProject.DTO.CategoryMovie;
+using APIProject.DTO.Movie;
+using APIProject.DTO.MovieEpisode;
+using APIProject.DTO.MovieSeason;
 using APIProject.DTO.Role;
 using APIProject.DTO.Transaction;
 using APIProject.DTO.User;
@@ -29,11 +33,18 @@ namespace APIProject.Mapping
             CreateMap<Category, GetCategoryResponseDTO>();
             CreateMap<CreateCategoryRequestDTO, Category>();
             CreateMap<UpdateCategoryRequestDTO, Category>();
+            CreateMap<CreateCategoryMovieRequestDTO, Category>();
             
             //User
             CreateMap<User, GetUserResponseDTO>();
             CreateMap<CreateUserRequestDTO, User>();
             CreateMap<UpdateUserRequestDTO, User>();
+
+            //Movie
+            CreateMap<CreateMovieRequestDTO, Movie>();
+            CreateMap<Movie, GetMovieResponseDTO>();
+            CreateMap<CreateMovieSeasonRequestDTO, MovieSeason>();
+            CreateMap<CreateMovieEpisodeRequestDTO, MovieEpisode>();
         }
     }
 }
