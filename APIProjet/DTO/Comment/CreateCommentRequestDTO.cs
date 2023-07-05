@@ -7,8 +7,6 @@ namespace APIProject.DTO.Comment
     public class CreateCommentRequestDTO
     {
         [Required]
-        public int UserId { get; set; }
-        [Required]
         public int MovieId { get; set; }
         [Required]
         public string Content { get; set; }

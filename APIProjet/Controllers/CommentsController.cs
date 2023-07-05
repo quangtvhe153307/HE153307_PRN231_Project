@@ -26,25 +26,30 @@ namespace APIProject.Controllers
             List<GetCommentResponseDTO> getCommentResponseDTOs = _mapper.Map<List<GetCommentResponseDTO>>(comments);
             return Ok(getCommentResponseDTOs);
         }
-        //[EnableQuery]
-        //public ActionResult<GetCommentResponseDTO> Get([FromRoute] int key)
-        //{
-        //    Comment comment = repository.GetCommentById(key);
-        //    if (comment == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    GetCommentResponseDTO getCommentResponseDTO = _mapper.Map<GetCommentResponseDTO>(comment);
-        //    return Ok(getCommentResponseDTO);
-        //}
+        [EnableQuery]
+        public ActionResult<IQueryable<GetCommentResponseDTO>> Get([FromRoute] int key)
+        {
+            List<Comment> comments = repository.GetCommentByMovieId(key);
+            List<GetCommentResponseDTO> getCommentResponseDTOs = _mapper.Map<List<GetCommentResponseDTO>>(comments);
+            return Ok(getCommentResponseDTOs);
+        }
         [EnableQuery]
         public IActionResult Post([FromBody] CreateCommentRequestDTO createCommentRequestDTO)
         {
-            Comment comment = _mapper.Map<Comment>(createCommentRequestDTO);
-            repository.SaveComment(comment);
+            try
+            {
+                Comment comment = _mapper.Map<Comment>(createCommentRequestDTO);
+                comment.UserId = LoggedUserId();
+                comment.CommentedDate = DateTime.Now;
+                repository.SaveComment(comment);
 
-            GetCommentResponseDTO responseDTO = _mapper.Map<GetCommentResponseDTO>(comment);
-            return Created(responseDTO);
+                GetCommentResponseDTO responseDTO = _mapper.Map<GetCommentResponseDTO>(comment);
+                return Created(responseDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new {message = "error"});
+            }
         }
         //[EnableQuery]
         //public ActionResult Put([FromRoute] int key, [FromBody] UpdateCommentRequestDTO updateCommentRequestDTO)
@@ -73,5 +78,11 @@ namespace APIProject.Controllers
         //    repository.DeleteComment(tempComment);
         //    return NoContent();
         //}
+        private int LoggedUserId()
+        {
+            var userIdString = User.Claims.ToList()[4].Value;
+            int userId = Int32.Parse(userIdString);
+            return userId;
+        }
     }
 }
