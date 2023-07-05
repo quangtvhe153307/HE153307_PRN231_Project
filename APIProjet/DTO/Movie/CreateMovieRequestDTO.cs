@@ -9,13 +9,20 @@ namespace APIProject.DTO.Movie
 {
     public class CreateMovieRequestDTO
     {
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public DateTime? ReleaseDate { get; set; }
+        [Required]
         public bool IsSingleEpisode { get; set; }
+        [Required]
         public double Price { get; set; }
         public bool IsFree => Price == 0;
+        [Required]
         public virtual ICollection<CreateCategoryMovieRequestDTO> Categories { get; set; }
+        [Required]
         public virtual ICollection<CreateMovieSeasonRequestDTO> MovieSeasons { get; set; }
     }
 }

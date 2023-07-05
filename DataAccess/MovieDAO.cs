@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace DataAccess
                 using (var context = new MyDbContext())
                 {
                     listMovies = context.Movies
+                        .Include(x => x.Categories)
+                        .Include(x => x.MovieSeasons)
+                        .ThenInclude(x => x.MovieEpisodes)
                         .ToList();
                 }
             }
@@ -34,6 +38,9 @@ namespace DataAccess
                 using (var context = new MyDbContext())
                 {
                     movie = context.Movies
+                        .Include(x => x.Categories)
+                        .Include(x => x.MovieSeasons)
+                        .ThenInclude(x => x.MovieEpisodes)
                         .SingleOrDefault(x => x.MovieId == prodId);
                 }
             }

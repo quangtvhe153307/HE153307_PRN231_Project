@@ -1,15 +1,18 @@
 ﻿using APIProject.DTO.Movie;
 using AutoMapper;
 using BusinessObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Repository.IRepository;
 using Repository.Repository;
+using System.Data;
 
 namespace APIProject.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class MoviesController : ODataController
     {
         private IMovieRepository repository = new MovieRepository();

@@ -11,7 +11,7 @@ using Repository.Repository;
 
 namespace APIProject.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class TransactionsController : ODataController
     {
         private ITransactionRepository repository = new TransactionRepository();

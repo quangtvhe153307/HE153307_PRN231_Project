@@ -181,6 +181,7 @@ namespace api.Controllers
             };
 
             SetTokenCookie(newRefreshToken.Token);
+            Console.WriteLine(jwtToken);
             return Ok(authenticateResponse);
         }
 
