@@ -14,5 +14,8 @@ namespace APIProject.DTO.User
         public int RoleId { get; set; }
         public virtual GetRoleResponseDTO Role { get; set; }
         public virtual ICollection<GetPurchasedMovieResponseDTO> PurchasedMovies { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public bool EmailConfirmed { get; set; }
     }
 }
