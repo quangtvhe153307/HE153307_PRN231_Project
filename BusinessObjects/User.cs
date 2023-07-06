@@ -21,5 +21,8 @@ namespace BusinessObjects
         public virtual Role Role { get; set; }
         public virtual ICollection<PurchasedMovie> PurchasedMovies { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public bool EmailConfirmed { get; set; }
     }
 }
