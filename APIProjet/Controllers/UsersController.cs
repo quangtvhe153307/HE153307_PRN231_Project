@@ -221,7 +221,7 @@ namespace api.Controllers
         public IActionResult RegisterUser([FromBody] CreateUserRequestDTO createUserRequestDTO)
         {
             User existUser = _repository.GetUserByEmail(createUserRequestDTO.Email);
-            if (existUser == null)
+            if (existUser != null)
             {
                 return BadRequest(new { message = "User already exist!" });
             }
@@ -244,6 +244,7 @@ namespace api.Controllers
             {
                 return BadRequest();
             }
+            token = Uri.UnescapeDataString(token);
             User user = _aESUtils.Decrypt(token);
             if (user.Equals(userFromDB))
             {

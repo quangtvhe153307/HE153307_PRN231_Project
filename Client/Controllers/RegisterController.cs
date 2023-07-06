@@ -1,4 +1,5 @@
 ﻿
+using APIProject.DTO.User;
 using Client.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,35 +32,50 @@ namespace Client.Controllers
             {
                 return View(model);
             }
-            //CreateUserRequestDTO createUserRequestDTO = new CreateUserRequestDTO
-            //{
-            //    EmailAddress = model.EmailAddress,
-            //    Password = model.Password,
-            //    Source = "",
-            //    FirstName = "",
-            //    MiddleName = "",
-            //    LastName = "",
-            //    RoleId = 1,
-            //    PublisherId = 1,
-            //    HireDate = DateTime.Today
-            //};
-            //string url = "https://localhost:7111/odata/Users";
+            CreateUserRequestDTO createUserRequestDTO = new CreateUserRequestDTO
+            {
+                Email = model.EmailAddress,
+                Password = model.Password,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+            string url = "RegisterUser";
 
-            //HttpContent content = new StringContent(JsonSerializer.Serialize(createUserRequestDTO), Encoding.UTF8, "application/json");
-            //HttpResponseMessage response = await client.PostAsync(url, content);
-            //if(response.IsSuccessStatusCode)
-            //{
-            //    string strData = await response.Content.ReadAsStringAsync();
-            //    GetUserResponseDTO getUserResponseDTO = JsonSerializer.Deserialize<GetUserResponseDTO>(strData);
-            //    HttpContext.Session.Remove("UserId");
+            HttpContent content = new StringContent(JsonSerializer.Serialize(createUserRequestDTO), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(url, content);
+            if (response.IsSuccessStatusCode)
+            {
+                string strData = await response.Content.ReadAsStringAsync();
+                JsonSerializerOptions option = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                EmailConfirmModel emailConfirm = JsonSerializer.Deserialize<EmailConfirmModel>(strData, option);
+                return RedirectToAction("EmailConfirmation");
+            }
 
-            //    HttpContext.Session.SetInt32("UserId", getUserResponseDTO.UserId);
-
-            //    return RedirectPermanent("/Book");
-            //}
-
-            //ModelState.AddModelError("EmailAddress", "Error");
+            ModelState.AddModelError("EmailAddress", "Error");
             return View(model);
+        }
+        public async Task<IActionResult> ConfirmEmailAsync(EmailConfirmModel emailConfirm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(emailConfirm);
+            }
+            string url = $"ConfirmEmail/{emailConfirm.UserId}/{emailConfirm.Token}";
+
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectPermanent("Home/Index");
+            }
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> EmailConfirmation()
+        {
+            return View();
         }
     }
 }
