@@ -11,14 +11,11 @@ namespace Client.Controllers
     public class RegisterController : Controller
     {
         private readonly HttpClient client = null;
-        private string UserApiUrl = "";
 
-        public RegisterController()
+        public RegisterController(HttpClient httpClient)
         {
-            client = new HttpClient();
-            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
-            client.DefaultRequestHeaders.Accept.Add(contentType);
-            UserApiUrl = "https://localhost:7111/odata/Users";
+            client = httpClient;
+            //UserApiUrl = "https://localhost:7111/odata/Users";
             ViewData["Title"] = "Register";
         }
 

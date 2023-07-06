@@ -45,6 +45,7 @@ namespace Client
                 var endPoint = context.Request.Path;
                 if(Regex.IsMatch(endPoint.ToString().ToLower(), "login") 
                 || Regex.IsMatch(endPoint.ToString().ToLower(), "register")
+                //|| Regex.IsMatch(endPoint.ToString().ToLower(), "")
                 )
                 {
                     await next(context);
@@ -94,6 +95,7 @@ namespace Client
                             var responseString = await response.Content.ReadAsStringAsync();
                             System.Text.Json.JsonElement anonymousObject = (System.Text.Json.JsonElement)JsonSerializer.Deserialize<object>(responseString);
                             string newAccessToken = anonymousObject.GetString("accessToken");
+                            Console.WriteLine(newAccessToken);
                             JWTUtils.SetAccessToken(context.Response, newAccessToken);
                         }
                         else

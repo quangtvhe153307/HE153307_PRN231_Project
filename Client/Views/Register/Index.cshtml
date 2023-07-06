@@ -6,25 +6,28 @@
     main{
         height: 60vh;
     }
+
+    .input-fields input {
+        margin-right: 0;
+    }
 </style>
 <div class="login-panel">
     <form asp-controller="Register" asp-action="Index" method="post">
         @Html.AntiForgeryToken()
         <div class="item-container flex flex-column">
-            <div class="title text-primary">
-                <span>Book Stores Register</span>
-            </div>
             <div>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             </div>
-            <div class="input-fields">
-                <div class="input-parent">
-
-                    <div class="flex flex-row">
-                        <label asp-for="EmailAddress">EmailAddress</label>
-                        <input asp-for="EmailAddress" type="text" placeholder="Email address" />
+            <div class="input-fields full-name-fields">
+                <div class="input-parent" style="    box-sizing: border-box;">
+                    <div class="name-fields" style="float: left;">
+                        <input asp-for="FirstName" type="text" placeholder="First name" />
+                        <span asp-validation-for="FirstName" class="text-danger" style="width: 40%;"></span>
+                    </div>                    
+                    <div class="name-fields" style="float: right;">
+                        <input asp-for="LastName" type="text" placeholder="Last name" />
+                        <span asp-validation-for="LastName" class="text-danger" style="width: 40%;"></span>
                     </div>
-                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
                 </div>
 
             </div>
@@ -32,7 +35,18 @@
                 <div class="input-parent">
 
                     <div class="flex flex-row">
-                        <label asp-for="Password">Password</label>
+                        @*<label asp-for="EmailAddress">EmailAddress</label>*@
+                        <input asp-for="EmailAddress" type="text" placeholder="Email address" />
+                    </div>
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+
+            </div>            
+            <div class="input-fields">
+                <div class="input-parent">
+
+                    <div class="flex flex-row">
+                        @*<label asp-for="Password">Password</label>*@
                         <input asp-for="Password" type="password" placeholder="Password" />
                     </div>
                     <span asp-validation-for="Password" class="text-danger"></span>
@@ -43,14 +57,28 @@
                 <div class="input-parent">
 
                     <div class="flex flex-row">
-                        <label asp-for="ConfirmPassword">ConfirmPassword</label>
+                        @*<label asp-for="ConfirmPassword">ConfirmPassword</label>*@
                         <input asp-for="ConfirmPassword" type="password" placeholder="Confirm password" />
                     </div>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
             </div>
-            <div class="action">
+            <div class="input-fields">
+                <div class="input-parent">
+                    <div class="">
+                        <button class="btn-success sign-up-btn">Sign up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="input-fields">
+                <div class="input-parent">
+                    <div class="">
+                        <a class="forgot-password text-primary" href="/Login/" style="margin-right: 10px;">Login</a>
+                    </div>
+                </div>
+            </div>
+@*            <div class="action">
                 <div class="btn-action">
                     <div class="flex-1">
                     </div>
@@ -60,7 +88,7 @@
                     <button class="btn-primary login-btn" type="submit" style="margin-left: 10px;">Sign up</button>
                 </div>
 
-            </div>
+            </div>*@
         </div>
     </form>
 

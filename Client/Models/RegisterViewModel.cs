@@ -5,6 +5,10 @@ namespace Client.Models
     public class RegisterViewModel
     {
         [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
         [Required]

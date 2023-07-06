@@ -8,8 +8,10 @@
     width: 100%;
     overflow: hidden;
 }
-body{
+body {
     margin-bottom: 0 !important;
+    background-color: #f0f2f5;
+    color: #000;
 }
 .flex{
     display: flex;
@@ -26,12 +28,14 @@ body{
 main {
     position: absolute;
     background: #fff;
-    width: 45vw;
+    width: 25vw;
     height: 50vh;
     top: 20%;
-    right: 10%;
+    right: 15%;
     border-radius: 10px;
     box-shadow: 5px 2px 8px #888888;
+    min-width: 250px;
+    min-height: 360px;
 }
 .title {
     text-align: center;
@@ -41,18 +45,22 @@ main {
     font-size: 125%;
 }
 .item-container.flex.flex-column > div {
-    margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
 }
 .input-fields input {
-    width: 80%;
+    width: 100%;
     border: 1px solid #00000040;
-    padding-left: 10px;
     margin-right: 20px;
+    height: 51px;
+    padding: 14px 16px;
+    border-radius: 6px;
 }
 .input-fields {
-    height: 35px;
-    line-height: 35px;
+/*    height: 35px;
+    line-height: 35px;*/
 }
 .input-parent {
     text-align: center;
@@ -62,7 +70,8 @@ span.text-danger.field-validation-error {
     font-size: 75%;
     display: block;
     text-align: left;
-    margin-left: 20px;
+    margin-left: 16px;
+    position: absolute;
 }
 .action {
     display: flex;
@@ -72,24 +81,46 @@ span.text-danger.field-validation-error {
     display: flex;
 }
 .login-btn, .sign-up-btn {
-    width: 100px;
-    height: 35px;
+    margin-right: 10px;
+    width: 100%;
+    border-radius: 6px;
+    height: 51px;
+    font-size: 20px;
+    color: #fff;
 }
 button.btn-primary.login-btn {
     margin-right: 10px;
 }
 .sign-up-btn {
-    margin-left: 10px;
+    /*margin-left: 10px;*/
     text-decoration: none;
-    border: 1px solid;
+    border: none;
     border-color: #000;
     text-align: center;
-    line-height: 35px;
+    /*line-height: 35px;*/
     cursor: pointer;
+    display: block;
+    line-height: 51px;
 }
 .input-parent label {
     width: 200px;
     text-align: left;
     padding-left: 20px;
     font-weight: bold;
+}
+.Logo-container {
+    margin-top: 30vh;
+    width: 30vw;
+    margin-left: 10vw;
+}
+.slogan {
+    font-size: 125%;
+}
+.forgot-password{
+    cursor: pointer;
+    text-decoration: none;
+}
+.name-fields {
+    display: inline-block;
+    width: 48%;
 }
