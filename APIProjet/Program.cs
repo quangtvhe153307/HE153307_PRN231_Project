@@ -73,7 +73,6 @@ namespace APIProjet
                          }
                      });
                 });
-
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
             builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
             builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
@@ -86,6 +85,7 @@ namespace APIProjet
             builder.Services.AddSingleton<IPurchasedMovieRepository, PurchasedMovieRepository>();
             builder.Services.AddSingleton<ITransactionRepository, TransactionRepository>();
             builder.Services.AddSingleton<IJWTUtils, JWTUtils>();
+            //builder.Services.AddSingleton<IAESUtils, AESUtils>();
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
@@ -93,7 +93,6 @@ namespace APIProjet
 
             IMapper mapper = mapperConfig.CreateMapper();
             builder.Services.AddSingleton(mapper);
-
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
