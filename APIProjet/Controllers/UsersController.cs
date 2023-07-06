@@ -24,13 +24,15 @@ namespace api.Controllers
         private readonly IJWTUtils _jwtUtils;
         private readonly IConfiguration _config;
         private readonly IRefreshtokenRepository _refreshtokenRepository;
-        public UsersController(IMapper mapper, IJWTUtils jWTUtils, IUserRepository res, IConfiguration configuration, IRefreshtokenRepository refreshtokenRepository)
+        private readonly IAESUtils _aESUtils;
+        public UsersController(IMapper mapper, IJWTUtils jWTUtils, IUserRepository res, IConfiguration configuration, IRefreshtokenRepository refreshtokenRepository, IAESUtils aESUtils)
         {
             _mapper = mapper;
             _jwtUtils = jWTUtils;
             _repository = res;
             _config = configuration;
             _refreshtokenRepository = refreshtokenRepository;
+            _aESUtils= aESUtils;
         }
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetUserResponseDTO>> Get()
@@ -141,48 +143,57 @@ namespace api.Controllers
         [HttpPost("refresh-token")]
         public IActionResult RefreshToken()
         {
-            var oldRefreshToken = Request.Cookies["refreshToken"];
-            var user = _repository.GetUserByRefreshToken(oldRefreshToken);
-
-            var refreshToken = user.RefreshTokens.Single(x => x.Token.Equals(oldRefreshToken));
-
-            if (refreshToken.IsRevoked)
+            try
             {
-                // revoke all descendant tokens in case this token has been compromised
-                RevokeDescendantRefreshTokens(refreshToken, user, IpAddress(), $"Attempted reuse of revoked ancestor token: {oldRefreshToken}");
+                var oldRefreshToken = Request.Cookies["refreshToken"];
+                var user = _repository.GetUserByRefreshToken(oldRefreshToken);
+                if(user == null)
+                {
+                    return BadRequest();
+                }
+                var refreshToken = user.RefreshTokens.Single(x => x.Token.Equals(oldRefreshToken));
+
+                if (refreshToken.IsRevoked)
+                {
+                    // revoke all descendant tokens in case this token has been compromised
+                    RevokeDescendantRefreshTokens(refreshToken, user, IpAddress(), $"Attempted reuse of revoked ancestor token: {oldRefreshToken}");
+                    _repository.UpdateUser(user);
+                }
+
+                if (!refreshToken.IsActive)
+                {
+                    return BadRequest(new { message = "Invalid token" });
+                }
+
+
+                // replace old refresh token with a new one (rotate token)
+                var newRefreshToken = RotateRefreshToken(refreshToken, IpAddress());
+                user.RefreshTokens.Add(newRefreshToken);
+
+                // remove old refresh tokens from user
+                RemoveOldRefreshToken(user);
+
+                // save changes to db
                 _repository.UpdateUser(user);
-            }
 
-            if (!refreshToken.IsActive)
+                // generate new jwt
+                var jwtToken = _jwtUtils.GenerateJwtToken(user);
+
+                var authenticateResponse = new AuthenticateResponse
+                {
+                    AccessToken = jwtToken,
+                    Email = user.Email,
+                    UserId = user.UserId,
+                    RefreshToken = newRefreshToken.Token
+                };
+
+                SetTokenCookie(newRefreshToken.Token);
+                Console.WriteLine(jwtToken);
+                return Ok(authenticateResponse);
+            } catch (Exception ex)
             {
-                return BadRequest(new { message = "Invalid token" });
+                return BadRequest();
             }
-
-
-            // replace old refresh token with a new one (rotate token)
-            var newRefreshToken = RotateRefreshToken(refreshToken, IpAddress());
-            user.RefreshTokens.Add(newRefreshToken);
-
-            // remove old refresh tokens from user
-            RemoveOldRefreshToken(user);
-
-            // save changes to db
-            _repository.UpdateUser(user);
-
-            // generate new jwt
-            var jwtToken = _jwtUtils.GenerateJwtToken(user);
-
-            var authenticateResponse = new AuthenticateResponse
-            {
-                AccessToken = jwtToken,
-                Email = user.Email,
-                UserId = user.UserId,
-                RefreshToken = newRefreshToken.Token
-            };
-
-            SetTokenCookie(newRefreshToken.Token);
-            Console.WriteLine(jwtToken);
-            return Ok(authenticateResponse);
         }
 
         [HttpPost("revoke-token")]
@@ -204,6 +215,45 @@ namespace api.Controllers
             RevokeRefreshToken(refreshToken, IpAddress(), "Revoked without replacement");
             _repository.UpdateUser(user);
             return Ok(new { message = "Token revoked" });
+        }
+        [AllowAnonymous]
+        [HttpPost("/RegisterUser")]
+        public IActionResult RegisterUser([FromBody] CreateUserRequestDTO createUserRequestDTO)
+        {
+            User existUser = _repository.GetUserByEmail(createUserRequestDTO.Email);
+            if (existUser == null)
+            {
+                return BadRequest(new { message = "User already exist!" });
+            }
+            User user = _mapper.Map<User>(createUserRequestDTO);
+            user.RoleId = 3;
+            _repository.SaveUser(user);
+
+            user = _repository.GetUserById(user.UserId);
+            string token = _aESUtils.Encrypt(user);
+            GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
+            return Ok(new { UserId = user.UserId, Token = token });
+            //return Ok();
+        }
+        [AllowAnonymous]
+        [HttpGet("/ConfirmEmail/{userId}/{token}")]
+        public IActionResult ConfirmEmail(int userId, string token)
+        {
+            User userFromDB = _repository.GetUserById(userId);
+            if (userFromDB == null)
+            {
+                return BadRequest();
+            }
+            User user = _aESUtils.Decrypt(token);
+            if (user.Equals(userFromDB))
+            {
+                Console.WriteLine("email confirmed");
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
         private void SetTokenCookie(string token)
         {
