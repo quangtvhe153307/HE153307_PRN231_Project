@@ -4,6 +4,7 @@ using APIProject.DTO.Movie;
 using APIProject.DTO.MovieEpisode;
 using APIProject.DTO.MovieRated;
 using APIProject.DTO.MovieSeason;
+using APIProject.DTO.PurchasedMovie;
 using APIProject.DTO.Role;
 using APIProject.DTO.Transaction;
 using APIProject.DTO.User;
@@ -77,6 +78,13 @@ namespace APIProjet
             builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
             builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
             builder.Services.AddSingleton<IRefreshtokenRepository, RefreshtokenRepository>();
+            builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
+            builder.Services.AddSingleton<IMovieEpisodeRepository, MovieEpisodeRepository>();
+            builder.Services.AddSingleton<IMovieRatedRepository, MovieRatedRepository>();
+            builder.Services.AddSingleton<IMovieRepository, MovieRepository>();
+            builder.Services.AddSingleton<IMovieSeasonRepository, MovieSeasonRepository>();
+            builder.Services.AddSingleton<IPurchasedMovieRepository, PurchasedMovieRepository>();
+            builder.Services.AddSingleton<ITransactionRepository, TransactionRepository>();
             builder.Services.AddSingleton<IJWTUtils, JWTUtils>();
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -207,6 +215,7 @@ namespace APIProjet
             builder.EntitySet<GetMovieSeasonResponseDTO>("MovieSeasons");
             builder.EntitySet<GetMovieEpisodeResponseDTO>("MovieEpisodes");
             builder.EntitySet<GetMovieRatedResponseDTO>("MovieRateds");
+            builder.EntitySet<GetPurchasedMovieResponseDTO>("PurchasedMovies");
             return builder.GetEdmModel();
         }
     }

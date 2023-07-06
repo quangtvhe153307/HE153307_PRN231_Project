@@ -15,12 +15,13 @@ namespace APIProject.Controllers
     [Authorize(Roles = "Administrator")]
     public class CommentsController : ODataController
     {
-        private ICommentRepository repository = new CommentRepository();
+        private ICommentRepository repository;
         private readonly IMapper _mapper;
 
-        public CommentsController(IMapper mapper)
+        public CommentsController(IMapper mapper, ICommentRepository commentRepository)
         {
             _mapper = mapper;
+            repository = commentRepository;
         }
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetCommentResponseDTO>> Get()

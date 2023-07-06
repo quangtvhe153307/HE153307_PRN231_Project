@@ -6,6 +6,7 @@ using APIProject.DTO.Movie;
 using APIProject.DTO.MovieEpisode;
 using APIProject.DTO.MovieRated;
 using APIProject.DTO.MovieSeason;
+using APIProject.DTO.PurchasedMovie;
 using APIProject.DTO.Role;
 using APIProject.DTO.Transaction;
 using APIProject.DTO.User;
@@ -62,6 +63,11 @@ namespace APIProject.Mapping
             CreateMap<CreateMovieRatedRequestDTO, MovieRated>();
             CreateMap<UpdateMovieRatedRequestDTO, MovieRated>();
             CreateMap<MovieRated, GetMovieRatedResponseDTO>();
+            
+            //PurchasedMovie
+            CreateMap<CreatePurchasedMovieRequestDTO, PurchasedMovie>();
+            CreateMap<UpdatePurchasedMovieRequestDTO, PurchasedMovie>();
+            CreateMap<PurchasedMovie, GetPurchasedMovieResponseDTO>();
         }
     }
 }

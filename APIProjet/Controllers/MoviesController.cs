@@ -15,12 +15,13 @@ namespace APIProject.Controllers
     [Authorize(Roles = "Administrator")]
     public class MoviesController : ODataController
     {
-        private IMovieRepository repository = new MovieRepository();
+        private IMovieRepository repository;
         private readonly IMapper _mapper;
 
-        public MoviesController(IMapper mapper)
+        public MoviesController(IMapper mapper, IMovieRepository movieRepository)
         {
             _mapper = mapper;
+            repository= movieRepository;
         }
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetMovieResponseDTO>> Get()

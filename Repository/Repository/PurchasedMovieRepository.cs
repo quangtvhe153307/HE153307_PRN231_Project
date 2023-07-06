@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Repository.Repository
 {
-    public class PurchasedmoviesRepository : IPurchasedMoviesRepository
+    public class PurchasedMovieRepository : IPurchasedMovieRepository
     {
         public void SavePurchasedMovies(PurchasedMovie purchasedMovies) => PurchasedMovieDAO.SavePurchasedMovies(purchasedMovies);
         public void UpdatePurchasedMovies(PurchasedMovie purchasedMovies) => PurchasedMovieDAO.UpdatePurchasedMovies(purchasedMovies);
-        public List<PurchasedMovie> GetPurchasedMoviess() => PurchasedMovieDAO.GetPurchasedMovies();
+        public List<PurchasedMovie> GetPurchasedMovies() => PurchasedMovieDAO.GetPurchasedMovies();
         public List<PurchasedMovie> GetPurchasedMoviesById(int userId) => PurchasedMovieDAO.FindPurchasedMoviesById(userId);
         public void DeletePurchasedMovies(PurchasedMovie purchasedmovies) => PurchasedMovieDAO.DeletePurchasedMovies(purchasedmovies);
     }

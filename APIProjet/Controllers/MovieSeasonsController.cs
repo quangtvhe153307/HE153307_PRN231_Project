@@ -15,12 +15,13 @@ namespace APIProject.Controllers
     [Authorize(Roles = "Administrator")]
     public class MovieSeasonsController : ODataController
     {
-        private IMovieSeasonRepository repository = new MovieSeasonRepository();
+        private IMovieSeasonRepository repository;
         private readonly IMapper _mapper;
 
-        public MovieSeasonsController(IMapper mapper)
+        public MovieSeasonsController(IMapper mapper, IMovieSeasonRepository movieSeasonRepository)
         {
             _mapper = mapper;
+            repository= movieSeasonRepository;
         }
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetMovieSeasonResponseDTO>> Get()

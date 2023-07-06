@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using APIProject.DTO.Role;
+using APIProject.DTO.PurchasedMovie;
 
 namespace APIProject.DTO.User
 {
@@ -12,6 +13,6 @@ namespace APIProject.DTO.User
         public string Email { get; set; }
         public int RoleId { get; set; }
         public virtual GetRoleResponseDTO Role { get; set; }
-        public virtual ICollection<PurchasedMovie> PurchasedMovies { get; set; }
+        public virtual ICollection<GetPurchasedMovieResponseDTO> PurchasedMovies { get; set; }
     }
 }

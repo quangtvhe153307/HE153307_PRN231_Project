@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Repository.IRepository
 {
-    public interface IPurchasedMoviesRepository
+    public interface IPurchasedMovieRepository
     {
         void SavePurchasedMovies(PurchasedMovie purchasedMovies);
         List<PurchasedMovie> GetPurchasedMoviesById(int userId);
         void DeletePurchasedMovies(PurchasedMovie purchasedMovies);
         void UpdatePurchasedMovies(PurchasedMovie purchasedMovies);
-        List<PurchasedMovie> GetPurchasedMoviess();
+        List<PurchasedMovie> GetPurchasedMovies();
     }
 }

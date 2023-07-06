@@ -14,12 +14,13 @@ namespace APIProject.Controllers
     [Authorize(Roles = "Administrator")]
     public class TransactionsController : ODataController
     {
-        private ITransactionRepository repository = new TransactionRepository();
+        private ITransactionRepository repository;
         private readonly IMapper _mapper;
 
-        public TransactionsController(IMapper mapper)
+        public TransactionsController(IMapper mapper, ITransactionRepository transactionRepository)
         {
             _mapper = mapper;
+            repository= transactionRepository;
         }
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetTransactionResponseDTO>> Get()
