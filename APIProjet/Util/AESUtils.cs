@@ -46,6 +46,7 @@ namespace APIProject.Util
                 }
             }
             return Convert.ToBase64String(array);
+            //return "";
         }
         public User Decrypt(string cipherText)
         {
@@ -77,6 +78,7 @@ namespace APIProject.Util
                 Console.WriteLine(ex.Message);
             }
             return user;
+            //return null;
         }
     }
 }

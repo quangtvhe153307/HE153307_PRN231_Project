@@ -85,7 +85,7 @@ namespace APIProjet
             builder.Services.AddSingleton<IPurchasedMovieRepository, PurchasedMovieRepository>();
             builder.Services.AddSingleton<ITransactionRepository, TransactionRepository>();
             builder.Services.AddSingleton<IJWTUtils, JWTUtils>();
-            //builder.Services.AddSingleton<IAESUtils, AESUtils>();
+            builder.Services.AddSingleton<IAESUtils, AESUtils>();
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
