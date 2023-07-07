@@ -25,7 +25,7 @@ namespace APIProject.Util
         {
             string tokenEscaped = Uri.EscapeDataString(token);
             var subject = "Account Verification";
-            var body = $"<div>To finish registration, you need to verificate your account.<a href=\"https://localhost:7038/ConfirmEmail/{userId}/{tokenEscaped}\">Click here!</a></div>";
+            var body = $"<div>To finish registration, you need to verificate your account.<a href=\"https://localhost:7180/Register/ConfirmEmail/{userId}/{tokenEscaped}\">Click here!</a></div>";
             await emailService.SendAsync(toAddress, subject, body, true);
         }
     }

@@ -57,6 +57,7 @@ namespace Client.Controllers
             ModelState.AddModelError("EmailAddress", "Error");
             return View(model);
         }
+        [HttpGet("Register/ConfirmEmail/{UserId}/{Token}")]
         public async Task<IActionResult> ConfirmEmailAsync(EmailConfirmModel emailConfirm)
         {
             if (!ModelState.IsValid)
@@ -68,7 +69,11 @@ namespace Client.Controllers
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                return RedirectPermanent("Home/Index");
+                //return RedirectToAction("Index", "Home");
+                ViewData["message"] = "success";
+            } else
+            {
+                ViewData["message"] = "error";
             }
             return View();
         }
