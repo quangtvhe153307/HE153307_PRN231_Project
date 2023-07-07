@@ -1,7 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@if ((bool)ViewData["completed"])
+{
+      <div class="alert alert-success" role="alert">
+        @ViewData["message"]
+      </div>
+} else
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData["message"]
+    </div>
 }
-
-<h1> @ViewData["message"]</h1>

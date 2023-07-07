@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
 {
@@ -6,9 +7,17 @@ namespace Client.Controllers
     {
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("UserId") != null)
+            var cookieOptions = new CookieOptions
             {
-                HttpContext.Session.Remove("UserId");
+                Expires = DateTime.UtcNow.AddDays(-7)
+            };
+            //Remove accesstoken
+            if (Request.Cookies["accessToken"] != null) { 
+                Response.Cookies.Delete("accessToken", cookieOptions); 
+            }            
+            //Remove refreshToken
+            if (Request.Cookies["refreshToken"] != null) { 
+                Response.Cookies.Delete("refreshToken", cookieOptions); 
             }
             return RedirectPermanent("/Login/Index");
         }

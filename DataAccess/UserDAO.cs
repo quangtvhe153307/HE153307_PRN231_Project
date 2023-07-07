@@ -117,7 +117,7 @@ namespace DataAccess
                     user = context.Users
                         .Include(x => x.RefreshTokens)
                         .Include(x => x.Role)
-                        .SingleOrDefault(x => x.Email.Equals(email) && x.Password.Equals(password) && x.EmailConfirmed);
+                        .SingleOrDefault(x => x.Email.Equals(email) && x.Password.Equals(password));
                 }
             } catch(Exception ex)
             {

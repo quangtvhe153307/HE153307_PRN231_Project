@@ -1,6 +1,7 @@
 ﻿
 using APIProject.DTO.User;
 using Client.Models;
+using Client.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
@@ -16,7 +17,6 @@ namespace Client.Controllers
         public RegisterController(HttpClient httpClient)
         {
             client = httpClient;
-            //UserApiUrl = "https://localhost:7111/odata/Users";
             ViewData["Title"] = "Register";
         }
 
@@ -43,9 +43,9 @@ namespace Client.Controllers
 
             HttpContent content = new StringContent(JsonSerializer.Serialize(createUserRequestDTO), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, content);
+            string strData = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                string strData = await response.Content.ReadAsStringAsync();
                 JsonSerializerOptions option = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
@@ -53,28 +53,30 @@ namespace Client.Controllers
                 EmailConfirmModel emailConfirm = JsonSerializer.Deserialize<EmailConfirmModel>(strData, option);
                 return RedirectToAction("EmailConfirmation");
             }
-
-            ModelState.AddModelError("EmailAddress", "Error");
+            string message = StringUtils.GetMessageFromErrorResponse(strData);
+            ModelState.AddModelError("EmailAddress", message);
             return View(model);
         }
         [HttpGet("Register/ConfirmEmail/{UserId}/{Token}")]
         public async Task<IActionResult> ConfirmEmailAsync(EmailConfirmModel emailConfirm)
         {
+            bool completed = false;
             if (!ModelState.IsValid)
             {
+                ViewData["completed"] = completed;
                 return View(emailConfirm);
             }
             string url = $"ConfirmEmail/{emailConfirm.UserId}/{emailConfirm.Token}";
 
             HttpResponseMessage response = await client.GetAsync(url);
+            string strData = await response.Content.ReadAsStringAsync();
+            string message = StringUtils.GetMessageFromErrorResponse(strData);
+            ViewData["message"] = message;
             if (response.IsSuccessStatusCode)
             {
-                //return RedirectToAction("Index", "Home");
-                ViewData["message"] = "success";
-            } else
-            {
-                ViewData["message"] = "error";
+                completed= true;
             }
+            ViewData["completed"] = completed;
             return View();
         }
         [HttpGet]

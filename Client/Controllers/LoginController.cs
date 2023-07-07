@@ -34,14 +34,13 @@ namespace Client.Controllers
 
             HttpContent httpContent = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
             HttpResponseMessage responseMessage = await client.PostAsync("authenticate", httpContent);
-
-            if(!responseMessage.IsSuccessStatusCode)
+            string strData = await responseMessage.Content.ReadAsStringAsync();
+            if (!responseMessage.IsSuccessStatusCode)
             {
-                ModelState.AddModelError("Password", "Invalid email address or password.");
+                string message = StringUtils.GetMessageFromErrorResponse(strData);
+                ModelState.AddModelError("Password", message);
                 return View(model);
             }
-
-            string strData = await responseMessage.Content.ReadAsStringAsync();
 
             JsonSerializerOptions options = new JsonSerializerOptions
             {
@@ -51,25 +50,8 @@ namespace Client.Controllers
 
             JWTUtils.SetAccessToken(Response, response.AccessToken);
             JWTUtils.SetRefreshToken(responseMessage, Response);
-            //dynamic temp = JObject.Parse(strData);
-            //JArray lst = temp.value;
-            //if (!lst.HasValues)
-            //{
-            //    ModelState.AddModelError("Password", "Invalid email address or password.");
-            //    return View(model);
-            //}
-            //GetUserResponseDTO user = ((JArray)temp.value)
-            //    .Select(x => new GetUserResponseDTO
-            //    {
-            //        UserId = (int)x["UserId"],
-            //        EmailAddress = (string)x["EmailAddress"]
-            //    })
-            //    .First();
-            //HttpContext.Session.Remove("UserId");
-
-            //HttpContext.Session.SetInt32("UserId", user.UserId);
-
-            return View(model);
+            //return View(model);
+            return RedirectPermanent("/Home/Index");
         }
     }
 }

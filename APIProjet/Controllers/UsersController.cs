@@ -106,7 +106,10 @@ namespace api.Controllers
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
-
+            if (!user.EmailConfirmed)
+            {
+                return BadRequest(new { message = "Your account is not verificated yet. Check your account to finish verification step!" });
+            }
             //Generate access Token and refresh Token
             var accessToken = _jwtUtils.GenerateJwtToken(user);
             var refreshToken = _jwtUtils.GenerateRefreshToken(IpAddress());
@@ -233,7 +236,7 @@ namespace api.Controllers
 
             user = _repository.GetUserById(user.UserId);
             string token = _aESUtils.Encrypt(user);
-            GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
+
             _sendMailUtils.SendAccountVerification(user.Email, user.UserId, token);
             return Ok(new { UserId = user.UserId, Token = token });
             //return Ok();
@@ -245,7 +248,7 @@ namespace api.Controllers
             User userFromDB = _repository.GetUserById(userId);
             if (userFromDB == null)
             {
-                return BadRequest();
+                return BadRequest(new { message = "Your link is wrong or encountered an error." });
             }
             token = Uri.UnescapeDataString(token);
             User user = _aESUtils.Decrypt(token);
@@ -254,11 +257,11 @@ namespace api.Controllers
                 Console.WriteLine("email confirmed");
                 userFromDB.EmailConfirmed= true;
                 _repository.UpdateUser(userFromDB);
-                return Ok();
+                return Ok(new { message = "Verification successfully." });
             }
             else
             {
-                return BadRequest();
+                return BadRequest(new { message = "Your link is wrong or encountered an error." });
             }
         }
         private void SetTokenCookie(string token)
