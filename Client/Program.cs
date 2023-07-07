@@ -26,9 +26,13 @@ namespace Client
             builder.Services.AddSingleton(httpClient);
 
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            //app.Use(async (context, next) =>
+            //{
+            //    var endPoint = context.Request.Path;
+            //    await next(context);
+            //});
+                // Configure the HTTP request pipeline.
+                if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -38,14 +42,13 @@ namespace Client
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
-
             app.Use(async (context, next) =>
             {
                 var endPoint = context.Request.Path;
                 if(Regex.IsMatch(endPoint.ToString().ToLower(), "login") 
                 || Regex.IsMatch(endPoint.ToString().ToLower(), "register")
                 || Regex.IsMatch(endPoint.ToString().ToLower(), "forgotpassword")
+                || Regex.IsMatch(endPoint.ToString().ToLower(), "signout")
                 //|| Regex.IsMatch(endPoint.ToString().ToLower(), "")
                 )
                 {
@@ -57,57 +60,59 @@ namespace Client
                     if (accessToken == null)
                     {
                         context.Response.Redirect("/login");
-                    }
-
-                    var handler = new JwtSecurityTokenHandler();
-                    var jsonToken = handler.ReadToken(accessToken);
-                    var tokenS = jsonToken as JwtSecurityToken;
-
-                    //
-                    if(tokenS.ValidTo < DateTime.UtcNow)
+                    } else
                     {
-                        string refreshToken = context.Request.Cookies["refreshToken"];
+                        var handler = new JwtSecurityTokenHandler();
+                        var jsonToken = handler.ReadToken(accessToken);
+                        var tokenS = jsonToken as JwtSecurityToken;
 
-                        // Create an instance of HttpClientHandler
-                        var httpClientHandler = new HttpClientHandler();
-
-                        // Configure the HttpClientHandler to use cookies
-                        httpClientHandler.UseCookies = true;
-                        httpClientHandler.CookieContainer = new CookieContainer();
-
-                        // Get the cookies from the client's request
-                        var clientCookies = context.Request.Cookies;
-                        foreach (var cookie in clientCookies)
+                        //
+                        if (tokenS.ValidTo < DateTime.UtcNow)
                         {
-                            // Add each cookie to the CookieContainer
-                            httpClientHandler.CookieContainer.Add(new Uri("https://localhost:7038"), new Cookie(cookie.Key, cookie.Value));
-                        }
+                            string refreshToken = context.Request.Cookies["refreshToken"];
 
-                        // Make a request to your API's refresh token endpoint
-                        HttpClient httpClient = new HttpClient(httpClientHandler);
-                        var response = await httpClient.PostAsync("https://localhost:7038/refresh-token", null);
+                            // Create an instance of HttpClientHandler
+                            var httpClientHandler = new HttpClientHandler();
 
-                        if (response.IsSuccessStatusCode)
-                        {
-                            //update refresh token to cookie
-                            JWTUtils.SetRefreshToken(response, context.Response);
+                            // Configure the HttpClientHandler to use cookies
+                            httpClientHandler.UseCookies = true;
+                            httpClientHandler.CookieContainer = new CookieContainer();
 
-                            // Extract the new access token and refresh token from the response
-                            var responseString = await response.Content.ReadAsStringAsync();
-                            System.Text.Json.JsonElement anonymousObject = (System.Text.Json.JsonElement)JsonSerializer.Deserialize<object>(responseString);
-                            string newAccessToken = anonymousObject.GetString("accessToken");
-                            Console.WriteLine(newAccessToken);
-                            JWTUtils.SetAccessToken(context.Response, newAccessToken);
+                            // Get the cookies from the client's request
+                            var clientCookies = context.Request.Cookies;
+                            foreach (var cookie in clientCookies)
+                            {
+                                // Add each cookie to the CookieContainer
+                                httpClientHandler.CookieContainer.Add(new Uri("https://localhost:7038"), new Cookie(cookie.Key, cookie.Value));
+                            }
+
+                            // Make a request to your API's refresh token endpoint
+                            HttpClient httpClient = new HttpClient(httpClientHandler);
+                            var response = await httpClient.PostAsync("https://localhost:7038/refresh-token", null);
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                //update refresh token to cookie
+                                JWTUtils.SetRefreshToken(response, context.Response);
+
+                                // Extract the new access token and refresh token from the response
+                                var responseString = await response.Content.ReadAsStringAsync();
+                                System.Text.Json.JsonElement anonymousObject = (System.Text.Json.JsonElement)JsonSerializer.Deserialize<object>(responseString);
+                                string newAccessToken = anonymousObject.GetString("accessToken");
+                                Console.WriteLine(newAccessToken);
+                                JWTUtils.SetAccessToken(context.Response, newAccessToken);
+                            }
+                            else
+                            {
+                                //context.Response.Redirect("/login");
+                            }
                         }
-                        else
-                        {
-                            context.Response.Redirect("/login");
-                        }
+                        await next(context);
                     }
-                    await next(context);
 
                 }
             });
+            app.UseRouting();
             app.UseAuthorization();
 
             app.MapControllerRoute(

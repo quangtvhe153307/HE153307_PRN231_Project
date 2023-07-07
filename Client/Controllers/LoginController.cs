@@ -20,6 +20,16 @@ namespace Client.Controllers
 
         public IActionResult Index()
         {
+            //Remove accesstoken
+            if (Request.Cookies["accessToken"] != null)
+            {
+                Response.Cookies.Delete("accessToken");
+            }
+            //Remove refreshToken
+            if (Request.Cookies["refreshToken"] != null)
+            {
+                Response.Cookies.Delete("refreshToken");
+            }
             return View();
         }
         [HttpPost]

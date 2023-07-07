@@ -3,23 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
 {
-    public class LogoutController : Controller
+    public class SignOutController : Controller
     {
         public IActionResult Index()
         {
-            var cookieOptions = new CookieOptions
-            {
-                Expires = DateTime.UtcNow.AddDays(-7)
-            };
             //Remove accesstoken
             if (Request.Cookies["accessToken"] != null) { 
-                Response.Cookies.Delete("accessToken", cookieOptions); 
+                Response.Cookies.Delete("accessToken"); 
             }            
             //Remove refreshToken
             if (Request.Cookies["refreshToken"] != null) { 
-                Response.Cookies.Delete("refreshToken", cookieOptions); 
+                Response.Cookies.Delete("refreshToken"); 
             }
-            return RedirectPermanent("/Login/Index");
+            return RedirectToAction("Index", "Login");
         }
     }
 }
