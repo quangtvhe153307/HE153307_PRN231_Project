@@ -21,6 +21,8 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OData.UriParser;
 using Microsoft.OpenApi.Models;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 using Newtonsoft.Json.Linq;
 using Repository.IRepository;
 using Repository.Repository;
@@ -179,6 +181,23 @@ namespace APIProjet
                     }
                 };
             });
+
+            // IEmailService implementation using MailKit
+            builder.Services.AddMailKit(optionBuilder =>
+            {
+                optionBuilder.UseMailKit(new MailKitOptions()
+                {
+                    Server = builder.Configuration["ExternalProviders:MailKit:SMTP:Address"],
+                    Port = Convert.ToInt32(builder.Configuration["ExternalProviders:MailKit:SMTP:Port"]),
+                    Account = builder.Configuration["ExternalProviders:MailKit:SMTP:Account"],
+                    Password = builder.Configuration["ExternalProviders:MailKit:SMTP:Password"],
+                    SenderEmail = builder.Configuration["ExternalProviders:MailKit:SMTP:SenderEmail"],
+                    SenderName = builder.Configuration["ExternalProviders:MailKit:SMTP:SenderName"],
+                    // Set it to TRUE to enable ssl or tls, FALSE otherwise
+                    Security = true
+                });
+            });
+            builder.Services.AddScoped<ISendMailUtils, SendMailUtils>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -24,5 +24,29 @@ namespace BusinessObjects
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool EmailConfirmed { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("other");
+            }
+            User user = obj as User;
+            if(user == null)
+            {
+                throw new ArgumentNullException("other");
+            }
+            if (this.FirstName.Equals(user.FirstName)
+                && this.LastName.Equals(user.LastName)
+                && this.UserId == user.UserId
+                && this.RoleId == user.RoleId
+                && this.Email.Equals(user.Email)
+                && this.Password.Equals(user.Password)
+                )
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

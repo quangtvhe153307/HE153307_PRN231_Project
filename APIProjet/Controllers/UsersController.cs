@@ -25,14 +25,16 @@ namespace api.Controllers
         private readonly IConfiguration _config;
         private readonly IRefreshtokenRepository _refreshtokenRepository;
         private readonly IAESUtils _aESUtils;
-        public UsersController(IMapper mapper, IJWTUtils jWTUtils, IUserRepository res, IConfiguration configuration, IRefreshtokenRepository refreshtokenRepository, IAESUtils aESUtils)
+        private readonly ISendMailUtils _sendMailUtils;
+        public UsersController(IMapper mapper, IJWTUtils jWTUtils, IUserRepository res, IConfiguration configuration, IRefreshtokenRepository refreshtokenRepository, IAESUtils aESUtils, ISendMailUtils sendMailUtils)
         {
             _mapper = mapper;
             _jwtUtils = jWTUtils;
             _repository = res;
             _config = configuration;
             _refreshtokenRepository = refreshtokenRepository;
-            _aESUtils= aESUtils;
+            _aESUtils = aESUtils;
+            _sendMailUtils = sendMailUtils;
         }
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetUserResponseDTO>> Get()
@@ -232,6 +234,7 @@ namespace api.Controllers
             user = _repository.GetUserById(user.UserId);
             string token = _aESUtils.Encrypt(user);
             GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
+            _sendMailUtils.SendAccountVerification(user.Email, user.UserId, token);
             return Ok(new { UserId = user.UserId, Token = token });
             //return Ok();
         }
@@ -249,6 +252,8 @@ namespace api.Controllers
             if (user.Equals(userFromDB))
             {
                 Console.WriteLine("email confirmed");
+                userFromDB.EmailConfirmed= true;
+                _repository.UpdateUser(userFromDB);
                 return Ok();
             }
             else
