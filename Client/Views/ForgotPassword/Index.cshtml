@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_LoginLayout";
+}
+@model ForgotPasswordModel
+<style>
+    main {
+        height: 20vh;
+        min-height: 180px;
+        top: 30%;
+    }
+
+    .input-fields input {
+        margin-right: 0;
+    }
+
+    .text-success {
+        font-weight: bold;
+        font-size: 75%;
+    }
+</style>
+<div class="login-panel">
+    <form asp-controller="ForgotPassword" asp-action="Index" method="post">
+        @Html.AntiForgeryToken()
+        <div class="item-container flex flex-column">
+            <div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+            <div class="input-fields">
+                <div class="input-parent">
+
+                    <div class="flex flex-row">
+                        <input asp-for="Email" type="text" placeholder="Email"/>
+                    </div>
+                    <span asp-validation-for="Email" class="@(ViewData["success"] != null ?"text-success":"text-danger")"></span>
+                </div>
+
+            </div>
+            <div class="input-fields">
+                <div class="input-parent">
+                    <div class="">
+                        <button class="btn-success sign-up-btn">Reset password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

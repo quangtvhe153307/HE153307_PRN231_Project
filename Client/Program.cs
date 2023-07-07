@@ -45,6 +45,7 @@ namespace Client
                 var endPoint = context.Request.Path;
                 if(Regex.IsMatch(endPoint.ToString().ToLower(), "login") 
                 || Regex.IsMatch(endPoint.ToString().ToLower(), "register")
+                || Regex.IsMatch(endPoint.ToString().ToLower(), "forgotpassword")
                 //|| Regex.IsMatch(endPoint.ToString().ToLower(), "")
                 )
                 {

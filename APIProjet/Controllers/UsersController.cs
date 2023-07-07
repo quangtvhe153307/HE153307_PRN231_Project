@@ -264,6 +264,31 @@ namespace api.Controllers
                 return BadRequest(new { message = "Your link is wrong or encountered an error." });
             }
         }
+        [AllowAnonymous]
+        [HttpPost("/ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ForgotPasswordDTO model)
+        {   
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(new { message = "Not valid" });
+            }
+            User user = _repository.GetUserByEmail(model.Email);
+            if(user == null) {
+                return BadRequest(new { message = "Your does not exist." });
+            }
+            try
+            {
+                user.Password = JWTUtils.GenerateNewPassword();
+                //save user
+                _repository.UpdateUser(user);
+                await _sendMailUtils.SendMailResetPassword(user.Email, user.Password);
+                return Ok(new { message = "Your new password has been sent to your email." });
+            } catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest(new { message = "Error." });
+            }
+        }
         private void SetTokenCookie(string token)
         {
             // append cookie with refresh token to the http response

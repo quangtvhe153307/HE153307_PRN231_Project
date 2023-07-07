@@ -95,5 +95,9 @@ namespace APIProject.Util
             };
             response.Cookies.Append("accessToken", accessToken, cookieOptions);
         }
+        public static string GenerateNewPassword()
+        {
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(16));
+        }
     }
 }

@@ -72,6 +72,13 @@ span.text-danger.field-validation-error {
     text-align: left;
     margin-left: 16px;
     position: absolute;
+}span.text-success.field-validation-error {
+    font-weight: bold;
+    font-size: 75%;
+    display: block;
+    text-align: left;
+    margin-left: 16px;
+    position: absolute;
 }
 .action {
     display: flex;

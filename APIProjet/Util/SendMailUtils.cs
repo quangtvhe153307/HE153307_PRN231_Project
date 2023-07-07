@@ -6,6 +6,7 @@ namespace APIProject.Util
     {
         public Task Send(string toAddress);
         public Task SendAccountVerification(string toAddress, int userId, string token);
+        public Task SendMailResetPassword(string toAddress, string newPassword);
     }
     public class SendMailUtils : ISendMailUtils
     {
@@ -26,6 +27,12 @@ namespace APIProject.Util
             string tokenEscaped = Uri.EscapeDataString(token);
             var subject = "Account Verification";
             var body = $"<div>To finish registration, you need to verificate your account.<a href=\"https://localhost:7180/Register/ConfirmEmail/{userId}/{tokenEscaped}\">Click here!</a></div>";
+            await emailService.SendAsync(toAddress, subject, body, true);
+        }
+        public async Task SendMailResetPassword(string toAddress, string newPassword)
+        {
+            var subject = "New password";
+            var body = $"<div>Your new password is: <strong>{newPassword}</strong></div>";
             await emailService.SendAsync(toAddress, subject, body, true);
         }
     }
