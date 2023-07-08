@@ -1,0 +1,31 @@
+﻿div#carousel {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.main-container {
+    margin-top: 20px;
+}
+.carousel-image{
+    
+}
+.carousel-caption.d-none.d-md-block {
+    width: 100%;
+    left: 5%;
+    right: 5%;
+    text-align: left;
+}
+button.carousel-control-prev, button.carousel-control-next {
+    height: 20%;
+    top: 40%;
+}
+.carousel-caption.d-none.d-md-block {
+    width: 100%;
+    left: 5%;
+    right: 5%;
+    text-align: left;
+}
+button.carousel-movie-watch-btn.btn-danger {
+    line-height: 30px;
+    font-weight: bold;
+}

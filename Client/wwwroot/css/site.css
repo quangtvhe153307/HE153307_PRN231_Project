@@ -1,3 +1,10 @@
+:root {
+    --blue: #1e90ff;
+    --white: #ffffff;
+    --black: #141414;
+    --bg-white: #fafafa;
+}
+
 html {
   font-size: 14px;
 }
@@ -14,5 +21,75 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: var(--bg-white);
+}
+.flex {
+    display: flex;
+}
+
+.flex-colunm {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-1 {
+    flex: 1;
+}
+.popular-movies {
+    margin-top: 30px;
+}
+.po-title-bar h2 {
+    font-size: 25px;
+}
+.popular-movies-item {
+    overflow-y: scroll;
+    white-space: nowrap;
+}
+.movie-items {
+    background: #80808045;
+    width: 20%;
+    height: 150px;
+    display: inline-block;
+    margin-right: 20px;
+}
+.po-title-bar.flex.flex-row {
+    margin-bottom: 20px;
+}
+footer#footer {
+    /* max-width: 1320px; */
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+}
+.social-links {
+    display: flex;
+    /* padding-left: 10%; */
+}
+footer .col-md-3 {
+    color: black;
+    padding-left: 0;
+}
+a.social-link {
+    color: black;
+    margin-right: 10px;
+}
+.text-muted{
+    text-decoration: none;
+}
+.search-input {
+    height: 40px;
+    line-height: 40px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid;
+    border-color: #00000024;
+}
+.search-input-icon {
+    position: absolute;
+    top: 12px;
+    right: 20px;
 }

@@ -26,13 +26,14 @@ namespace Client
             builder.Services.AddSingleton(httpClient);
 
             var app = builder.Build();
-            //app.Use(async (context, next) =>
-            //{
-            //    var endPoint = context.Request.Path;
-            //    await next(context);
-            //});
-                // Configure the HTTP request pipeline.
-                if (!app.Environment.IsDevelopment())
+            app.Use(async (context, next) =>
+            {
+                var endPoint = context.Request.Path;
+                Console.WriteLine(endPoint);
+                await next(context);
+            });
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
