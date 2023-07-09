@@ -41,6 +41,7 @@ namespace APIProject.Controllers
             GetMovieResponseDTO getMovieResponseDTO = _mapper.Map<GetMovieResponseDTO>(movie);
             return Ok(getMovieResponseDTO);
         }
+        [AllowAnonymous]
         [EnableQuery]
         public IActionResult Post([FromBody] CreateMovieRequestDTO createMovieRequestDTO)
         {

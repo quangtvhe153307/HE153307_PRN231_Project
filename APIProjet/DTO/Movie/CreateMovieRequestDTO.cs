@@ -20,6 +20,7 @@ namespace APIProject.DTO.Movie
         [Required]
         public double Price { get; set; }
         public bool IsFree => Price == 0;
+        public string? MovieImage { get; set; }
         [Required]
         public virtual ICollection<CreateCategoryMovieRequestDTO> Categories { get; set; }
         [Required]

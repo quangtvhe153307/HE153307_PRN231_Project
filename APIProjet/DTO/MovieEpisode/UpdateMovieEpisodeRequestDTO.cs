@@ -11,8 +11,10 @@ namespace APIProject.DTO.MovieEpisode
         [Required]
         public string Description { get; set; }
         [Required]
-        public double Duration { get; set; }
+        public string Duration { get; set; }
         [Required]
         public int MovieSeasonId { get; set; }
+        [Required]
+        public string EpisodeImage { get; set; }
     }
 }

@@ -15,6 +15,8 @@ namespace APIProject.DTO.MovieSeason
         [Required]
         public DateTime? ReleasedDate { get; set; }
         [Required]
+        public bool IsActive { get; set; }
+        [Required]
         public int MovieId { get; set; }
         //[Required]
         //public virtual ICollection<CreateMovieEpisodeRequestDTO> MovieEpisodes { get; set; }

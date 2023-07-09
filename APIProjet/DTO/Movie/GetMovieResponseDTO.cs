@@ -16,6 +16,8 @@ namespace APIProject.DTO.Movie
         public bool IsSingleEpisode { get; set; }
         public double Price { get; set; }
         public bool IsFree => Price == 0;
+        public bool IsActive { get; set; }
+        public string? MovieImage { get; set; }
         public virtual ICollection<GetCategoryResponseDTO> Categories { get; set; }
         public virtual ICollection<GetMovieSeasonResponseDTO> MovieSeasons { get; set; }
     }

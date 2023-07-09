@@ -18,6 +18,8 @@ namespace BusinessObjects
         public bool IsSingleEpisode { get; set; }
         public double Price { get; set; }
         public bool IsFree => Price == 0;
+        public bool IsActive { get; set; }
+        public string? MovieImage { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<MovieSeason> MovieSeasons { get; set; }
     }

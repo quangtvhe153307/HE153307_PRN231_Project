@@ -15,6 +15,7 @@ namespace BusinessObjects
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime? ReleasedDate { get; set; }
+        public bool IsActive { get; set; }
         public int MovieId { get; set; }
         [ForeignKey("MovieId")]
         public virtual Movie Movie { get; set; }
