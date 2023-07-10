@@ -17,5 +17,7 @@ namespace Repository.Repository
         public Movie GetMovieById(int id) => MovieDAO.FindMovieById(id);
 
         public void DeleteMovie(Movie movie) => MovieDAO.DeleteMovie(movie);
+
+        public List<Movie> GetMoviesByRank(DateTime startDate, DateTime endDate) => MovieDAO.GetMoviesByRank(startDate, endDate);
     }
 }

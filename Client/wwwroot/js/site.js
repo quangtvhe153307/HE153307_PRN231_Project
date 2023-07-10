@@ -21,3 +21,51 @@ function getAccessToken() {
 
     return getCookie('accessToken');
 }
+$('#ranking-select').on('change', function () {
+    $('.popular-movies-item').first()
+        .html(`<div class="movie-items movie-items-empty">
+            </div>            
+            <div class="movie-items movie-items-empty">
+            </div>            
+            <div class="movie-items movie-items-empty">
+            </div>            
+            <div class="movie-items movie-items-empty">
+            </div>            
+            <div class="movie-items movie-items-empty">
+            </div>            
+            <div class="movie-items movie-items-empty">
+            </div>            
+            <div class="movie-items movie-items-empty">
+            </div>            
+            <div class="movie-items movie-items-empty">
+            </div>            
+            <div class="movie-items movie-items-empty">
+            </div>`);
+    $.ajax({
+        url: 'https://localhost:7038/MovieRanking/' + $('#ranking-select').val(),
+        method: 'GET',
+        dataType: 'json',
+        headers: { "Authorization": "Bearer " + getAccessToken() },
+        contentType: "application/json",
+        success: function (response) {
+            appendMovieRanking(response);
+        },
+        error: function (xhr, status, error) {
+            // Handle the error here
+            console.log('Error:', error);
+        }
+    });
+});
+function appendMovieRanking(data) {
+    var a = $('.popular-movies-item').first();
+    var result = '';
+    for (let index = 0; index < data.length; index++) {
+        result += `<div class="movie-items">
+                    <div class="img-container">
+                        <img src="${data[index].movieImage}" class="rankedMovieImage">
+                    </div>
+
+                </div>`;
+    }
+    a.html(result);
+}

@@ -1,6 +1,7 @@
 using Client.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.Net.Http.Headers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Headers;
@@ -17,7 +18,7 @@ namespace Client
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            
+
             // Add http client to call to api with base address
             var httpClient = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
@@ -25,6 +26,11 @@ namespace Client
             httpClient.BaseAddress = new Uri(builder.Configuration["apiEndpoint"]);
             builder.Services.AddSingleton(httpClient);
 
+            //builder.Services.AddHttpClient("Client", httpClient =>
+            //{
+            //    httpClient.BaseAddress = new Uri(builder.Configuration["apiEndpoint"]);
+            //    httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+            //});
             var app = builder.Build();
             app.Use(async (context, next) =>
             {
@@ -102,13 +108,16 @@ namespace Client
                                 string newAccessToken = anonymousObject.GetString("accessToken");
                                 Console.WriteLine(newAccessToken);
                                 JWTUtils.SetAccessToken(context.Response, newAccessToken);
+                                await next(context);
                             }
                             else
                             {
-                                //context.Response.Redirect("/login");
+                                context.Response.Redirect("/login");
                             }
+                        } else
+                        {
+                            await next(context);
                         }
-                        await next(context);
                     }
 
                 }

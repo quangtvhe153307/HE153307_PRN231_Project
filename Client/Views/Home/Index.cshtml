@@ -1,4 +1,5 @@
-﻿@{
+﻿@using APIProject.DTO.Movie;
+@{
     ViewData["Title"] = "Home Page";
 }
 <div id="carousel" class="carousel slide">
@@ -75,44 +76,23 @@
     <div class="po-title-bar flex flex-row">
         <h2>POPULAR MOVIES</h2>
         <div class="flex-1"></div>
-        <select>
-            <option>Today</option>
-            <option>This week</option>
-            <option>This month</option>
+        <select class="ranking-select" id="ranking-select">
+            <option value="1">Today</option>
+            <option value="2" selected>This week</option>
+            <option value="3">This month</option>
         </select>
     </div>
     <div class="popular-movies-container">
         <div class="popular-movies-item">
-            <div class="movie-items">
+            @foreach (var item in (List<GetMovieByRankResponseDTO>)ViewBag.RankedMovie)
+            {
+                <div class="movie-items">
+                    <div class="img-container">
+                        <img src="@item.MovieImage" class="rankedMovieImage">
+                    </div>
 
-            </div>            
-            <div class="movie-items">
-
-            </div>            
-            <div class="movie-items">
-
-            </div>            
-            <div class="movie-items">
-
-            </div>            
-            <div class="movie-items">
-
-            </div>            
-            <div class="movie-items">
-
-            </div>            
-            <div class="movie-items">
-
-            </div>            
-            <div class="movie-items">
-
-            </div>            
-            <div class="movie-items">
-
-            </div>            
-            <div class="movie-items">
-
-            </div>
+                </div>
+            }          
         </div>
     </div>
 </div>

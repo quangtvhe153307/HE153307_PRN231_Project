@@ -29,6 +29,27 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
             return listMovies;
+        }        
+        public static List<Movie> GetMoviesByRank(DateTime startDate, DateTime endDate)
+        {
+            var listMovies = new List<Movie>();
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    listMovies = context.Movies
+                        .Include(x => x.Categories)
+                        .Include(x => x.MovieSeasons)
+                        .ThenInclude(x => x.MovieEpisodes)
+                        .ThenInclude(x => x.MovieViews.Where(mv => mv.ViewedDate >= startDate && mv.ViewedDate < endDate))
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listMovies;
         }
         public static Movie FindMovieById(int prodId)
         {

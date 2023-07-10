@@ -14,5 +14,6 @@ namespace Repository.IRepository
         void DeleteMovie(Movie movie);
         void UpdateMovie(Movie movie);
         List<Movie> GetMovies();
+        List<Movie> GetMoviesByRank(DateTime startDate, DateTime endDate);
     }
 }

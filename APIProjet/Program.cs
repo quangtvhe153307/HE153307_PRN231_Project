@@ -75,6 +75,7 @@ namespace APIProjet
                          }
                      });
                 });
+            builder.Services.AddCors();
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
             builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
             builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
@@ -124,7 +125,7 @@ namespace APIProjet
                             var jsonToken = tokenHandler.ReadToken(headerString);
                             var tokenS = jsonToken as JwtSecurityToken;
                             //check if expire
-                            if (tokenS.ValidTo < DateTime.UtcNow)
+                            if (tokenS.ValidTo < DateTime.UtcNow.AddMinutes(-2))
                             {
                                 string refreshToken = context.Request.Cookies["refreshToken"];
 
@@ -209,7 +210,13 @@ namespace APIProjet
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseCors();
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();

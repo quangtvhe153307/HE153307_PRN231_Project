@@ -46,6 +46,7 @@ namespace APIProject.Mapping
             //Movie
             CreateMap<CreateMovieRequestDTO, Movie>();
             CreateMap<UpdateMovieRequestDTO, Movie>();
+            CreateMap<GetMovieResponseDTO, GetMovieByRankResponseDTO>();
             CreateMap<Movie, GetMovieResponseDTO>()
                 .ForMember(destination => destination.ViewCount,
                 options => options.MapFrom(source => source.MovieSeasons.Sum(x => x.MovieEpisodes.Sum(me => me.MovieViews.Count))));
