@@ -46,13 +46,22 @@ namespace APIProject.Mapping
             //Movie
             CreateMap<CreateMovieRequestDTO, Movie>();
             CreateMap<UpdateMovieRequestDTO, Movie>();
-            CreateMap<Movie, GetMovieResponseDTO>();
+            CreateMap<Movie, GetMovieResponseDTO>()
+                .ForMember(destination => destination.ViewCount,
+                options => options.MapFrom(source => source.MovieSeasons.Sum(x => x.MovieEpisodes.Sum(me => me.MovieViews.Count))));
+                //options => options.MapFrom(source => source.MovieEpisodes.Sum(x => x.MovieViews.Count)));
+
             CreateMap<CreateMovieSeasonRequestDTO, MovieSeason>();
             CreateMap<UpdateMovieSeasonRequestDTO, MovieSeason>();
-            CreateMap<MovieSeason, GetMovieSeasonResponseDTO>();
+            CreateMap<MovieSeason, GetMovieSeasonResponseDTO>()
+                .ForMember(destination => destination.ViewCount,
+                options => options.MapFrom(source => source.MovieEpisodes.Sum(x => x.MovieViews.Count)));
+
             CreateMap<CreateMovieEpisodeRequestDTO, MovieEpisode>();
             CreateMap<UpdateMovieEpisodeRequestDTO, MovieEpisode>();
-            CreateMap<MovieEpisode, GetMovieEpisodeResponseDTO>();
+            CreateMap<MovieEpisode, GetMovieEpisodeResponseDTO>()
+                .ForMember(destination => destination.ViewCount,
+                options => options.MapFrom(source => source.MovieViews.Count));
 
             //Comment
             CreateMap<CreateCommentRequestDTO, Comment>();

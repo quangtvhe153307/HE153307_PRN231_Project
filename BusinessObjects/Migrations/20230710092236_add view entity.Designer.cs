@@ -4,6 +4,7 @@ using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObjects.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230710092236_add view entity")]
+    partial class addviewentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,7 +444,7 @@ namespace BusinessObjects.Migrations
             modelBuilder.Entity("BusinessObjects.MovieView", b =>
                 {
                     b.HasOne("BusinessObjects.MovieEpisode", "MovieEpisode")
-                        .WithMany("MovieViews")
+                        .WithMany()
                         .HasForeignKey("EpisodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -543,11 +545,6 @@ namespace BusinessObjects.Migrations
             modelBuilder.Entity("BusinessObjects.Movie", b =>
                 {
                     b.Navigation("MovieSeasons");
-                });
-
-            modelBuilder.Entity("BusinessObjects.MovieEpisode", b =>
-                {
-                    b.Navigation("MovieViews");
                 });
 
             modelBuilder.Entity("BusinessObjects.MovieSeason", b =>

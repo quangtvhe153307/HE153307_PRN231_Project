@@ -14,5 +14,6 @@ namespace APIProject.DTO.MovieSeason
         public bool IsActive { get; set; }
         public int MovieId { get; set; }
         public virtual ICollection<GetMovieEpisodeResponseDTO> MovieEpisodes { get; set; }
+        public double ViewCount { get; set; }
     }
 }

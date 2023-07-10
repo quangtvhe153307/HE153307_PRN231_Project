@@ -40,6 +40,8 @@ namespace BusinessObjects
                     .HasKey(c => new { c.MovieId, c.UserId});
             modelBuilder.Entity<MovieRated>()
                     .HasKey(c => new { c.MovieId, c.UserId});
+            modelBuilder.Entity<MovieView>()
+                    .HasKey(c => new { c.EpisodeId, c.UserId, c.ViewedDate});
 
             //add unique
             modelBuilder.Entity<User>()
@@ -60,6 +62,17 @@ namespace BusinessObjects
                 .HasOne(t => t.CreatedUser)
                 .WithMany()
                 .HasForeignKey(t => t.CreatedBy)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<MovieView>()
+                .HasOne(m => m.MovieEpisode)
+                .WithMany(m => m.MovieViews)
+                .HasForeignKey(m => m.EpisodeId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MovieView>()
+                .HasOne(m => m.User)
+                .WithMany()
+                .HasForeignKey(m => m.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
