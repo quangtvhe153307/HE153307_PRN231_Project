@@ -24,8 +24,7 @@ namespace APIProject.Controllers
             _mapper = mapper;
             repository= movieRepository;
         }
-        [Authorize(Roles = "Administrator")]
-        [EnableQuery(PageSize = 10)]
+        [EnableQuery(PageSize = 20)]
         public ActionResult<IQueryable<GetMovieResponseDTO>> Get()
         {
             List<Movie> movies = repository.GetMovies();

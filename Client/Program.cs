@@ -112,6 +112,7 @@ namespace Client
                             }
                             else
                             {
+                                Console.WriteLine("refreshTokenFailed");
                                 context.Response.Redirect("/login");
                             }
                         } else

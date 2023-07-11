@@ -21,6 +21,7 @@ namespace DataAccess
                         .Include(x => x.Categories)
                         .Include(x => x.MovieSeasons)
                         .ThenInclude(x => x.MovieEpisodes)
+                        .ThenInclude(x => x.MovieViews)
                         .ToList();
                 }
             }

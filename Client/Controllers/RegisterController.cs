@@ -80,7 +80,7 @@ namespace Client.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> EmailConfirmation()
+        public IActionResult EmailConfirmation()
         {
             return View();
         }

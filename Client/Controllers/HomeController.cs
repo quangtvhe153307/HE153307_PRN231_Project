@@ -1,6 +1,7 @@
 ﻿using APIProject.DTO.Movie;
 using Client.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
@@ -27,18 +28,31 @@ namespace Client.Controllers
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
             }
 
+            JsonSerializerOptions options = new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            };
             HttpResponseMessage responseMessage = await client.GetAsync(strQuery);
             if(responseMessage.IsSuccessStatusCode) {
                 string strData = await responseMessage.Content.ReadAsStringAsync();
-                JsonSerializerOptions options = new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true
-                };
                 List<GetMovieByRankResponseDTO> getMovieResponseDTOs = JsonSerializer.Deserialize<List<GetMovieByRankResponseDTO>>(strData, options);
                 ViewBag.RankedMovie = getMovieResponseDTOs;
             }
+            List<GetMovieResponseDTO> newestMovie = null;
+            strQuery = "odata/Movies?$OrderBy= UpdatedDate desc";
+            responseMessage = await client.GetAsync($"{strQuery}");
+            if(responseMessage.IsSuccessStatusCode)
+            {
+                string strData = await responseMessage.Content.ReadAsStringAsync();
 
-            return View();
+                JObject responseObject = JObject.Parse(strData);
+                JToken StudentsToken;
+                responseObject.TryGetValue("value", out StudentsToken);
+                string data = StudentsToken.ToString();
+
+                newestMovie = JsonSerializer.Deserialize<List<GetMovieResponseDTO>>(data, options);
+            }
+            return View(newestMovie);
         }
 
         public IActionResult Privacy()

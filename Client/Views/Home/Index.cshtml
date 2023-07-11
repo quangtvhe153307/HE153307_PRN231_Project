@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@model List<GetMovieResponseDTO>
 <div id="carousel" class="carousel slide">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -89,6 +90,7 @@
                 <div class="movie-items">
                     <div class="img-container">
                         <img src="@item.MovieImage" class="rankedMovieImage">
+                        <div class="overlay"></div>
                     </div>
 
                 </div>
@@ -102,7 +104,17 @@
     </div>
     <div class="popular-movies-container">
         <div class="popular-movies-item">
-            <div class="movie-items">
+            @foreach (var item in Model)
+            {
+                <div class="movie-items">
+                    <div class="img-container">
+                        <img src="@item.MovieImage" class="rankedMovieImage">
+                        <div class="overlay"></div>
+                    </div>
+
+                </div>
+            }
+@*            <div class="movie-items">
 
             </div>            
             <div class="movie-items">
@@ -131,7 +143,7 @@
             </div>            
             <div class="movie-items">
 
-            </div>
+            </div>*@
         </div>
     </div>
 </div>

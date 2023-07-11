@@ -52,12 +52,21 @@ body {
 .movie-items {
     background: #80808045;
     width: 20%;
-    /* height: 150px; */
+    min-width: 100px;
     display: inline-block;
     margin-right: 5px;
+    cursor: pointer;
 }
 .movie-items img {
     width: 100%;
+    transition: all .5s ease-in-out;
+}
+.img-container {
+    position: relative;
+    overflow: hidden;
+}
+.movie-items:hover img {
+    transform: scale(1.1);
 }
 .po-title-bar.flex.flex-row {
     margin-bottom: 20px;
@@ -101,4 +110,14 @@ a.social-link {
 }
 .movie-items {
     aspect-ratio: 16/9;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.movie-items:hover .overlay {
+    background: linear-gradient(to bottom, #ffffff00 0%, #ffffffa1 100%);
 }

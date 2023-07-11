@@ -18,6 +18,7 @@ namespace APIProject.DTO.Movie
         public bool IsFree => Price == 0;
         public bool IsActive { get; set; }
         public string? MovieImage { get; set; }
+        public DateTime UpdatedDate { get; set; }
         public virtual ICollection<GetCategoryResponseDTO> Categories { get; set; }
         public virtual ICollection<GetMovieSeasonResponseDTO> MovieSeasons { get; set; }
         public double ViewCount { get; set; }
