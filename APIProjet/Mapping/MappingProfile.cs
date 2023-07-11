@@ -49,7 +49,7 @@ namespace APIProject.Mapping
             CreateMap<GetMovieResponseDTO, GetMovieByRankResponseDTO>();
             CreateMap<Movie, GetMovieResponseDTO>()
                 .ForMember(destination => destination.ViewCount,
-                options => options.MapFrom(source => source.MovieSeasons.Sum(x => x.MovieEpisodes.Sum(me => me.MovieViews.Count))));
+                options => options.MapFrom(source => source.MovieSeasons.Sum(x => x.MovieEpisodes.Sum(me => me.MovieViews == null ? 0 : me.MovieViews.Count))));
                 //options => options.MapFrom(source => source.MovieEpisodes.Sum(x => x.MovieViews.Count)));
 
             CreateMap<CreateMovieSeasonRequestDTO, MovieSeason>();

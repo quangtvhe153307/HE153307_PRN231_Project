@@ -87,7 +87,7 @@
         <div class="popular-movies-item">
             @foreach (var item in (List<GetMovieByRankResponseDTO>)ViewBag.RankedMovie)
             {
-                <div class="movie-items">
+                <div class="movie-items" data-id="@item.MovieId">
                     <div class="img-container">
                         <img src="@item.MovieImage" class="rankedMovieImage">
                         <div class="overlay"></div>
@@ -106,7 +106,7 @@
         <div class="popular-movies-item">
             @foreach (var item in Model)
             {
-                <div class="movie-items">
+                <div class="movie-items" data-id="@item.MovieId">
                     <div class="img-container">
                         <img src="@item.MovieImage" class="rankedMovieImage">
                         <div class="overlay"></div>
@@ -144,6 +144,200 @@
             <div class="movie-items">
 
             </div>*@
+        </div>
+    </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<button id="preview-modal-btn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="previewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="previewModal--player_container"></div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="previewModal--info" style="opacity: 1;">
+                    <div class="detail-modal-container">
+                        <div class="ptrack-container">
+                            <div>
+                                <div class="previewModal--detailsMetadata">
+                                    <div class="previewModal--detailsMetadata-left">
+                                        <p>
+                                            <div class="description" id="description">
+                                                Before eradicating humankind from the world, the gods give them one last chance to prove themselves worthy of survival. Let the Ragnarok battles begin!
+                                            </div>
+                                        </p>
+                                    </div>
+                                    <div class="previewModal--detailsMetadata-right">
+                                        <div class="previewModal--tags">
+                                            <span class="previewModal--tags-label">Genres:</span>
+                                            <span class="tag-item">Action anime,</span>
+                                            <span class="tag-item">Japanese,</span>
+                                            <span class="tag-item">Anime series,</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ptrack-container">
+                            <div class="ptrack-content">
+                                <div class="episodeSelector">
+                                    <div class="episodeSelector-header">
+                                        <div>
+                                            <h3 class="previewModal--section-header episodeSelector-label">Episodes</h3>
+                                        </div>
+                                        <div class="episodeSelector-dropdown">
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Season 1
+                                                </button>
+                                                <ul class="dropdown-menu" id="dropdown-menu">
+                                                    <li><button class="dropdown-item" type="button">Season 1</button></li>
+                                                    <li><button class="dropdown-item" type="button">Season 2</button></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><button class="dropdown-item" type="button">See All Episodes</button></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="episodeSelector-container" id="episodeSelector-container">
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">0</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABU-p0wGeG3OsjgC60xn_fUBrLF1UOITQAAlt3FFU7BeOJ_PxVeEikP6Yp0Ys5n-u4RNUG0fBJKMZ4C4Hr-5cZR3vIwqiwgDiSppdr2NUn9Yi3FptRIqk4Fs6.jpg?r=fdc" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Ragnarok</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">At the Council of Valhalla, the gods vote unanimously for humankind's extinction. But Brünnhilde, eldest of the Valkyrie sisters, raises her objection.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">1</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABdOwx2mD0tJk8a9Ngp3IQ9FJIIZ7m01bwgQdbPlMP0mnuSIzGasudCSIAO2WR1RZbx-k5iQt34NL4ae5vTUTzhNHLmezb8K179kjq_Rnfolu8fLWhsnjQsvB.jpg?r=486" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Worthy Opponent</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">In the first round of the Ragnarok battle, Han dynasty warlord Lü Bu puts up a good fight against Norse god Thor, surprising the gods in attendance.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">2</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABZyi5ORbJx99cIUxvGSy3xeIyHV7dCG6Bbdfc9mB22nvXceBgO56ZPa0HgrhDibIpdSLREf-l0WJVPiwpJRCjoJ1yPPI1pY2_SVMlBpE0IO8eLz3_2hoaIZh.jpg?r=3e3" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Killer Move</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">To give Lü Bu the upper hand against Thor, Brünnhilde summons her sister Randgriz and asks her to transform into a sacred weapon — the Shield Breaker.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">3</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABTDVsvf3X3h_Ym82jCL4HWOjGLwFFpG21B2PUYpQr1JHzUN2gDTZM-JO69zcDNFRY6kcO_eV4hRosoCajoBUdTL-khAfxvGCXUzsqYN1kxafObOpptdq5c8B.jpg?r=485" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Joy</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">Lü Bu’s legs are crushed by the mighty Geirröd Thor's Hammer attack, but just when all hope seems lost, the warlord’s trusty horse Red Hare rides in.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">4</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABSpfYYq1djyomIPy0jokgrxf6iirbxuheHv_hSAXMsBDOjf_BBT6vlj74pm1cIdV-B4PVYAbDGNd1UtbZdEquAmRTuDwlkyUbOySq_4MJr-Jl_e4wXc8nYJD.jpg?r=177" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">FILE No.00000000001</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">Chosen for the next round is the father of humankind and the man bearing more hatred towards the gods than anyone else: Adam himself.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">5</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABfXv54nkAzQIxaqp-oHQD-_mDvFUN6vLXwV7ni20ULoRtwEe4lw5DCT3tQDFIralx1kZw_TjvTQD9-ppMK0Bhm_rDcM0-BlCHkQ2_gv9tJJA9PPY7Boq6_9P.jpg?r=56f" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Great Emulation</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">Zeus insists on going up against Adam, who joins forces with Valkyrie Reginleif to obtain a most peculiar weapon: a knuckleduster.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">6</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABVfl8Zz6znk1XZ1mMhUeMZj2qwSzI3h9KNj4cXx7s69QmR5OnypTZ1lhKynIDft1JTSE-CEAsDe6Nc7KvdwChZGo1GQig1BjP62jIW0yP1pwi67Z4ypJ3M5z.jpg?r=b42" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Expelled from Paradise</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">Just when it looks like Adam will earn humankind the victory they long for, Zeus gathers his strength to ask Adam why he’s really fighting.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">7</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABTWqy_zVR8SV2KuN23_HuJhgjtO5mYR1xeYmyiTt7H4k91nRxaSHzFNpRX05DZAARObo6nbY3A__8sSFMIAqzBmYq10Hj_3bXScfvpnSYek-fzCiw2lMOJTs.jpg?r=667" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Grace Abounding</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">Zeus has transformed into his final most powerful form, but after the beating he’s suffered, he may not last much longer in the fight.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">8</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABZNIAJzF5RrnqNpU1J8kW8YOpJ1GI9OSaWavFeDaKwkaLcCmT_WH1j3epITb4gprWcJIWf8YYNhuSJiuOmix0XtC8qBVfHDAgQoAlIsqiwvQOls5r44hAOJS.jpg?r=8e3" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Tyrant of the Ocean</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">Humankind is desperate to win the next bout, but the god they’re going up against is one of the mightiest of them all: Poseidon.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="titleCardList--container episode-item">
+                                            <div class="titleCard-title_index">9</div>
+                                            <div class="titleCard-imageWrapper">
+                                                <div class="ptrack-content"><img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABWamugtCEkH0xzOicV1iuYf_KNhmmp7BlQFgIP8J2LCIGvEpJdaEqynTjxRSEJH8Z7g6-alQZeTUu2Ce5ZAPcXn-7pbGmRnM5sAhENXfZD-0BSOZCbabyo-D.jpg?r=bb9" /></div>
+                                            </div>
+                                            <div class="titleCardList--metadataWrapper">
+                                                <div class="titleCardList-title"><span class="titleCard-title_text">Greatest Loser</span><span><span class="duration ellipsized">24m</span></span></div>
+                                                <div class="titleCard-synopsis">
+                                                    <div class="ptrack-content">Kojiro Sasaki uses his mighty Tsubame Gaeshi move to finish off Poseidon, but the god of the sea won’t be sunk so easily.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
         </div>
     </div>
 </div>

@@ -43,7 +43,6 @@ namespace APIProject.Controllers
             List<GetMovieByRankResponseDTO> responseDTOs = _mapper.Map<List<GetMovieByRankResponseDTO>>(getMovieResponseDTOs);
             return Ok(responseDTOs);
         }
-        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult<GetMovieResponseDTO> Get([FromRoute] int key)
         {
@@ -60,6 +59,7 @@ namespace APIProject.Controllers
         public IActionResult Post([FromBody] CreateMovieRequestDTO createMovieRequestDTO)
         {
             Movie movie = _mapper.Map<Movie>(createMovieRequestDTO);
+            movie.UpdatedDate = DateTime.Now;
             repository.SaveMovie(movie);
 
             GetMovieResponseDTO responseDTO = _mapper.Map<GetMovieResponseDTO>(movie);

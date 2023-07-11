@@ -1,0 +1,225 @@
+﻿.modal-body {
+    padding: 0 3em;
+}
+
+.previewModal--info {
+    background-color: #181818;
+    position: relative;
+}
+
+.previewModal--detailsMetadata {
+    -moz-column-gap: 2em;
+    column-gap: 2em;
+    grid-template-columns: minmax(0,2fr) minmax(0,1fr);
+    background-color: #181818;
+    display: grid;
+    position: relative;
+    width: 100%;
+}
+
+.previewModal--detailsMetadata-left {
+    box-sizing: inherit;
+}
+
+.description {
+    box-sizing: inherit;
+}
+
+.previewModal--detailsMetadata-left > p {
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.previewModal--detailsMetadata-right {
+    display: flex;
+    flex-direction: column;
+    box-sizing: inherit;
+}
+
+.previewModal--tags {
+    font-size: 14px;
+    line-height: 20px;
+    margin: .5em .5em .5em 0;
+    word-break: break-word;
+}
+
+.previewModal--wrapper *, .previewModal--wrapper :after, .previewModal--wrapper :before {
+    box-sizing: inherit;
+}
+
+span.previewModal--tags-label {
+    color: #777;
+    box-sizing: inherit;
+}
+
+span.tag-item {
+    color: #ddd;
+    cursor: pointer;
+    margin: 0;
+    outline-color: #fff;
+}
+
+.episodeSelector {
+    background-color: #181818;
+    padding: 1em 0 0;
+}
+
+.episodeSelector-header {
+    grid-gap: 2rem;
+    align-items: baseline;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+h3.previewModal--section-header.episodeSelector-label {
+    margin-bottom: 16px;
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 32px;
+}
+
+.episodeSelector-dropdown {
+    font-size: 12px;
+    font-weight: 500;
+    justify-self: end;
+}
+
+.dropdown {
+    position: relative;
+    z-index: 1;
+}
+
+button.btn.btn-secondary.dropdown-toggle {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    min-width: 4em;
+    position: relative;
+    font-size: 1.5em;
+    background-color: rgb(36, 36, 36);
+    padding: 0.5em 1em;
+    color: white;
+    cursor: pointer;
+    border: 0.1em solid rgb(77, 77, 77);
+    border-radius: 0.2em;
+}
+
+ul.dropdown-menu {
+    min-width: 4em;
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+    color: white;
+    list-style-type: none;
+    border: 0.1em solid rgb(77, 77, 77);
+    margin-top: 0.1em;
+    font-size: 1.5em;
+    z-index: 1;
+    background-color: rgb(36, 36, 36);
+    white-space: nowrap;
+    column-gap: 1.8em;
+    max-height: max(10em, 202.787px - 2rem);
+    overflow: auto;
+    padding: 1rem 0px;
+}
+
+.dropdown-menu li {
+    min-width: 4em;
+    padding: 0.5em 0.8em;
+    display: block;
+    break-inside: avoid;
+}
+
+.episodeSelector-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.titleCardList--container.episode-item:first-of-type {
+    border-top: 1px solid #404040;
+}
+
+.titleCardList--container.episode-item {
+    align-items: center;
+    border-bottom: 1px solid #404040;
+    border-radius: .25em;
+    cursor: pointer;
+    display: flex;
+    min-height: 10em;
+    overflow: hidden;
+    padding: 1em;
+    position: relative;
+}
+
+.titleCard-title_index {
+    color: #d2d2d2;
+    display: flex;
+    flex: 0 0 7%;
+    font-size: 1.5em;
+    justify-content: center;
+}
+
+.titleCard-imageWrapper {
+    border-radius: 4px;
+    flex: 0 0 18%;
+    overflow: hidden;
+    position: relative;
+}
+
+    .titleCard-imageWrapper img {
+        display: block;
+        max-width: 100%;
+    }
+
+.titleCardList--metadataWrapper {
+    flex: 0 0 70%;
+    font-size: 1em;
+    min-height: 100%;
+}
+
+.titleCardList-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em 1em .5em;
+    box-sizing: border-box;
+}
+
+span.titleCard-title_text {
+    color: #fff;
+    font-size: 1em;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+span.duration.ellipsized {
+    padding-left: 10px;
+    box-sizing: inherit;
+}
+
+.titleCard-synopsis {
+    color: #d2d2d2;
+    margin: 0;
+    padding: 0 1em 1em;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.modal-dialog {
+    left: auto;
+    transform-origin: 50% 12.5%;
+    top: 2em;
+    width: 850px;
+    opacity: 1;
+    margin-bottom: 2em;
+    transform: none;
+    min-width: 850px;
+    z-index: 2;
+    background-color: transparent;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+    will-change: transform;
+}
