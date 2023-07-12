@@ -1,7 +1,9 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿$(document).ready(function () {
+    $('.popular-movies').on('click', '.movie-items', function (e) {
+        loadDataPreviewMovie($(this).data('id'));
+        $('#preview-modal-btn').click();
+    });
+});
 function getAccessToken() {
     function getCookie(cname) {
         let name = cname + "=";
@@ -88,15 +90,20 @@ function loadDataPreviewMovie(movieId) {
 function appendPreviewData(data) {
     var modal = $('#previewModal');
     modal.find('#description').text(data.Description);
-
+    var trailerContainer = modal.find('#previewModal--player_container');
+    trailerContainer.html(`<iframe width="100%" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/7jxB9-9aLl0" frameborder="0" allowfullscreen></iframe>`);
     var row = ``;
     var result = '';
+    var trailer = 'previewModal--player_container'
     for (var i = 0; i < data.MovieSeasons.length; i++) {
-        row += `<li><button class="dropdown-item" type="button">Season ${i + 1}</button></li>`;
+        row += `<li><button class="dropdown-item" type="button" data-target="season-container-${data.MovieSeasons[i].MovieSeasonId}">Season ${i + 1}</button></li>`;
 
+        result += `<div class="seasons-container" id="season-container-${data.MovieSeasons[i].MovieSeasonId}">`;
         for (var j = 0; j < data.MovieSeasons[i].MovieEpisodes.length; j++) {
-            result += `<div class="titleCardList--container episode-item"><div class="titleCard-title_index">${j}</div><div class="titleCard-imageWrapper"><div class="ptrack-content"><img src="${data.MovieSeasons[i].MovieEpisodes[j].episodeImage}"/></div></div><div class="titleCardList--metadataWrapper"><div class="titleCardList-title"><span class="titleCard-title_text">${data.MovieSeasons[i].MovieEpisodes[j].title}</span><span><span class="duration ellipsized">${data.MovieSeasons[i].MovieEpisodes[j].duration}</span></span></div><p class="titleCard-synopsis"><div class="ptrack-content">${data.MovieSeasons[i].MovieEpisodes[j].description}</div></p></div></div> `;
+            result += `<div class="titleCardList--container episode-item"><div class="titleCard-title_index">${j}</div><div class="titleCard-imageWrapper"><div class="ptrack-content"><img src="${data.MovieSeasons[i].MovieEpisodes[j].EpisodeImage}"/></div></div><div class="titleCardList--metadataWrapper"><div class="titleCardList-title"><span class="titleCard-title_text">${data.MovieSeasons[i].MovieEpisodes[j].Title}</span><span><span class="duration ellipsized">${data.MovieSeasons[i].MovieEpisodes[j].Duration}</span></span></div><div class="titleCard-synopsis"><div class="ptrack-content">${data.MovieSeasons[i].MovieEpisodes[j].Description}</div></div></div></div> `;
         }
+        result += `</div>`;
+
     }
     row += `<li><hr class="dropdown-divider"></li> <li><button class="dropdown-item" type="button">See All Episodes</button></li>`
 
