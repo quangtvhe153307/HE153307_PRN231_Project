@@ -21,7 +21,9 @@
 });
 $('.episodeSelector-container').on('click', '.episode-item', function (e) {
     e.preventDefault();
-    window.location.href = 'https://facebook.com';
+    var movieId = $(this).data('movieid');
+    var episodeId = $(this).data('episodeid');
+    window.location.href = `https://localhost:7180/Movie/Index/${movieId}/${episodeId}`;
 });
 function getAccessToken() {
     function getCookie(cname) {
@@ -120,7 +122,7 @@ function appendPreviewData(data) {
         result += `<div class="seasons-container" id="season-container-${data.MovieSeasons[i].MovieSeasonId}" ` + (i != 0 ? `style="display:none;"`: ``)+`>`;
         result += `<div class="season-title" style="display:none;"><div class="ltr-1bdvpws"><span class="allEpisodeSelector-season-label ltr-78kobz">Season ${i + 1}</span></div></div>`;
         for (var j = 0; j < data.MovieSeasons[i].MovieEpisodes.length; j++) {
-            result += `<div class="titleCardList--container episode-item"><div class="titleCard-title_index">${j + 1}</div><div class="titleCard-imageWrapper"><div class="ptrack-content"><img src="${data.MovieSeasons[i].MovieEpisodes[j].EpisodeImage}"/></div><div class="titleCard-playIcon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true"><path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path></svg></div></div><div class="titleCardList--metadataWrapper"><div class="titleCardList-title"><span class="titleCard-title_text">${data.MovieSeasons[i].MovieEpisodes[j].Title}</span><span><span class="duration ellipsized">${data.MovieSeasons[i].MovieEpisodes[j].Duration}</span></span></div><div class="titleCard-synopsis"><div class="ptrack-content">${data.MovieSeasons[i].MovieEpisodes[j].Description}</div></div></div></div> `;
+            result += `<div class="titleCardList--container episode-item" data-movieid="${data.MovieId}" data-episodeid="${data.MovieSeasons[i].MovieEpisodes[j].EpisodeId}"><div class="titleCard-title_index">${j + 1}</div><div class="titleCard-imageWrapper"><div class="ptrack-content"><img src="${data.MovieSeasons[i].MovieEpisodes[j].EpisodeImage}"/></div><div class="titleCard-playIcon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true"><path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path></svg></div></div><div class="titleCardList--metadataWrapper"><div class="titleCardList-title"><span class="titleCard-title_text">${data.MovieSeasons[i].MovieEpisodes[j].Title}</span><span><span class="duration ellipsized">${data.MovieSeasons[i].MovieEpisodes[j].Duration}</span></span></div><div class="titleCard-synopsis"><div class="ptrack-content">${data.MovieSeasons[i].MovieEpisodes[j].Description}</div></div></div></div> `;
         }
         result += `</div>`;
 

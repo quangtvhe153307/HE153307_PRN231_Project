@@ -35,6 +35,7 @@ namespace DataAccess
                 using (var context = new MyDbContext())
                 {
                     movieEpisode = context.MovieEpisodes
+                        .Include(x => x.MovieSeason)
                         .Include(x => x.MovieViews)
                         .SingleOrDefault(x => x.EpisodeId == prodId);
                 }

@@ -12,17 +12,20 @@ using System.Data;
 
 namespace APIProject.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator,VIP,Normal")]
     public class MovieEpisodesController : ODataController
     {
         private IMovieEpisodeRepository repository;
+        private IMovieRepository movieRepository;
         private readonly IMapper _mapper;
 
-        public MovieEpisodesController(IMapper mapper, IMovieEpisodeRepository movieEpisodeRepository)
+        public MovieEpisodesController(IMapper mapper, IMovieEpisodeRepository movieEpisodeRepository, IMovieRepository movieRepository)
         {
             _mapper = mapper;
             repository= movieEpisodeRepository;
+            this.movieRepository = movieRepository;
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetMovieEpisodeResponseDTO>> Get()
         {
@@ -30,6 +33,7 @@ namespace APIProject.Controllers
             List<GetMovieEpisodeResponseDTO> getMovieepisodeResponseDTOs = _mapper.Map<List<GetMovieEpisodeResponseDTO>>(movieepisodes);
             return Ok(getMovieepisodeResponseDTOs);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult<GetMovieEpisodeResponseDTO> Get([FromRoute] int key)
         {
@@ -41,6 +45,28 @@ namespace APIProject.Controllers
             GetMovieEpisodeResponseDTO getMovieepisodeResponseDTO = _mapper.Map<GetMovieEpisodeResponseDTO>(movieepisode);
             return Ok(getMovieepisodeResponseDTO);
         }
+        [Authorize(Roles = "Administrator,VIP,Normal")]
+        [HttpGet("/MovieSource/{key}")]
+        public ActionResult<string> GetMovieUrl([FromRoute] int key)
+        {
+            string role = User.Claims.ToList()[3].Value;
+            MovieEpisode movieepisode = repository.GetMovieEpisodeById(key);
+            if (role.Equals("Normal"))
+            {
+                
+                bool isPurchased = movieRepository.IsPurchased(LoggedUserId(), movieepisode.MovieSeason.MovieId);
+                if (!isPurchased)
+                {
+                    return Forbid("you are not have permission to access");
+                }
+            }
+            if (movieepisode == null)
+            {
+                return NotFound();
+            }
+            return Ok(movieepisode.UrlSource);
+        }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public IActionResult Post([FromBody] CreateMovieEpisodeRequestDTO createMovieepisodeRequestDTO)
         {
@@ -50,6 +76,7 @@ namespace APIProject.Controllers
             GetMovieEpisodeResponseDTO responseDTO = _mapper.Map<GetMovieEpisodeResponseDTO>(movieepisode);
             return Created(responseDTO);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult Put([FromRoute] int key, [FromBody] UpdateMovieEpisodeRequestDTO updateMovieepisodeRequestDTO)
         {
@@ -67,6 +94,7 @@ namespace APIProject.Controllers
             repository.UpdateMovieEpisode(movieepisode);
             return Updated(movieepisode);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult Delete([FromRoute] int key)
         {
@@ -77,6 +105,12 @@ namespace APIProject.Controllers
             }
             repository.DeleteMovieEpisode(tempMovieepisode);
             return NoContent();
+        }
+        private int LoggedUserId()
+        {
+            var userIdString = User.Claims.ToList()[4].Value;
+            int userId = Int32.Parse(userIdString);
+            return userId;
         }
     }
 }

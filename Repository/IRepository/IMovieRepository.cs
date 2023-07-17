@@ -15,5 +15,6 @@ namespace Repository.IRepository
         void UpdateMovie(Movie movie);
         List<Movie> GetMovies();
         List<Movie> GetMoviesByRank(DateTime startDate, DateTime endDate);
+        bool IsPurchased(int userId, int movieId); 
     }
 }

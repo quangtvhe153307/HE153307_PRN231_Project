@@ -128,5 +128,20 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
         }
+        public static bool IsPurchased(int userId, int movieId)
+        {
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    var p1 = context.PurchasedMovies.Any(x => x.UserId == userId && x.MovieId == movieId);
+                    return p1;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
