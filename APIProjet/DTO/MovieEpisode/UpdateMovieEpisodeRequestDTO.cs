@@ -16,5 +16,7 @@ namespace APIProject.DTO.MovieEpisode
         public int MovieSeasonId { get; set; }
         [Required]
         public string EpisodeImage { get; set; }
+        [Required]
+        public string UrlSource { get; set; }
     }
 }

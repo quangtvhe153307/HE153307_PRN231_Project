@@ -1,5 +1,6 @@
 ﻿using APIProject.DTO.Movie;
 using Client.Models;
+using Client.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
@@ -21,36 +22,27 @@ namespace Client.Controllers
         public async Task<IActionResult> Index()
         {
             string strQuery = $"/MovieRanking/2";
-            var header = client.DefaultRequestHeaders.Authorization;
-            if (header == null || header.ToString().Equals(""))
+            try
             {
-                string accessToken = Request.Cookies["accessToken"];
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+                var list = await HttpUtils.GetList<GetMovieByRankResponseDTO>(strQuery);
+                if (list != null)
+                {
+                    ViewBag.RankedMovie = list;
+                }
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
+            
 
-            JsonSerializerOptions options = new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            HttpResponseMessage responseMessage = await client.GetAsync(strQuery);
-            if(responseMessage.IsSuccessStatusCode) {
-                string strData = await responseMessage.Content.ReadAsStringAsync();
-                List<GetMovieByRankResponseDTO> getMovieResponseDTOs = JsonSerializer.Deserialize<List<GetMovieByRankResponseDTO>>(strData, options);
-                ViewBag.RankedMovie = getMovieResponseDTOs;
-            }
             List<GetMovieResponseDTO> newestMovie = null;
-            strQuery = "odata/Movies?$OrderBy= UpdatedDate desc";
-            responseMessage = await client.GetAsync($"{strQuery}");
-            if(responseMessage.IsSuccessStatusCode)
+            strQuery = "List?$OrderBy= UpdatedDate desc&$top=10";
+            try
             {
-                string strData = await responseMessage.Content.ReadAsStringAsync();
-
-                JObject responseObject = JObject.Parse(strData);
-                JToken StudentsToken;
-                responseObject.TryGetValue("value", out StudentsToken);
-                string data = StudentsToken.ToString();
-
-                newestMovie = JsonSerializer.Deserialize<List<GetMovieResponseDTO>>(data, options);
+                newestMovie = await HttpUtils.GetList<GetMovieResponseDTO>(strQuery);
+            } catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
             return View(newestMovie);
         }

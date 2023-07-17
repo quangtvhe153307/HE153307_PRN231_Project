@@ -17,6 +17,7 @@ namespace BusinessObjects
         public string Duration { get; set; }
         public string EpisodeImage { get; set; }
         public int MovieSeasonId { get; set; }
+        public string? UrlSource { get; set; }
         [ForeignKey("MovieSeasonId")]
         public virtual MovieSeason MovieSeason { get; set; }
         public virtual ICollection<MovieView> MovieViews { get; set; }

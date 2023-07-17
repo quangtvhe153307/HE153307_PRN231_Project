@@ -14,5 +14,7 @@ namespace APIProject.DTO.MovieEpisode
         public string Duration { get; set; }
         [Required]
         public string EpisodeImage { get; set; }
+        [Required]
+        public string UrlSource { get; set; }
     }
 }

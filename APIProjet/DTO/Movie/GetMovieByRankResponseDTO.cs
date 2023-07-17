@@ -17,5 +17,6 @@ namespace APIProject.DTO.Movie
         public bool IsActive { get; set; }
         public string? MovieImage { get; set; }
         public double ViewCount { get; set; }
+        public string? TrailerUrl { get; set; }
     }
 }

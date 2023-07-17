@@ -21,6 +21,7 @@ namespace BusinessObjects
         public bool IsActive { get; set; }
         public string? MovieImage { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public string? TrailerUrl { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<MovieSeason> MovieSeasons { get; set; }
     }

@@ -24,6 +24,7 @@ namespace APIProject.DTO.Movie
         public bool IsFree => Price == 0;
         public bool IsActive { get; set; }
         public string? MovieImage { get; set; }
+        public string? TrailerUrl { get; set; }
         //public virtual ICollection<CreateCategoryMovieRequestDTO> Categories { get; set; }
     }
 }

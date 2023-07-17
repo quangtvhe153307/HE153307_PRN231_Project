@@ -25,12 +25,8 @@ namespace Client
             httpClient.DefaultRequestHeaders.Accept.Add(contentType);
             httpClient.BaseAddress = new Uri(builder.Configuration["apiEndpoint"]);
             builder.Services.AddSingleton(httpClient);
+            HttpUtils.Initialize(httpClient);
 
-            //builder.Services.AddHttpClient("Client", httpClient =>
-            //{
-            //    httpClient.BaseAddress = new Uri(builder.Configuration["apiEndpoint"]);
-            //    httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-            //});
             var app = builder.Build();
             app.Use(async (context, next) =>
             {
@@ -73,6 +69,12 @@ namespace Client
                         var jsonToken = handler.ReadToken(accessToken);
                         var tokenS = jsonToken as JwtSecurityToken;
 
+                        var injectedHttpClient = app.Services.GetService<HttpClient>();
+                        if (injectedHttpClient.DefaultRequestHeaders.Authorization == null)
+                        {
+                            injectedHttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+                        }
+
                         //
                         if (tokenS.ValidTo < DateTime.UtcNow)
                         {
@@ -108,11 +110,17 @@ namespace Client
                                 string newAccessToken = anonymousObject.GetString("accessToken");
                                 Console.WriteLine(newAccessToken);
                                 JWTUtils.SetAccessToken(context.Response, newAccessToken);
+
+                                //add new access token to injected http client
+                                injectedHttpClient.DefaultRequestHeaders.Remove("Authorization");
+                                injectedHttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + newAccessToken);
+
                                 await next(context);
                             }
                             else
                             {
-                                Console.WriteLine("refreshTokenFailed");
+                                var responseString = await response.Content.ReadAsStringAsync();
+                                Console.WriteLine("refreshTokenFailed: "+ responseString);
                                 context.Response.Redirect("/login");
                             }
                         } else
@@ -128,7 +136,7 @@ namespace Client
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}/{episodeId?}");
 
             app.Run();
         }
