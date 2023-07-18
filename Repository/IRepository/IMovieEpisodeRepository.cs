@@ -14,5 +14,7 @@ namespace Repository.IRepository
         void DeleteMovieEpisode(MovieEpisode movieepisode);
         void UpdateMovieEpisode(MovieEpisode movieepisode);
         List<MovieEpisode> GetMovieEpisodes();
+        MovieEpisode GetMovieSourceById(int id);
+        void AddMovieView(MovieView movieview);
     }
 }

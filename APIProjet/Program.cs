@@ -8,6 +8,7 @@ using APIProject.DTO.PurchasedMovie;
 using APIProject.DTO.Role;
 using APIProject.DTO.Transaction;
 using APIProject.DTO.User;
+using APIProject.Jobs;
 using APIProject.Mapping;
 using APIProject.Util;
 using AutoMapper;
@@ -24,6 +25,7 @@ using Microsoft.OpenApi.Models;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
 using Newtonsoft.Json.Linq;
+using Quartz;
 using Repository.IRepository;
 using Repository.Repository;
 using System.IdentityModel.Tokens.Jwt;
@@ -199,6 +201,18 @@ namespace APIProjet
                 });
             });
             builder.Services.AddScoped<ISendMailUtils, SendMailUtils>();
+            builder.Services.AddQuartz(q =>
+            {
+                q.UseMicrosoftDependencyInjectionScopedJobFactory();
+                var jobKey = new JobKey(builder.Configuration["Jobs:UpdatePlan"]);
+                q.AddJob<UpdatePlanJob>(opt => opt.WithIdentity(jobKey));
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey)
+                    .WithIdentity(builder.Configuration["Jobs:UpdatePlan"]+"-trigger")
+                    //.WithCronSchedule("0/5 * * * * ?"));
+                    .WithCronSchedule("0 0 0 * * ?"));
+        });
+            builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -217,7 +231,12 @@ namespace APIProjet
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             });
-
+            app.Use(async (context, next) =>
+            {
+                var endPoint = context.Request.Path;
+                Console.WriteLine(endPoint);
+                await next(context);
+            });
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

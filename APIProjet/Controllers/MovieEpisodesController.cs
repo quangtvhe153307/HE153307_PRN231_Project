@@ -17,6 +17,7 @@ namespace APIProject.Controllers
     {
         private IMovieEpisodeRepository repository;
         private IMovieRepository movieRepository;
+        
         private readonly IMapper _mapper;
 
         public MovieEpisodesController(IMapper mapper, IMovieEpisodeRepository movieEpisodeRepository, IMovieRepository movieRepository)
@@ -50,7 +51,7 @@ namespace APIProject.Controllers
         public ActionResult<string> GetMovieUrl([FromRoute] int key)
         {
             string role = User.Claims.ToList()[3].Value;
-            MovieEpisode movieepisode = repository.GetMovieEpisodeById(key);
+            MovieEpisode movieepisode = repository.GetMovieSourceById(key);
             if (role.Equals("Normal"))
             {
                 
@@ -64,6 +65,13 @@ namespace APIProject.Controllers
             {
                 return NotFound();
             }
+            repository.AddMovieView(new MovieView
+            {
+                EpisodeId = key,
+                UserId = LoggedUserId(),
+                ViewedDate = DateTime.Now
+            });
+            repository.UpdateMovieEpisode(movieepisode);
             return Ok(movieepisode.UrlSource);
         }
         [Authorize(Roles = "Administrator")]

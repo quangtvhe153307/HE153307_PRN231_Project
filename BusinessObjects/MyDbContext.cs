@@ -27,6 +27,7 @@ namespace BusinessObjects
         public DbSet<MovieRated> MovieRateds { get; set; }
         public DbSet<MovieSeason> MovieSeasons { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<MovieView> MovieViews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

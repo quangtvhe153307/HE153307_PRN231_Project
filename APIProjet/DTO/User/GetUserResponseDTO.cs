@@ -17,5 +17,6 @@ namespace APIProject.DTO.User
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool EmailConfirmed { get; set; }
+        public double Balance { get; set; }
     }
 }

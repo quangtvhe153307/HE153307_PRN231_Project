@@ -45,7 +45,25 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
             return movieEpisode;
-        }
+        }        
+        public static MovieEpisode FindMovieEpisodeByIdNotInclludeView(int prodId)
+        {
+            MovieEpisode movieEpisode = null;
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    movieEpisode = context.MovieEpisodes
+                        .Include(x => x.MovieSeason)
+                        .SingleOrDefault(x => x.EpisodeId == prodId);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return movieEpisode;
+        }        
         public static void SaveMovieEpisode(MovieEpisode movieEpisode)
         {
             try
@@ -67,7 +85,7 @@ namespace DataAccess
             {
                 using (var context = new MyDbContext())
                 {
-                    context.Entry<MovieEpisode>(movieEpisode).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    context.MovieEpisodes.Update(movieEpisode);
                     context.SaveChanges();
                 }
             }
@@ -84,6 +102,21 @@ namespace DataAccess
                 {
                     var p1 = context.MovieEpisodes.SingleOrDefault(x => x.EpisodeId == movieEpisode.EpisodeId);
                     context.MovieEpisodes.Remove(p1);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void AddMovieView(MovieView view)
+        {
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    context.MovieViews.Add(view);
                     context.SaveChanges();
                 }
             }

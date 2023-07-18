@@ -28,12 +28,6 @@ namespace Client
             HttpUtils.Initialize(httpClient);
 
             var app = builder.Build();
-            app.Use(async (context, next) =>
-            {
-                var endPoint = context.Request.Path;
-                Console.WriteLine(endPoint);
-                await next(context);
-            });
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -44,7 +38,12 @@ namespace Client
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.Use(async (context, next) =>
+            {
+                var endPoint = context.Request.Path;
+                Console.WriteLine(endPoint);
+                await next(context);
+            });
             app.Use(async (context, next) =>
             {
                 var endPoint = context.Request.Path;

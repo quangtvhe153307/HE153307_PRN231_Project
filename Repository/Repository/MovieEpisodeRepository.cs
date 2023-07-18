@@ -17,5 +17,9 @@ namespace Repository.Repository
         public MovieEpisode GetMovieEpisodeById(int id) => MovieEpisodeDAO.FindMovieEpisodeById(id);
 
         public void DeleteMovieEpisode(MovieEpisode movieepisode) => MovieEpisodeDAO.DeleteMovieEpisode(movieepisode);
+
+        public MovieEpisode GetMovieSourceById(int id) => MovieEpisodeDAO.FindMovieEpisodeByIdNotInclludeView(id);
+
+        public void AddMovieView(MovieView movieview) => MovieEpisodeDAO.AddMovieView(movieview);
     }   
 }
