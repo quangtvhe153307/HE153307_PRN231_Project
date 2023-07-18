@@ -90,6 +90,22 @@ namespace DataAccess
             {
                 throw new Exception(ex.Message);
             }
+        }        
+        public static void UpdateUser(List<User> users)
+        {
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    //context.Entry<User>(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    context.Users.UpdateRange(users);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static void DeleteUser(User user)
         {

@@ -15,5 +15,7 @@ namespace Repository.Repository
         public bool ContainRefreshToken(string token) => RefreshtokenDAO.ContainRefreshToken(token);
         public User GetUserByRefreshToken(string token) => UserDAO.GetUserByRefreshToken(token);
         public User GetUserByEmail(string email) => UserDAO.FindUserWithEmail(email);
+
+        public void SaveUser(List<User> users) => UserDAO.UpdateUser(users);
     }
 }

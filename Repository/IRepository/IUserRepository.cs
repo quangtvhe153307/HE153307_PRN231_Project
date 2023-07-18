@@ -10,6 +10,7 @@ namespace Repository.IRepository
     public interface IUserRepository
     {
         void SaveUser(User user);
+        void SaveUser(List<User> users);
         User GetUserById(int id);
         User GetUserByEmail(string email);
         void DeleteUser(User user);
