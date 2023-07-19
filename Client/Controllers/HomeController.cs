@@ -36,7 +36,7 @@ namespace Client.Controllers
             
 
             List<GetMovieResponseDTO> newestMovie = null;
-            strQuery = "List?$OrderBy= UpdatedDate desc&$top=10";
+            strQuery = "api/Movies/List?$OrderBy= UpdatedDate desc&$top=10";
             try
             {
                 newestMovie = await HttpUtils.GetList<GetMovieResponseDTO>(strQuery);

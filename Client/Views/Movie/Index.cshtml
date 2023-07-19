@@ -1,6 +1,643 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1>Movies</h1>
+﻿<link rel="stylesheet" href="~/css/moviePlay.css"/>
+<style>
+    .movie-items{
+        width: 19%;
+    }
+</style>
+<div class="child-container play">
+    <div class="movie-section">
+        <div class="video-section">
+            <div class="video-container shrink-0 w-full s1280:w-[880px] s1366:w-[960px]">
+                <div id="player" class="player w-full h-full player-paused user-inactive" tabindex="0">
+                    <video class="player-video" autoplay="" preload="auto" playsinline="" webkit-playsinline="" src="https://scontent.cdninstagram.com/v/t39.25447-2/10000000_1401376347384960_7285982435909605474_n.mp4?_nc_cat=101&amp;vs=1f4a62b7962e8dbb&amp;_nc_vs=HBksFQAYJEdJQ1dtQUNBN0dGYmktb0VBR0tZSURSc0FoMWxibWRqQUFBRhUAAsgBABUAGCRHSUNXbUFDYy1oZFRzNG9BQUtLYVBHS3k5V3A2YnY0R0FBQUYVAgLIAQBLB4gScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AHXVzZV9sYW5jem9zX2Zvcl92cW1fdXBzY2FsaW5nABFkaXNhYmxlX3Bvc3RfcHZxcwAVACUAHIwXQAAAAAAAAAAREQAAACbs0bDt5eiOAhUCKAJDMxgLdnRzX3ByZXZpZXccF0CVCw1P3ztkGCFkYXNoX2dlbjJod2Jhc2ljX2hxMl9mcmFnXzJfdmlkZW8SABgYdmlkZW9zLnZ0cy5jYWxsYmFjay5wcm9kOBJWSURFT19WSUVXX1JFUVVFU1QbCogVb2VtX3RhcmdldF9lbmNvZGVfdGFnBm9lcF9oZBNvZW1fcmVxdWVzdF90aW1lX21zATAMb2VtX2NmZ19ydWxlB3VubXV0ZWQTb2VtX3JvaV9yZWFjaF9jb3VudAEwEW9lbV9pc19leHBlcmltZW50AAxvZW1fdmlkZW9faWQPOTc1NDM1NzY2OTM2NTQ2Em9lbV92aWRlb19hc3NldF9pZA8yMjk4NDE2OTMzMzcyMjIVb2VtX3ZpZGVvX3Jlc291cmNlX2lkDzU5NTUzNjY1NjA3Nzk0MhxvZW1fc291cmNlX3ZpZGVvX2VuY29kaW5nX2lkEDEwNDcyMDc1OTY0NDE5OTMOdnRzX3JlcXVlc3RfaWQAJQIcACXEARsHiAFzBDMwNDUCY2QKMjAyMy0wNy0xOANyY2IBMANhcHAFVmlkZW8CY3QZQ09OVEFJTkVEX1BPU1RfQVRUQUNITUVOVBNvcmlnaW5hbF9kdXJhdGlvbl9zCDE0MjAuMDk1AnRzFXByb2dyZXNzaXZlX2VuY29kaW5ncwA%3D&amp;ccb=1-7&amp;_nc_sid=41a7d5&amp;efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&amp;_nc_ohc=l61nKfZYvh8AX_TYAmg&amp;_nc_ht=scontent-prg1-1.xx&amp;edm=APRAPSkEAAAA&amp;oh=00_AfA1u7BYsg05WDnY313kxVhbQUK806UO7qqtngxu5sTl2A&amp;oe=64BC0A29&amp;_nc_rid=498309913993883" poster="https://s199.imacdn.com/vg/2023/07/04/826c307a821efe39_cf02e313300b9cc2_16878916884848533118684.jpg" tabindex="1"></video>
+                    <div class="player-title"><span>Suki na Ko ga Megane wo Wasureta Tập 3</span></div>
+                </div>
+            </div>
+            <div class="">
+                <h1 class="film-info-title">Suki na Ko ga Megane wo Wasureta Tập 3</h1>
+            </div>
+            <div class="flex justify-between items-center " style="font-size: 90%;">
+                <span class="inline-block font-light">53,016 lượt xem</span>
+            </div>
+        </div>
+        <div class="ptrack-container">
+            <div class="ptrack-content" style="    border: 1px solid #404040;">
+                <div class="episodeSelector episodeSelector1">
+                    <div class="episodeSelector-header" style="border-bottom: 1px solid #404040;">
+                        <div style="display: none;">
+                            <h3 class="previewModal--section-header episodeSelector-label">Episodes</h3>
+                        </div>
+                        <div class="episodeSelector-dropdown episode-selector-dropdown">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle show-season-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="    font-weight: bold;">Season 1</button>
+                                <div class="dropdown-menu" id="dropdown-menu" style="padding-top: 0;padding-bottom: 0;">
+                                    <li data-target="season-container-42" class="season-list-items1">
+                                        <div class="" type="button">Season 1</div>
+                                    </li>
+                                    <div>
+                                        <hr class="dropdown-divider" style="    margin: 0;">
+                                    </div>
+                                    <li data-target="season-container-43" class="season-list-items1">
+                                        <div class="" type="button">Season 2</div>
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="movie-comments-header">
+                            <div>Comments</div>
+                        </div>
+                    </div>
+                    <div class="episodeSelector-container episodeSelector-container1" id="episodeSelector-container">
+                        <div class="seasons-container" id="season-container-42">
+                            <div class="season-title" style="display:none;">
+                                <div class="ltr-1bdvpws"><span class="allEpisodeSelector-season-label ltr-78kobz">Season 1</span></div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="seasons-container" id="season-container-43" style="display:none;">
+                            <div class="season-title" style="display:none;">
+                                <div class="ltr-1bdvpws"><span class="allEpisodeSelector-season-label ltr-78kobz">Season 2</span></div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="31" data-episodeid="310">
+                                <div class="titleCard-title_index" id="episode-order">1</div>
+                                <div class="titleCard-imageWrapper titleCard-imageWrapper1">
+                                    <div class="ptrack-content"><img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABUIFkmB4uSznPBXcVj3bU4n5W_OlKslHTvCGiep5sTcpqSJNur5YeoOAxsZ40mJWFSs8CC3UNe2EkebdlEae30ckWowNJYZtXiSdjpMm5hjyolcSOgCrWWn4.jpg?r=722"></div>
+                                    <div class="titleCard-playIcon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="titleCard-playSVG ltr-0 e1mhci4z1" data-name="Play" aria-hidden="true">
+                                            <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="titleCardList--metadataWrapper">
+                                    <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">Synchronicity</span><span><span class="duration ellipsized">24m</span></span></div>
+                                    <div class="titleCard-synopsis">
+                                        <div class="ptrack-content description">Underground martial arts promoter Tokugawa warns champion Baki that five violent death row escapees from around the world are all heading for Tokyo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="seasons-container comments-container" style="display: none;">
+                            <div class="comment-input">
+                                <div>
+                                    <input />
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="comments-list">
+                                <div class="comment-item">
+                                    <div class="author-avatar">
+                                        <img class="" src="https://th.bing.com/th/id/OIP.Cl56H6WgxJ8npVqyhefTdQHaHa?pid=ImgDet&rs=1" />
+                                    </div>
+                                    <div style="flex: 1;"></div>
+                                    <div class="comment-item-body w-full">
+                                        <div class="author-name items-center">
+                                            Haloguyz
+                                        </div>
+                                        <div class="comment-content font-light break-words clear-both">
+                                            Sang tập tiếp theo mà dà tới chap 87 88 chắc khóc mất ;-; ( coi hình đại diện là hiểu nha ;-;)
+                                        </div>
+                                        <div class="comment-action">
+                                            <span class="comment-time">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline-block" style="width: 16px;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg> 2 giờ trước
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                                                <div class="comment-item">
+                                    <div class="author-avatar">
+                                        <img class="" src="https://th.bing.com/th/id/OIP.Cl56H6WgxJ8npVqyhefTdQHaHa?pid=ImgDet&rs=1" />
+                                    </div>
+                                    <div style="flex: 1;"></div>
+                                    <div class="comment-item-body w-full">
+                                        <div class="author-name items-center">
+                                            Haloguyz
+                                        </div>
+                                        <div class="comment-content font-light break-words clear-both">
+                                            Sang tập tiếp theo mà dà tới chap 87 88 chắc khóc mất ;-; ( coi hình đại diện là hiểu nha ;-;)
+                                        </div>
+                                        <div class="comment-action">
+                                            <span class="comment-time">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline-block" style="width: 16px;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg> 2 giờ trước
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                                                <div class="comment-item">
+                                    <div class="author-avatar">
+                                        <img class="" src="https://th.bing.com/th/id/OIP.Cl56H6WgxJ8npVqyhefTdQHaHa?pid=ImgDet&rs=1" />
+                                    </div>
+                                    <div style="flex: 1;"></div>
+                                    <div class="comment-item-body w-full">
+                                        <div class="author-name items-center">
+                                            Haloguyz
+                                        </div>
+                                        <div class="comment-content font-light break-words clear-both">
+                                            Sang tập tiếp theo mà dà tới chap 87 88 chắc khóc mất ;-; ( coi hình đại diện là hiểu nha ;-;)
+                                        </div>
+                                        <div class="comment-action">
+                                            <span class="comment-time">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline-block" style="width: 16px;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg> 2 giờ trước
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="movie-information-section">
+        <div class="information-item">
+            <span class="previewModal--tags-label">Genres:</span>
+            <span class="item-value btn-primary"><a>Action</a></span>
+            <span class="item-value btn-primary"><a>Animated</a></span>
+        </div>        
+        <div class="information-item">
+            <span class="previewModal--tags-label">Released Date:</span>
+            <span class="item-value" style="    padding-left: .25em;"><a>2023-07-20</a></span>
+        </div>
+        <div class="information-item">
+            <span class="previewModal--tags-label">Introduction:</span>
+            <div class="movie-des">
+                Một ngày kia, Nakajima Atsushi bị đá đít ra khỏi cô nhi viện, không còn nơi nào để đi cũng như không có gì để ăn. Lúc gần như chết đói, anh tình cờ cứu sống được một thằng cha cuồng tự tử ở bờ sông tên là Dazai Osamu. Người này và cộng sự của anh ta là Kunikida là thành viên của một tổ chức thám tử đặc biệt. Họ có những năng lực siêu nhiên chuyên để đối phó với những vụ án vô cùng nguy hiểm của cảnh sát và quân đội. Trong khoảng thời gian Atsushi đến thành phố này, họ cũng đang theo dõi một con hổ mới xuất hiện gần đây ở nơi đó. Điều này dường như có liên quan đặc biệt với Atsushi và khi mọi chuyện đã được giải quyết xong xuôi, Atsushi buộc phải gắn bó với Dazai và đội thám tử bí ẩn đó nhiều hơn nữa…
+            </div>
+        </div>
+    </div>
+    <div class="related-movies popular-movies-container">
+        <div>
+            <h2>NEW RELEASES</h2>
+        </div>
+        <div class="related-movies">
+            <div class="movie-items" data-id="33">
+                <div class="img-container">
+                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABdpqzZxZ_6QublXzPZJp3-lJggnI2tavBnn27YmImGByv_Kbgt1fvhxbEHQls1xtcJIiPf03iGjXu75mfG4GSkFNwPX-64Y92AoJm4i-1VhqWTlOk9V1gLfS96jON4Iro_at.jpg?r=5b7" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="32">
+                <div class="img-container">
+                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABdpqzZxZ_6QublXzPZJp3-lJggnI2tavBnn27YmImGByv_Kbgt1fvhxbEHQls1xtcJIiPf03iGjXu75mfG4GSkFNwPX-64Y92AoJm4i-1VhqWTlOk9V1gLfS96jON4Iro_at.jpg?r=5b7" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="31">
+                <div class="img-container">
+                    <img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABZ4Ia60h5OU4XpJfB9etlI6djRw3T7g1K8FGAGMOtCV8UUq_u4_k-WFC-j4SMadHRQu6p7XASPPxxoej4b1_A3N7X36hoxPorGtwSFenXXA5KkWceBmK5h8m9mBfFmVptv2Q.jpg?r=157" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="30">
+                <div class="img-container">
+                    <img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABed-9wEYANJzgpdmduzr4iEObBtbw-O4NKoXYdE0trVX8k5NN9NmSDjrtUqHtMIR2nhfxq_fRnsEnvf1b7vgZl6TJIwIIhqHE3NszWfoZDdo-uT7P0-Qt0fbvAQEOzY2ga6p.jpg?r=c47" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="29">
+                <div class="img-container">
+                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABexMFTSu3Fh3PyD1S1y-JvAwXm1Q9nblemkHVG7UcmekZw6jNDObd8Mdffb6N-YJ1Q6dcFiF6Nrfwj1xyUGPz6ftySh4Y6So8MxoaJsA_DqLOcNEBvj7A3hJgHSgsNTuvkCr.jpg?r=f3e" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="28">
+                <div class="img-container">
+                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABexMFTSu3Fh3PyD1S1y-JvAwXm1Q9nblemkHVG7UcmekZw6jNDObd8Mdffb6N-YJ1Q6dcFiF6Nrfwj1xyUGPz6ftySh4Y6So8MxoaJsA_DqLOcNEBvj7A3hJgHSgsNTuvkCr.jpg?r=f3e" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="27">
+                <div class="img-container">
+                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABexMFTSu3Fh3PyD1S1y-JvAwXm1Q9nblemkHVG7UcmekZw6jNDObd8Mdffb6N-YJ1Q6dcFiF6Nrfwj1xyUGPz6ftySh4Y6So8MxoaJsA_DqLOcNEBvj7A3hJgHSgsNTuvkCr.jpg?r=f3e" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="26">
+                <div class="img-container">
+                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABefMRIxKYxC5tlFm9q_QvwMh9kxTUQRmRLhVcmdAn8TlHl6k0gZ1sq3Jsh9W8bkG2-ohoATDc_h0xiWg8UP_oQftClEVCUa79xNI8sokDWbQTK7s95PBy5Se3vXt-tmaqf87.jpg?r=e31" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="25">
+                <div class="img-container">
+                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABZ0IIRm9KdvEIHX8pEG19_nwxu8sV_ai2FXeApKN_d2mY6_Cmw2TykaORJg2tjOq4P5Sx9TfNoCkdsPdTfIn7ehG27wFLUH3VPeMqeQL4eUMUqtXTsxJ46otf-Uq6OKBpoGN.jpg?r=4d2" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+            <div class="movie-items" data-id="24">
+                <div class="img-container">
+                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABe4EULJNPPr2jaVJlf0IuH7tMvBnkJTK0zAxH9BxADAq1ID8_TnU0AvX2RS_-hLELEQYspFOaXu6_iIbFCXo3OiLosndfqxJSd9ajTgadSfihBwtBT4QgdZJKQMHDEaB4FG_.jpg?r=b47" class="rankedMovieImage">
+                    <div class="overlay"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

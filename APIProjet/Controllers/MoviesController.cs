@@ -14,8 +14,6 @@ using System.Data;
 namespace APIProject.Controllers
 {
     [Authorize(Roles = "Administrator,VIP,Normal")]
-    [ApiController]
-    [Route("api/[controller]")]
     public class MoviesController : ODataController
     {
         private IMovieRepository repository;
@@ -27,7 +25,7 @@ namespace APIProject.Controllers
             repository= movieRepository;
         }
         [EnableQuery(PageSize = 20)]
-        [HttpGet("/List")]
+        [HttpGet("api/Movies/List")]
         public ActionResult<IQueryable<GetMovieResponseDTO>> GetMovies()
         {
             List<Movie> movies = repository.GetMovies();
@@ -35,7 +33,6 @@ namespace APIProject.Controllers
             return Ok(getMovieResponseDTOs);
         }
         [HttpGet("/MovieRanking/{rankType}")]
-        [EnableQuery]
         public ActionResult<IQueryable<GetMovieResponseDTO>> GetMovieByRanking(int rankType)
         {
             DateTime startDate = DateTimeUtils.GetStartDateRanking(rankType);
@@ -47,7 +44,6 @@ namespace APIProject.Controllers
             return Ok(responseDTOs);
         }
         [EnableQuery]
-        [HttpGet]
         public ActionResult<GetMovieResponseDTO> Get([FromRoute] int key)
         {
             Movie movie = repository.GetMovieById(key);
@@ -60,7 +56,6 @@ namespace APIProject.Controllers
         }
         [Authorize(Roles = "Administrator")]
         [EnableQuery]
-        [HttpPost]
         public IActionResult Post([FromBody] CreateMovieRequestDTO createMovieRequestDTO)
         {
             Movie movie = _mapper.Map<Movie>(createMovieRequestDTO);
@@ -72,7 +67,6 @@ namespace APIProject.Controllers
         }
         [Authorize(Roles = "Administrator")]
         [EnableQuery]
-        [HttpPut]
         public ActionResult Put([FromRoute] int key, [FromBody] UpdateMovieRequestDTO updateMovieRequestDTO)
         {
             if (key != updateMovieRequestDTO.MovieId)
@@ -91,7 +85,6 @@ namespace APIProject.Controllers
         }
         [Authorize(Roles = "Administrator")]
         [EnableQuery]
-        [HttpDelete]
         public ActionResult Delete([FromRoute] int key)
         {
             Movie tempMovie = repository.GetMovieById(key);

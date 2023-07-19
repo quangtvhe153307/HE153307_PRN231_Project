@@ -20,6 +20,7 @@ namespace APIProject.DTO.Movie
         public string? MovieImage { get; set; }
         public DateTime UpdatedDate { get; set; }
         public double ViewCount { get; set; }
+        public string? TrailerUrl { get; set; }
         public virtual ICollection<GetCategoryResponseDTO> Categories { get; set; }
         public virtual ICollection<GetMovieSeasonResponseDTO> MovieSeasons { get; set; }
     }
