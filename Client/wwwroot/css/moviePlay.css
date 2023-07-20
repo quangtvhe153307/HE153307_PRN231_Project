@@ -419,3 +419,6 @@ span.item-value {
 .related-movies.popular-movies-container {
     margin-top: 2em;
 }
+h1.film-info-title {
+    margin-top: 1em;
+}

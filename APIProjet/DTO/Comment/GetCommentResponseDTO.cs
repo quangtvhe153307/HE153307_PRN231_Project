@@ -12,6 +12,7 @@ namespace APIProject.DTO.Comment
         public int UserId { get; set; }
         public int MovieId { get; set; }
         public DateTime CommentedDate { get; set; }
+        public TimeSpan CommentedTimeInterval => DateTime.Now - CommentedDate;
         public string Content { get; set; }
         public virtual GetUserResponseDTO User { get; set; }
         public virtual GetMovieResponseDTO Movie { get; set; }

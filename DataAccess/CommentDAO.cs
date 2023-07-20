@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace DataAccess
                 using (var context = new MyDbContext())
                 {
                     listComments = context.Comments
+                        .Include(x => x.User)
                         .ToList();
                 }
             }
@@ -34,6 +36,7 @@ namespace DataAccess
                 using (var context = new MyDbContext())
                 {
                     comments = context.Comments
+                        .Include(x => x.User)
                         .Where(x => x.MovieId == movieId)
                         .ToList();
                 }
