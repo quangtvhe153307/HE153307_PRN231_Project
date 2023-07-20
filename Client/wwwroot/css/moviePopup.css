@@ -155,11 +155,11 @@ ul.dropdown-menu {
     justify-content: flex-start;
 }
 
-.titleCardList--container.episode-item:first-of-type {
+.titleCardList--container.episode-item:first-of-type, .titleCardList--container.movie-item:first-of-type {
     border-top: 1px solid #404040;
 }
 
-.titleCardList--container.episode-item {
+.titleCardList--container.episode-item, .titleCardList--container.movie-item {
     align-items: center;
     border-bottom: 1px solid #404040;
     border-radius: .25em;
@@ -278,6 +278,7 @@ span.allEpisodeSelector-season-label.ltr-78kobz {
     position: absolute;
     right: 0;
     top: 0;
+    color: #fff;
 }
 svg.titleCard-playSVG.ltr-0.e1mhci4z1 {
     background-color: rgba(30,30,20,.5);
@@ -289,6 +290,6 @@ svg.titleCard-playSVG.ltr-0.e1mhci4z1 {
     transition: opacity .2s ease-in;
     width: 3em;
 }
-.titleCardList--container.episode-item:hover .titleCard-playSVG {
+.titleCardList--container.episode-item:hover .titleCard-playSVG, .titleCardList--container.movie-item:hover .titleCard-playSVG {
     opacity: 1;
 }

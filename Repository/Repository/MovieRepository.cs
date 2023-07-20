@@ -21,5 +21,7 @@ namespace Repository.Repository
         public List<Movie> GetMoviesByRank(DateTime startDate, DateTime endDate) => MovieDAO.GetMoviesByRank(startDate, endDate);
 
         public bool IsPurchased(int userId, int movieId) => MovieDAO.IsPurchased(userId, movieId);
+
+        public bool CheckFreeMovie(int id) => MovieDAO.CheckFreeMovie(id);
     }
 }

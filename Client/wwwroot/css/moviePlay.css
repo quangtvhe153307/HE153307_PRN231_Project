@@ -319,6 +319,9 @@ span.titleCard-title_text1 {
 .episodeSelector-container1 .titleCardList--container.episode-item {
     border-radius: 0;
 }
+.episodeSelector-container1 .titleCardList--container.movie-item {
+    border-radius: 0;
+}
 .show-season-btn:focus, .show-season-btn:focus-visible{
     box-shadow: none!important;
 }
@@ -341,8 +344,14 @@ span.titleCard-title_text1 {
 .titleCardList--container.episode-item.episode-selector:last-child {
     border-bottom: none;
 }
+.titleCardList--container.movie-item.episode-selector:last-child {
+    border-bottom: none;
+}
 .episodeSelector-container1 .titleCardList--container.episode-item{
     padding: 0!important;
+}
+.episodeSelector-container1 .titleCardList--container.movie-item {
+    padding: 0 !important;
 }
 .comment-input {
     /* background: red; */
@@ -421,4 +430,17 @@ span.item-value {
 }
 h1.film-info-title {
     margin-top: 1em;
+}
+.not-permitted-content > div {
+    background: #fff;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 1em;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: unset;
+    line-height: 2em;
+}
+.not-permitted-content button {
+    border-radius: 5px;
 }

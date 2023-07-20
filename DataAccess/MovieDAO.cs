@@ -143,5 +143,24 @@ namespace DataAccess
                 return false;
             }
         }
+        public static bool CheckFreeMovie(int id)
+        {
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    var p1 = context.Movies.SingleOrDefault(x => x.MovieId == id);
+                    if(p1 == null)
+                    {
+                        return false;
+                    }
+                    return p1.IsFree;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

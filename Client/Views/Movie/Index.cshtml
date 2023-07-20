@@ -7,14 +7,37 @@
     .movie-items{
         width: 19%;
     }
+
+    .movie-item svg.titleCard-playSVG.ltr-0.e1mhci4z1 {
+        height: 2em;
+        width: 2em;
+    }
 </style>
+<script>
+    var isPermitted = ('@ViewBag.isPermitted'=='True');
+</script>
 <div class="child-container play">
     <div class="movie-section">
         <div class="video-section">
             <div class="video-container shrink-0 w-full s1280:w-[880px] s1366:w-[960px]">
-                <div id="player" class="player w-full h-full player-paused user-inactive" tabindex="0">
-                    @*<video class="player-video" autoplay="" preload="auto" playsinline="" webkit-playsinline="" src="https://scontent.cdninstagram.com/v/t39.25447-2/10000000_1401376347384960_7285982435909605474_n.mp4?_nc_cat=101&amp;vs=1f4a62b7962e8dbb&amp;_nc_vs=HBksFQAYJEdJQ1dtQUNBN0dGYmktb0VBR0tZSURSc0FoMWxibWRqQUFBRhUAAsgBABUAGCRHSUNXbUFDYy1oZFRzNG9BQUtLYVBHS3k5V3A2YnY0R0FBQUYVAgLIAQBLB4gScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AHXVzZV9sYW5jem9zX2Zvcl92cW1fdXBzY2FsaW5nABFkaXNhYmxlX3Bvc3RfcHZxcwAVACUAHIwXQAAAAAAAAAAREQAAACbs0bDt5eiOAhUCKAJDMxgLdnRzX3ByZXZpZXccF0CVCw1P3ztkGCFkYXNoX2dlbjJod2Jhc2ljX2hxMl9mcmFnXzJfdmlkZW8SABgYdmlkZW9zLnZ0cy5jYWxsYmFjay5wcm9kOBJWSURFT19WSUVXX1JFUVVFU1QbCogVb2VtX3RhcmdldF9lbmNvZGVfdGFnBm9lcF9oZBNvZW1fcmVxdWVzdF90aW1lX21zATAMb2VtX2NmZ19ydWxlB3VubXV0ZWQTb2VtX3JvaV9yZWFjaF9jb3VudAEwEW9lbV9pc19leHBlcmltZW50AAxvZW1fdmlkZW9faWQPOTc1NDM1NzY2OTM2NTQ2Em9lbV92aWRlb19hc3NldF9pZA8yMjk4NDE2OTMzMzcyMjIVb2VtX3ZpZGVvX3Jlc291cmNlX2lkDzU5NTUzNjY1NjA3Nzk0MhxvZW1fc291cmNlX3ZpZGVvX2VuY29kaW5nX2lkEDEwNDcyMDc1OTY0NDE5OTMOdnRzX3JlcXVlc3RfaWQAJQIcACXEARsHiAFzBDMwNDUCY2QKMjAyMy0wNy0xOANyY2IBMANhcHAFVmlkZW8CY3QZQ09OVEFJTkVEX1BPU1RfQVRUQUNITUVOVBNvcmlnaW5hbF9kdXJhdGlvbl9zCDE0MjAuMDk1AnRzFXByb2dyZXNzaXZlX2VuY29kaW5ncwA%3D&amp;ccb=1-7&amp;_nc_sid=41a7d5&amp;efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&amp;_nc_ohc=l61nKfZYvh8AX_TYAmg&amp;_nc_ht=scontent-prg1-1.xx&amp;edm=APRAPSkEAAAA&amp;oh=00_AfA1u7BYsg05WDnY313kxVhbQUK806UO7qqtngxu5sTl2A&amp;oe=64BC0A29&amp;_nc_rid=498309913993883" poster="https://s199.imacdn.com/vg/2023/07/04/826c307a821efe39_cf02e313300b9cc2_16878916884848533118684.jpg" tabindex="1"></video>*@
-                    <iframe width="100%" class="player-video" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/@(ViewData["url"])" frameborder="0" allowfullscreen></iframe>`
+                <div id="player" class="player w-full h-full player-paused" tabindex="0">
+                    @if ((bool)ViewData["isPermitted"])
+                    {
+                        <iframe width="100%" class="player-video" id="play-movie" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/@(ViewData["url"])" frameborder="0" allowfullscreen></iframe>
+                    } else
+                    {
+                        <div>
+                            <img class="player-video" style="aspect-ratio: 16/9;" src="@Model.MovieImage" />
+                            <div class="overlay" style="background: #fff;opacity: 0.9;"></div>
+                            <div class="overlay" style="">
+                                <div style="text-align: center;display: flex;height: 100%;align-items: center;width: 100%;" class="not-permitted-panel">
+                                    <div style="width: 100%;align-items: center;" class="not-permitted-content">
+                                        <div>You don't have permission to access this movie<br>Please <button class="upgrade-btn btn-primary">Upgrade your plan</button> or <button class="purchase-btn btn-primary">Purchase this movie</button> to continue watching</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div class="player-title"><span>@Model.Title</span></div>
                 </div>
             </div>
@@ -25,7 +48,7 @@
                 <span class="inline-block font-light">@Model.ViewCount views</span>
             </div>
         </div>
-        <div class="ptrack-container">
+        <div class="ptrack-container" style="width: 100%;">
             <div class="ptrack-content" style="    border: 1px solid #404040;">
                 <div class="episodeSelector episodeSelector1">
                     <div class="episodeSelector-header" style="border-bottom: 1px solid #404040;">
@@ -34,7 +57,7 @@
                         </div>
                         <div class="episodeSelector-dropdown episode-selector-dropdown">
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle show-season-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="    font-weight: bold;">Season 1</button>
+                                <button class="btn btn-secondary dropdown-toggle show-season-btn" id="season-list-select-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="    font-weight: bold;">Season 1</button>
                                 <div class="dropdown-menu" id="dropdown-menu" style="padding-top: 0;padding-bottom: 0;">
                                     @for (int i = 0; i < Model.MovieSeasons.Count - 1; i++)
                                     {
@@ -58,13 +81,13 @@
                     <div class="episodeSelector-container episodeSelector-container1" id="episodeSelector-container">
                         @for (int i = 0; i < Model.MovieSeasons.Count; i++)
                         {
-                            <div class="seasons-container" id="season-container-@((Model.MovieSeasons as List<GetMovieSeasonResponseDTO>)[i].MovieSeasonId)">
+                            <div class="seasons-container" id="season-container-@((Model.MovieSeasons as List<GetMovieSeasonResponseDTO>)[i].MovieSeasonId)" style="@(i == 0 ? "" : "display:none;")">
                                 <div class="season-title" style="display:none;">
                                     <div class="ltr-1bdvpws"><span class="allEpisodeSelector-season-label ltr-78kobz">Season @(i+1)</span></div>
                                 </div>
                                 @foreach (var item in ((Model.MovieSeasons as List<GetMovieSeasonResponseDTO>)[i].MovieEpisodes))
                                 {
-                                    <div class="titleCardList--container episode-item episode-selector movie-episode-list" data-movieid="@Model.MovieId" data-episodeid="@item.EpisodeId">
+                                    <div class="titleCardList--container movie-item episode-selector movie-episode-list" data-movieid="@Model.MovieId" data-episodeid="@item.EpisodeId">
                                         @*<div class="titleCard-title_index" id="episode-order">1</div>*@
                                         <div class="titleCard-imageWrapper titleCard-imageWrapper1">
                                             <div class="ptrack-content"><img src="@item.EpisodeImage"></div>
@@ -149,76 +172,16 @@
             <h2>NEW RELEASES</h2>
         </div>
         <div class="related-movies">
-            <div class="movie-items" data-id="33">
-                <div class="img-container">
-                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABdpqzZxZ_6QublXzPZJp3-lJggnI2tavBnn27YmImGByv_Kbgt1fvhxbEHQls1xtcJIiPf03iGjXu75mfG4GSkFNwPX-64Y92AoJm4i-1VhqWTlOk9V1gLfS96jON4Iro_at.jpg?r=5b7" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
+            @foreach (var item in (List<GetMovieResponseDTO>)ViewData["relatedMovies"])
+            {
+                <div class="movie-items" data-id="@item.MovieId">
+                    <div class="img-container">
+                        <img src="@item.MovieImage" class="rankedMovieImage">
+                        <div class="overlay"></div>
+                    </div>
 
-            </div>
-            <div class="movie-items" data-id="32">
-                <div class="img-container">
-                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABdpqzZxZ_6QublXzPZJp3-lJggnI2tavBnn27YmImGByv_Kbgt1fvhxbEHQls1xtcJIiPf03iGjXu75mfG4GSkFNwPX-64Y92AoJm4i-1VhqWTlOk9V1gLfS96jON4Iro_at.jpg?r=5b7" class="rankedMovieImage">
-                    <div class="overlay"></div>
                 </div>
-
-            </div>
-            <div class="movie-items" data-id="31">
-                <div class="img-container">
-                    <img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABZ4Ia60h5OU4XpJfB9etlI6djRw3T7g1K8FGAGMOtCV8UUq_u4_k-WFC-j4SMadHRQu6p7XASPPxxoej4b1_A3N7X36hoxPorGtwSFenXXA5KkWceBmK5h8m9mBfFmVptv2Q.jpg?r=157" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
-
-            </div>
-            <div class="movie-items" data-id="30">
-                <div class="img-container">
-                    <img src="https://occ-0-395-2774.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABed-9wEYANJzgpdmduzr4iEObBtbw-O4NKoXYdE0trVX8k5NN9NmSDjrtUqHtMIR2nhfxq_fRnsEnvf1b7vgZl6TJIwIIhqHE3NszWfoZDdo-uT7P0-Qt0fbvAQEOzY2ga6p.jpg?r=c47" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
-
-            </div>
-            <div class="movie-items" data-id="29">
-                <div class="img-container">
-                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABexMFTSu3Fh3PyD1S1y-JvAwXm1Q9nblemkHVG7UcmekZw6jNDObd8Mdffb6N-YJ1Q6dcFiF6Nrfwj1xyUGPz6ftySh4Y6So8MxoaJsA_DqLOcNEBvj7A3hJgHSgsNTuvkCr.jpg?r=f3e" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
-
-            </div>
-            <div class="movie-items" data-id="28">
-                <div class="img-container">
-                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABexMFTSu3Fh3PyD1S1y-JvAwXm1Q9nblemkHVG7UcmekZw6jNDObd8Mdffb6N-YJ1Q6dcFiF6Nrfwj1xyUGPz6ftySh4Y6So8MxoaJsA_DqLOcNEBvj7A3hJgHSgsNTuvkCr.jpg?r=f3e" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
-
-            </div>
-            <div class="movie-items" data-id="27">
-                <div class="img-container">
-                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABexMFTSu3Fh3PyD1S1y-JvAwXm1Q9nblemkHVG7UcmekZw6jNDObd8Mdffb6N-YJ1Q6dcFiF6Nrfwj1xyUGPz6ftySh4Y6So8MxoaJsA_DqLOcNEBvj7A3hJgHSgsNTuvkCr.jpg?r=f3e" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
-
-            </div>
-            <div class="movie-items" data-id="26">
-                <div class="img-container">
-                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABefMRIxKYxC5tlFm9q_QvwMh9kxTUQRmRLhVcmdAn8TlHl6k0gZ1sq3Jsh9W8bkG2-ohoATDc_h0xiWg8UP_oQftClEVCUa79xNI8sokDWbQTK7s95PBy5Se3vXt-tmaqf87.jpg?r=e31" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
-
-            </div>
-            <div class="movie-items" data-id="25">
-                <div class="img-container">
-                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABZ0IIRm9KdvEIHX8pEG19_nwxu8sV_ai2FXeApKN_d2mY6_Cmw2TykaORJg2tjOq4P5Sx9TfNoCkdsPdTfIn7ehG27wFLUH3VPeMqeQL4eUMUqtXTsxJ46otf-Uq6OKBpoGN.jpg?r=4d2" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
-
-            </div>
-            <div class="movie-items" data-id="24">
-                <div class="img-container">
-                    <img src="https://occ-0-395-325.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABe4EULJNPPr2jaVJlf0IuH7tMvBnkJTK0zAxH9BxADAq1ID8_TnU0AvX2RS_-hLELEQYspFOaXu6_iIbFCXo3OiLosndfqxJSd9ajTgadSfihBwtBT4QgdZJKQMHDEaB4FG_.jpg?r=b47" class="rankedMovieImage">
-                    <div class="overlay"></div>
-                </div>
-
-            </div>
+            }
         </div>
     </div>
 </div>

@@ -12,7 +12,7 @@ using System.Data;
 
 namespace APIProject.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator,VIP,Normal")]
     public class CommentsController : ODataController
     {
         private ICommentRepository repository;
@@ -23,6 +23,7 @@ namespace APIProject.Controllers
             _mapper = mapper;
             repository = commentRepository;
         }
+        [Authorize(Roles = "Administrator,VIP,Normal")]
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetCommentResponseDTO>> Get()
         {
@@ -30,6 +31,7 @@ namespace APIProject.Controllers
             List<GetCommentResponseDTO> getCommentResponseDTOs = _mapper.Map<List<GetCommentResponseDTO>>(comments);
             return Ok(getCommentResponseDTOs);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult<IQueryable<GetCommentResponseDTO>> Get([FromRoute] int key)
         {
@@ -37,6 +39,7 @@ namespace APIProject.Controllers
             List<GetCommentResponseDTO> getCommentResponseDTOs = _mapper.Map<List<GetCommentResponseDTO>>(comments);
             return Ok(getCommentResponseDTOs);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public IActionResult Post([FromBody] CreateCommentRequestDTO createCommentRequestDTO)
         {

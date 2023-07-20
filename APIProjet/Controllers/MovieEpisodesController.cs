@@ -52,13 +52,19 @@ namespace APIProject.Controllers
         {
             string role = User.Claims.ToList()[3].Value;
             MovieEpisode movieepisode = repository.GetMovieSourceById(key);
-            if (role.Equals("Normal"))
+
+            bool isFree = movieRepository.CheckFreeMovie(movieepisode.MovieSeason.MovieId);
+            if (!isFree)
             {
-                
-                bool isPurchased = movieRepository.IsPurchased(LoggedUserId(), movieepisode.MovieSeason.MovieId);
-                if (!isPurchased)
+                if (role.Equals("Normal"))
                 {
-                    return Forbid("you are not have permission to access");
+
+                    bool isPurchased = movieRepository.IsPurchased(LoggedUserId(), movieepisode.MovieSeason.MovieId);
+                    Console.WriteLine(isPurchased);
+                    if (!isPurchased)
+                    {
+                        return Forbid("you are not have permission to access");
+                    }
                 }
             }
             if (movieepisode == null)

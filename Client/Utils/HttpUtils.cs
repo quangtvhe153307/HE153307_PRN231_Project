@@ -42,7 +42,7 @@ namespace Client.Utils
             } else
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
-                throw new Exception(StringUtils.GetMessageFromErrorResponse(errorMessage));
+                throw new Exception(errorMessage);
             }
 
         }
