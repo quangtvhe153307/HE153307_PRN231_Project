@@ -65,11 +65,12 @@ namespace APIProject.Mapping
                 options => options.MapFrom(source => source.MovieViews.Count));
 
             //Comment
+            CreateMap<TimeSpan, string>().ConvertUsing(typeof(TimeSpanFormatterConverter));
             CreateMap<CreateCommentRequestDTO, Comment>();
             CreateMap<UpdateCommentRequestDTO, Comment>();
             CreateMap<Comment, GetCommentResponseDTO>()
                 .ForMember(destination => destination.CommentedTimeInterval,
-                options => options.MapFrom(source => (DateTime.Now - source.CommentedDate).ToString("d'd 'h'h 'm'm 's's'")));
+                options => options.MapFrom<TimeSpanFormatterConverter>());
 
             //MovieRate
             CreateMap<CreateMovieRatedRequestDTO, MovieRated>();

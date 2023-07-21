@@ -10,6 +10,9 @@ $('.movie-section').on('click', '.season-list-items1', function () {
     var text = $(this).find('div').text();
     $('#season-list-select-btn').text(text);
 });
+$('.comment-input').on('click', '#comment-add', function () {
+    addComment();
+});
 
 if (isPermitted) {
     $('.movie-section').on('click', '.movie-item', function () {
@@ -87,5 +90,52 @@ function appendComment(data) {
 
     if (data["@odata.nextLink"] == undefined) {
         $('.more-comment').remove();
+    }
+}
+function addComment() {
+    var content = $('#comment-input').val();
+    if (content != undefined && content != '') {
+        var a = {
+            movieId: movieId,
+            content: content
+        };
+
+        $.ajax({
+            url: 'https://localhost:7038/odata/Comments?$expand=User',
+            method: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(a),
+            headers: { "Authorization": "Bearer " + getAccessToken() },
+            contentType: "application/json",
+            success: function (response) {
+                var result = ``;
+                result += `<div class="comment-item">
+                                            <div class="author-avatar">
+                                                <img class="" src="https://th.bing.com/th/id/OIP.Cl56H6WgxJ8npVqyhefTdQHaHa?pid=ImgDet&rs=1" />
+                                            </div>
+                                            <div style="flex: 1;"></div>
+                                            <div class="comment-item-body w-full">
+                                                <div class="author-name items-center">
+                                                    ${response.User.Email}
+                                                </div>
+                                                <div class="comment-content font-light break-words clear-both">
+                                                    ${response.Content}
+                                                </div>
+                                                <div class="comment-action">
+                                                    <span class="comment-time">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline-block" style="width: 16px;">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg> ${response.CommentedTimeInterval} ago
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>`;
+
+                var a = $('#comment-list-container').prepend(result);
+            },
+            error: function (xhr, status, error) {
+                $('#comment-error').html(`You don't have permission to comment`);
+            }
+        });
     }
 }

@@ -63,7 +63,7 @@ namespace APIProject.Controllers
                     Console.WriteLine(isPurchased);
                     if (!isPurchased)
                     {
-                        return Forbid("you are not have permission to access");
+                        return Forbid();
                     }
                 }
             }

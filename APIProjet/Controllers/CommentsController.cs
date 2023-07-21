@@ -16,12 +16,16 @@ namespace APIProject.Controllers
     public class CommentsController : ODataController
     {
         private ICommentRepository repository;
+        private IUserRepository userRepository;
+        private IMovieRepository movieRepository;
         private readonly IMapper _mapper;
 
-        public CommentsController(IMapper mapper, ICommentRepository commentRepository)
+        public CommentsController(IMapper mapper, ICommentRepository commentRepository, IMovieRepository movieRepository, IUserRepository userRepository)
         {
             _mapper = mapper;
             repository = commentRepository;
+            this.movieRepository = movieRepository;
+            this.userRepository = userRepository;
         }
         [Authorize(Roles = "Administrator,VIP,Normal")]
         [EnableQuery(PageSize = 10)]
@@ -39,17 +43,36 @@ namespace APIProject.Controllers
             List<GetCommentResponseDTO> getCommentResponseDTOs = _mapper.Map<List<GetCommentResponseDTO>>(comments);
             return Ok(getCommentResponseDTOs);
         }
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator,VIP,Normal")]
         [EnableQuery]
         public IActionResult Post([FromBody] CreateCommentRequestDTO createCommentRequestDTO)
         {
             try
             {
+                string role = User.Claims.ToList()[3].Value;
+                bool isFree = movieRepository.CheckFreeMovie(createCommentRequestDTO.MovieId);
+                if (!isFree)
+                {
+                    if (role.Equals("Normal"))
+                    {
+
+                        bool isPurchased = movieRepository.IsPurchased(LoggedUserId(), createCommentRequestDTO.MovieId);
+                        if (!isPurchased)
+                        {
+                            return Forbid();
+                        }
+                    }
+                }
                 Comment comment = _mapper.Map<Comment>(createCommentRequestDTO);
                 comment.UserId = LoggedUserId();
                 comment.CommentedDate = DateTime.Now;
                 repository.SaveComment(comment);
 
+                User user = userRepository.GetUserById(comment.UserId);
+                if (user != null)
+                {
+                    comment.User= user;
+                }
                 GetCommentResponseDTO responseDTO = _mapper.Map<GetCommentResponseDTO>(comment);
                 return Created(responseDTO);
             }
