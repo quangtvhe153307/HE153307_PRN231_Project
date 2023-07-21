@@ -69,10 +69,10 @@ namespace Client
                         var tokenS = jsonToken as JwtSecurityToken;
 
                         var injectedHttpClient = app.Services.GetService<HttpClient>();
-                        if (injectedHttpClient.DefaultRequestHeaders.Authorization == null)
-                        {
-                            injectedHttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-                        }
+                        //if (injectedHttpClient.DefaultRequestHeaders.Authorization == null)
+                        //{
+                        //    injectedHttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+                        //}
 
                         //
                         if (tokenS.ValidTo < DateTime.UtcNow)
@@ -124,6 +124,8 @@ namespace Client
                             }
                         } else
                         {
+                            injectedHttpClient.DefaultRequestHeaders.Remove("Authorization");
+                            injectedHttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
                             await next(context);
                         }
                     }
