@@ -379,14 +379,17 @@ span.titleCard-title_text1 {
     color: #000;
 }
 .comment-item {
-    padding: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: .5em;
     display: flex;
+    border-bottom: 1px solid #404040;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 .author-avatar {
     box-sizing: border-box;
-    width: 50px;
-    /* align-items: center; */
-    /* display: flex; */
+    width: 40px;
     position: relative;
 }
 .author-avatar img {
@@ -443,4 +446,15 @@ h1.film-info-title {
 }
 .not-permitted-content button {
     border-radius: 5px;
+}
+.more-comment button {
+    width: 100%;
+    background: rgb(229 231 235);
+    border: 1px solid rgb(229 231 235);
+    font-weight: 100;
+    font-size: 90%;
+}
+.more-comment:hover button {
+    background: rgb(77 77 77);
+    color: #fff;
 }

@@ -19,7 +19,7 @@ namespace Client.Controllers
                 var movie = await HttpUtils.GetObject<GetMovieResponseDTO>($"odata/Movies/{id}?$expand=Categories,MovieSeasons($expand=MovieEpisodes)");
 
                 //comment
-                var comment = await HttpUtils.GetObject<ODataReponseModel<GetCommentResponseDTO>>("/odata/Comments?$expand=User&$orderby=CommentedDate desc");
+                var comment = await HttpUtils.GetObject<ODataReponseModel<GetCommentResponseDTO>>($"/odata/Comments/{id}?$expand=User&$orderby=CommentedDate desc");
                 ViewData["comment"] = comment;
 
                 //incase user is not permitted

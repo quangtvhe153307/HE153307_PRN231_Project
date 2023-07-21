@@ -67,8 +67,10 @@ namespace APIProject.Mapping
             //Comment
             CreateMap<CreateCommentRequestDTO, Comment>();
             CreateMap<UpdateCommentRequestDTO, Comment>();
-            CreateMap<Comment, GetCommentResponseDTO>();
-            
+            CreateMap<Comment, GetCommentResponseDTO>()
+                .ForMember(destination => destination.CommentedTimeInterval,
+                options => options.MapFrom(source => (DateTime.Now - source.CommentedDate).ToString("d'd 'h'h 'm'm 's's'")));
+
             //MovieRate
             CreateMap<CreateMovieRatedRequestDTO, MovieRated>();
             CreateMap<UpdateMovieRatedRequestDTO, MovieRated>();

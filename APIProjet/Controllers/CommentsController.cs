@@ -31,8 +31,8 @@ namespace APIProject.Controllers
             List<GetCommentResponseDTO> getCommentResponseDTOs = _mapper.Map<List<GetCommentResponseDTO>>(comments);
             return Ok(getCommentResponseDTOs);
         }
-        [Authorize(Roles = "Administrator")]
-        [EnableQuery]
+        [Authorize(Roles = "Administrator,VIP,Normal")]
+        [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetCommentResponseDTO>> Get([FromRoute] int key)
         {
             List<Comment> comments = repository.GetCommentByMovieId(key);

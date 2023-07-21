@@ -117,30 +117,44 @@
                                 </div>
                             </div>
                             <div class="comments-list">
-                                @foreach (var item in ((ODataReponseModel<GetCommentResponseDTO>)ViewData["comment"]).Value)
+@*                                <span>@(((ODataReponseModel<GetCommentResponseDTO>)ViewData["comment"]).NextLink)</span>
+                                <span>@(((ODataReponseModel<GetCommentResponseDTO>)ViewData["comment"]).ODataContext)</span>
+                                <span></span>*@
+                                <div id="comment-list-container">
+                                    @foreach (var item in ((ODataReponseModel<GetCommentResponseDTO>)ViewData["comment"]).Value)
+                                    {
+                                        <div class="comment-item">
+                                            <div class="author-avatar">
+                                                <img class="" src="https://th.bing.com/th/id/OIP.Cl56H6WgxJ8npVqyhefTdQHaHa?pid=ImgDet&rs=1" />
+                                            </div>
+                                            <div style="flex: 1;"></div>
+                                            <div class="comment-item-body w-full">
+                                                <div class="author-name items-center">
+                                                    @item.User.Email
+                                                </div>
+                                                <div class="comment-content font-light break-words clear-both">
+                                                    @item.Content
+                                                </div>
+                                                <div class="comment-action">
+                                                    <span class="comment-time">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline-block" style="width: 16px;">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg> @item.CommentedTimeInterval ago
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                @if ((((ODataReponseModel<GetCommentResponseDTO>)ViewData["comment"]).NextLink) != null)
                                 {
-                                    <div class="comment-item">
-                                        <div class="author-avatar">
-                                            <img class="" src="https://th.bing.com/th/id/OIP.Cl56H6WgxJ8npVqyhefTdQHaHa?pid=ImgDet&rs=1" />
-                                        </div>
-                                        <div style="flex: 1;"></div>
-                                        <div class="comment-item-body w-full">
-                                            <div class="author-name items-center">
-                                                @item.User.Email
-                                            </div>
-                                            <div class="comment-content font-light break-words clear-both">
-                                                @item.Content
-                                            </div>
-                                            <div class="comment-action">
-                                                <span class="comment-time">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline-block" style="width: 16px;">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                    </svg> @item.CommentedTimeInterval
-                                                </span>
-                                            </div>
-                                        </div>
+                                    <div class="comment-item more-comment" style="border: none;padding-left: 0;">
+                                        <button id="more-comment-btn" data-link="@(((ODataReponseModel<GetCommentResponseDTO>)ViewData["comment"]).NextLink)">
+                                            More
+                                        </button>
                                     </div>
                                 }
+
                             </div>
                         </div>
                     </div>
