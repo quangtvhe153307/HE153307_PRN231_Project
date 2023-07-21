@@ -101,7 +101,7 @@
                                         <div class="titleCardList--metadataWrapper">
                                             <div class="titleCardList-title"><span class="titleCard-title_text titleCard-title_text1">@item.Title</span><span><span class="duration ellipsized">@item.Duration</span></span></div>
                                             <div class="titleCard-synopsis">
-                                                <div class="ptrack-content description">@item.ViewCount views</div>
+                                                <div class="ptrack-content item-description">@item.ViewCount views</div>
                                             </div>
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@
         <div>
             <h2>NEW RELEASES</h2>
         </div>
-        <div class="related-movies">
+        <div class="related-movies popular-movies">
             @foreach (var item in (List<GetMovieResponseDTO>)ViewData["relatedMovies"])
             {
                 <div class="movie-items" data-id="@item.MovieId">

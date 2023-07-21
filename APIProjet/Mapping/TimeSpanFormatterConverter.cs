@@ -25,7 +25,7 @@ namespace APIProject.Mapping
             string format = (time.Days > 0 ? "d'd '" : "") +
                        (time.Hours > 0 ? "h'h '" : "") +
                        (time.Minutes > 0 ? "m'm '" : "") +
-                       (time.Seconds > 0 ? "s's'" : "");
+                       (time.Seconds >= 0 ? "s's'" : "");
 
             // Format the TimeSpan using the custom format string
             string formattedString = time.ToString(format);

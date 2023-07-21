@@ -67,7 +67,73 @@
             @RenderBody()
         </main>
     </div>
+    <!-- Button trigger modal -->
+    <button id="preview-modal-btn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal" style="display: none;">
+    </button>
 
+    <!-- Modal -->
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="previewModal--player_container" id="previewModal--player_container"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="previewModal--info" style="opacity: 1;">
+                        <div class="detail-modal-container">
+                            <div class="ptrack-container">
+                                <div>
+                                    <div class="previewModal--detailsMetadata">
+                                        <div class="previewModal--detailsMetadata-left">
+                                            <p>
+                                                <div class="description" id="description">
+                                                    Before eradicating humankind from the world, the gods give them one last chance to prove themselves worthy of survival. Let the Ragnarok battles begin!
+                                                </div>
+                                            </p>
+                                        </div>
+                                        <div class="previewModal--detailsMetadata-right">
+                                            <div class="previewModal--tags" id="previewModal--tags">
+                                                <span class="previewModal--tags-label">Genres:</span>
+                                                <span class="tag-item">Action anime,</span>
+                                                <span class="tag-item">Japanese,</span>
+                                                <span class="tag-item">Anime series,</span>
+                                            </div>
+                                            <div class="previewModal--tags" id="previewModal--tags1">
+                                                <span class="previewModal--tags-label">Released Date:</span>
+                                                <span class="tag-item" id="released-date-tag-item"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ptrack-container">
+                                <div class="ptrack-content">
+                                    <div class="episodeSelector">
+                                        <div class="episodeSelector-header">
+                                            <div>
+                                                <h3 class="previewModal--section-header episodeSelector-label">Episodes</h3>
+                                            </div>
+                                            <div class="episodeSelector-dropdown">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Season 1
+                                                    </button>
+                                                    <ul class="dropdown-menu" id="dropdown-menu">
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="episodeSelector-container" id="episodeSelector-container">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer id="footer" class="bg-white mt-5">
         <div style="max-width: 1320px;margin-left: auto;margin-right: auto;">
             <div class="social-links">
