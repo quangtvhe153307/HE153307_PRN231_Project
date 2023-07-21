@@ -13,8 +13,15 @@ namespace Client.Utils
         public static async Task<T> PostAsync<T>(string uri, HttpContent content)
         {
             var response = await httpClient.PostAsync(uri, content);
-            var responseString = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(responseString);
+            try
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(responseString);
+            } catch(Exception ex)
+            {
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+
         }
 
         public static Task<Dictionary<string, object>> PostAsync(string uri, HttpContent content)

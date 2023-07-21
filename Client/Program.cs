@@ -18,7 +18,8 @@ namespace Client
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession();
             // Add http client to call to api with base address
             var httpClient = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
@@ -134,7 +135,7 @@ namespace Client
             });
             app.UseRouting();
             app.UseAuthorization();
-
+            app.UseSession();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}/{episodeId?}");

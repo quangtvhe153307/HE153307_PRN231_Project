@@ -4,6 +4,7 @@ using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObjects.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230721180629_add order entity")]
+    partial class addorderentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,27 +210,6 @@ namespace BusinessObjects.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("MovieViews");
-                });
-
-            modelBuilder.Entity("BusinessObjects.Order", b =>
-                {
-                    b.Property<string>("Apptransid")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long>("Amount")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Apptransid");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("BusinessObjects.PurchasedMovie", b =>
@@ -490,17 +471,6 @@ namespace BusinessObjects.Migrations
                         .IsRequired();
 
                     b.Navigation("MovieEpisode");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BusinessObjects.Order", b =>
-                {
-                    b.HasOne("BusinessObjects.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });

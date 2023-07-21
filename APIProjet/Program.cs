@@ -11,6 +11,7 @@ using APIProject.DTO.User;
 using APIProject.Jobs;
 using APIProject.Mapping;
 using APIProject.Util;
+using APIProject.Utils;
 using AutoMapper;
 using BusinessObjects;
 using Microsoft.AspNetCore.Authentication;
@@ -22,6 +23,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OData.UriParser;
 using Microsoft.OpenApi.Models;
+using MimeKit.Text;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
 using Newtonsoft.Json.Linq;
@@ -30,6 +32,7 @@ using Repository.IRepository;
 using Repository.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -89,6 +92,7 @@ namespace APIProjet
             builder.Services.AddSingleton<IMovieSeasonRepository, MovieSeasonRepository>();
             builder.Services.AddSingleton<IPurchasedMovieRepository, PurchasedMovieRepository>();
             builder.Services.AddSingleton<ITransactionRepository, TransactionRepository>();
+            builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
             builder.Services.AddSingleton<IJWTUtils, JWTUtils>();
             builder.Services.AddSingleton<IAESUtils, AESUtils>();
             var mapperConfig = new MapperConfiguration(mc =>
@@ -213,6 +217,7 @@ namespace APIProjet
                     .WithCronSchedule("0 0 0 * * ?"));
         });
             builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+            ConfigurationUtils.Init(builder.Configuration);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
