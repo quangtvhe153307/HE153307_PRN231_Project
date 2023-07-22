@@ -33,7 +33,7 @@
                             <div class="overlay" style="">
                                 <div style="text-align: center;display: flex;height: 100%;align-items: center;width: 100%;" class="not-permitted-panel">
                                     <div style="width: 100%;align-items: center;" class="not-permitted-content">
-                                        <div>You don't have permission to access this movie<br>Please <button class="upgrade-btn btn-primary">Upgrade your plan</button> or <button class="purchase-btn btn-primary">Purchase this movie</button> to continue watching</div>
+                                        <div>You don't have permission to access this movie<br>Please <button class="upgrade-btn btn-primary">Upgrade your plan</button> or <button class="purchase-btn btn-primary" id="btn-purchase" data-name="@Model.Title" data-id="@Model.MovieId" data-price="@Model.Price" data-img="@Model.MovieImage">Purchase this movie</button> to continue watching</div>
                                     </div>
                                 </div>
                             </div>
@@ -198,6 +198,34 @@
 
                 </div>
             }
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#purchaseModal" id="btn-do-purchcase" style="display: none;">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Purchase confirmation?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-content">
+                <div style="display: flex;gap: 3em;margin: 3em 0;">
+                    <div class="purchase-img-container">
+                        <img id="purchase-img-movie"/>
+                    </div>
+                    <div class="purchase-message">
+                        <div>Do you want to purchase <span class="fw-bold" id="purchase-name">Movie 1</span> with <span class="fw-bold" id="purchase-price">1000000</span> VND</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="purchase-done">Close</button>
+                <button type="button" class="btn btn-primary" id="purchase-confirmation">Purchase</button>
+            </div>
         </div>
     </div>
 </div>

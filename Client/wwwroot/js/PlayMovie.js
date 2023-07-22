@@ -59,7 +59,46 @@ $('.movie-section').on('click', '#more-comment-btn', function () {
         }
     });
 });
-var x;
+$('#player').on('click', '#btn-purchase', function () {
+    var id = $(this).data('id');
+    var name = $(this).data('name');
+    var price = $(this).data('price');
+    var img = $(this).data('img');
+
+    $('#modal-content').find('#purchase-img-movie').prop('src', img);
+    $('#modal-content').find('#purchase-name').html(name);
+    $('#modal-content').find('#purchase-price').html(price);
+    $('#modal-content').data('id', id);
+    $('#btn-do-purchcase').click();
+});
+$('#purchaseModal').on('click', '#purchase-confirmation', function () {
+    var a = {
+        movieId: $('#modal-content').data('id')
+    };
+    $.ajax({
+        url: 'https://localhost:7038/odata/PurchasedMovies',
+        method: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(a),
+        headers: { "Authorization": "Bearer " + getAccessToken() },
+        contentType: "application/json",
+        success: function (response) {
+            appendAlert('Purchased Successfully', 'success');
+            setTimeout(function () {
+                location.reload();
+            }, 1000);
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr.responseJSON.message);
+            if (xhr.responseJSON.message == 'Not enough balance') {
+                appendAlert('Not enough balance', 'danger');
+                setTimeout(function () {
+                    window.location.href = `https://localhost:7180/Balance/Add`;
+                }, 1000);
+            }
+        }
+    });
+});
 function appendComment(data) {
     var a = $('#comment-list-container');
     var result = '';

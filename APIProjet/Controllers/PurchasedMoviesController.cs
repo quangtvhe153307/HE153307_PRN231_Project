@@ -12,17 +12,22 @@ using System.Data;
 
 namespace APIProject.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator,VIP,Normal")]
     public class PurchasedMoviesController : ODataController
     {
         private IPurchasedMovieRepository repository;
+        private IMovieRepository movieRepository;
+        private IUserRepository userRepository;
         private readonly IMapper _mapper;
 
-        public PurchasedMoviesController(IMapper mapper, IPurchasedMovieRepository purchasedMovieRepository)
+        public PurchasedMoviesController(IMapper mapper, IPurchasedMovieRepository purchasedMovieRepository, IMovieRepository movieRepository, IUserRepository userRepository)
         {
             _mapper = mapper;
             repository= purchasedMovieRepository;
+            this.movieRepository = movieRepository;
+            this.userRepository = userRepository;
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetPurchasedMovieResponseDTO>> Get()
         {
@@ -30,6 +35,7 @@ namespace APIProject.Controllers
             List<GetPurchasedMovieResponseDTO> getPurchasedmovieResponseDTOs = _mapper.Map<List<GetPurchasedMovieResponseDTO>>(purchasedmovies);
             return Ok(getPurchasedmovieResponseDTOs);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult<IQueryable<GetPurchasedMovieResponseDTO>> Get([FromRoute] int key)
         {
@@ -37,6 +43,7 @@ namespace APIProject.Controllers
             List<GetPurchasedMovieResponseDTO> getPurchasedmovieResponseDTO = _mapper.Map<List<GetPurchasedMovieResponseDTO>>(purchasedmovies);
             return Ok(getPurchasedmovieResponseDTO);
         }
+        [Authorize(Roles = "Administrator,VIP,Normal")]
         [HttpGet("/MyPurchase")]
         public ActionResult<IQueryable<GetPurchasedMovieResponseDTO>> GetMyPurchase()
         {
@@ -51,11 +58,32 @@ namespace APIProject.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "Administrator,VIP,Normal")]
         [EnableQuery]
         public IActionResult Post([FromBody] CreatePurchasedMovieRequestDTO createPurchasedMovieRequestDTO)
         {
             try
             {
+                User user = userRepository.GetUserById(LoggedUserId());
+                Movie movie = movieRepository.GetMovieById(createPurchasedMovieRequestDTO.MovieId);
+                if (user == null || movie == null)
+                {
+                    return NotFound(new { message = "Not found" });
+                }
+                List<PurchasedMovie> purchasedMovies = repository.GetPurchasedMoviesById(LoggedUserId());
+                foreach (var item in purchasedMovies)
+                {
+                    if(item.MovieId == createPurchasedMovieRequestDTO.MovieId)
+                    {
+                        return BadRequest(new {message = "Already purchased"});
+                    }
+                }
+                if (user.Balance < movie.Price)
+                {
+                    return BadRequest(new { message = "Not enough balance" });
+                }
+                user.Balance -= movie.Price;
+                userRepository.UpdateUser(user);
                 PurchasedMovie purchasedMovie = _mapper.Map<PurchasedMovie>(createPurchasedMovieRequestDTO);
                 purchasedMovie.PurchasedTime = DateTime.Now;
                 purchasedMovie.UserId = LoggedUserId();

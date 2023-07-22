@@ -17,8 +17,43 @@
             $('#episodeSelector-container').find('.season-title').css('display', '');
             $('.episodeSelector-header').find('.episodeSelector-dropdown').find('button').text('All Episodes');
         }
-    })
+    });
 });
+$('#liveAlertPlaceholder').on('click', '.btn-close', function () {
+    var a = $(this).closest('.displayed-message');
+    a.css('right', '-300px');
+    setTimeout(function () {
+        a.remove();
+    }, 500);
+});
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+const appendAlert = (message, type) => {
+    const wrapper = document.createElement('div')
+    wrapper.classList.add("displayed-message");
+    wrapper.innerHTML = [
+        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+        `   <div>${message}</div>`,
+        '   <button type="button" class="btn-close"></button>',
+        '</div>'
+    ].join('')
+
+    alertPlaceholder.append(wrapper)
+    setTimeout(fadeIn, 100, wrapper);
+    //fadeIn(wrapper);
+}
+const fadeIn = (element) => {
+    /*    element.style.right = '0'*/
+    $(element).css('right', '0');
+    var a = $(element);
+    setTimeout(function () {
+        if (a) {
+            a.css('right', '-300px');
+            setTimeout(function () {
+                a.remove();
+            }, 500);
+        }
+    }, 3000);
+}
 $('.episodeSelector-container').on('click', '.episode-item', function (e) {
     e.preventDefault();
     var movieId = $(this).data('movieid');
