@@ -134,3 +134,123 @@ div#liveAlertPlaceholder {
     right: -300px;
     transition: right 0.5s;
 }
+.akira-header .account-menu-item, .pinning-header .account-menu-item {
+    display: block;
+    font-size: 12px;
+    position: relative;
+    z-index: 0;
+}
+
+.akira-header .account-dropdown-button, .pinning-header .account-dropdown-button {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    width: 100%;
+}
+
+.profile-link {
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.avatar-wrapper {
+    position: relative;
+    display: inline;
+}
+
+img.profile-icon {
+    border-radius: 4px;
+    height: 32px;
+    vertical-align: middle;
+    width: 32px;
+}
+
+.sub-menu.theme-lakira {
+    background-color: rgba(0,0,0,.9);
+    border: 1px solid hsla(0,0%,100%,.15);
+    box-sizing: border-box;
+    color: #fff;
+    cursor: default;
+    font-size: 13px;
+    line-height: 21px;
+    opacity: 0;
+    position: absolute;
+    top: 71px;
+}
+
+.account-drop-down {
+    margin-left: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 52px;
+    width: 220px;
+    background-color: rgba(0,0,0,.9);
+    border: 1px solid hsla(0,0%,100%,.15);
+    box-sizing: border-box;
+    color: #fff;
+    cursor: default;
+    font-size: 13px;
+    line-height: 21px;
+}
+
+.account-links {
+    padding-bottom: 10px;
+    display: block;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.sub-menu-item {
+    cursor: default;
+    display: block;
+    line-height: 24px;
+    display: block;
+    font-size: 13px;
+    /* line-height: 16px; */
+    padding: 5px 10px;
+}
+
+a.sub-menu-link-icon {
+    text-transform: none;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    color: #fff!important;
+    text-decoration: none;
+}
+
+.nav-item a.sub-menu-link-icon svg {
+    color: #b3b3b3;
+    margin: 0 13px 0 5px;
+}
+
+.sub-menu-list {
+    display: block;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.sign-out-links {
+    border-top: 1px solid hsla(0,0%,100%,.25);
+    padding: 10px 0;
+    cursor: default;
+}
+
+    .sign-out-links a {
+        color: #fff!important;
+        text-decoration: none;
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+.account-dropdown-button.dropdown-toggle {
+    display: flex;
+    align-items: center;
+}
