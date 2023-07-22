@@ -16,17 +16,18 @@ using System.Net;
 
 namespace api.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator,VIP,Normal")]
     public class UsersController : ODataController
     {
         private IUserRepository _repository;
+        private IRoleRepository _roleRepository;
         private readonly IMapper _mapper;
         private readonly IJWTUtils _jwtUtils;
         private readonly IConfiguration _config;
         private readonly IRefreshtokenRepository _refreshtokenRepository;
         private readonly IAESUtils _aESUtils;
         private readonly ISendMailUtils _sendMailUtils;
-        public UsersController(IMapper mapper, IJWTUtils jWTUtils, IUserRepository res, IConfiguration configuration, IRefreshtokenRepository refreshtokenRepository, IAESUtils aESUtils, ISendMailUtils sendMailUtils)
+        public UsersController(IMapper mapper, IJWTUtils jWTUtils, IUserRepository res, IConfiguration configuration, IRefreshtokenRepository refreshtokenRepository, IAESUtils aESUtils, ISendMailUtils sendMailUtils, IRoleRepository roleRepository)
         {
             _mapper = mapper;
             _jwtUtils = jWTUtils;
@@ -35,7 +36,9 @@ namespace api.Controllers
             _refreshtokenRepository = refreshtokenRepository;
             _aESUtils = aESUtils;
             _sendMailUtils = sendMailUtils;
+            _roleRepository = roleRepository;
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetUserResponseDTO>> Get()
         {
@@ -43,6 +46,7 @@ namespace api.Controllers
             List<GetUserResponseDTO> getUserResponseDTOs = _mapper.Map<List<GetUserResponseDTO>>(users);
             return Ok(getUserResponseDTOs);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult<GetUserResponseDTO> Get([FromRoute] int key)
         {
@@ -54,13 +58,14 @@ namespace api.Controllers
             GetUserResponseDTO getUserResponseDTO = _mapper.Map<GetUserResponseDTO>(user);
             return Ok(getUserResponseDTO);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public IActionResult Post([FromBody] CreateUserRequestDTO createUserRequestDTO)
         {
             User existUser = _repository.GetUserByEmail(createUserRequestDTO.Email);
-            if(existUser != null)
+            if (existUser != null)
             {
-                return BadRequest(new {message = "User already exist!"});
+                return BadRequest(new { message = "User already exist!" });
             }
             User user = _mapper.Map<User>(createUserRequestDTO);
             _repository.SaveUser(user);
@@ -68,6 +73,33 @@ namespace api.Controllers
             GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
             return Created(responseDTO);
         }
+        [Authorize(Roles = "Administrator,VIP,Normal")]
+        [HttpPost("/Upgrade")]
+        public IActionResult Upgrade()
+        {
+            User user = _repository.GetUserById(LoggedUserId());
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (user.RoleId == 2 || user.RoleId == 1)
+            {
+                return BadRequest(new { message ="You are already a premium user"});
+            }
+            if(user.Balance < 100)
+            {
+                return BadRequest(new { message = "Balance not enough" });
+            }
+            Role premiumRole = _roleRepository.GetRoleById(2);
+            user.Role = premiumRole;
+            user.RoleId = premiumRole.RoleId;
+            user.Balance -= 100;
+            user.ExpirationDate = DateTime.Today.AddMonths(1);
+            _repository.UpdateUser(user);
+            GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
+            return Ok(responseDTO);
+        }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult Put([FromRoute] int key, [FromBody] UpdateUserRequestDTO updateUserRequestDTO)
         {
@@ -85,6 +117,7 @@ namespace api.Controllers
             _repository.UpdateUser(tempUser);
             return Updated(tempUser);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult Delete([FromRoute] int key)
         {
@@ -338,6 +371,12 @@ namespace api.Controllers
             var newRefreshToken = _jwtUtils.GenerateRefreshToken(ipAddress);
             RevokeRefreshToken(refreshToken, ipAddress, "Replaced by new token", newRefreshToken.Token);
             return newRefreshToken;
+        }
+        private int LoggedUserId()
+        {
+            var userIdString = User.Claims.ToList()[4].Value;
+            int userId = Int32.Parse(userIdString);
+            return userId;
         }
     }
 }

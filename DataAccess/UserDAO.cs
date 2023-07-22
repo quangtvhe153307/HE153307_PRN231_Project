@@ -81,7 +81,6 @@ namespace DataAccess
             {
                 using (var context = new MyDbContext())
                 {
-                    //context.Entry<User>(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     context.Users.Update(user);
                     context.SaveChanges();
                 }

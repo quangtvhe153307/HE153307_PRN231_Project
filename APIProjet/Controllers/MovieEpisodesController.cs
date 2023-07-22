@@ -17,14 +17,16 @@ namespace APIProject.Controllers
     {
         private IMovieEpisodeRepository repository;
         private IMovieRepository movieRepository;
+        private IUserRepository userRepository;
         
         private readonly IMapper _mapper;
 
-        public MovieEpisodesController(IMapper mapper, IMovieEpisodeRepository movieEpisodeRepository, IMovieRepository movieRepository)
+        public MovieEpisodesController(IMapper mapper, IMovieEpisodeRepository movieEpisodeRepository, IMovieRepository movieRepository, IUserRepository userRepository)
         {
             _mapper = mapper;
-            repository= movieEpisodeRepository;
+            repository = movieEpisodeRepository;
             this.movieRepository = movieRepository;
+            this.userRepository = userRepository;
         }
         [Authorize(Roles = "Administrator")]
         [EnableQuery(PageSize = 10)]
@@ -50,7 +52,7 @@ namespace APIProject.Controllers
         [HttpGet("/MovieSource/{key}")]
         public ActionResult<string> GetMovieUrl([FromRoute] int key)
         {
-            string role = User.Claims.ToList()[3].Value;
+            string role = userRepository.GetUserById(LoggedUserId()).Role.RoleName;
             MovieEpisode movieepisode = repository.GetMovieSourceById(key);
 
             bool isFree = movieRepository.CheckFreeMovie(movieepisode.MovieSeason.MovieId);

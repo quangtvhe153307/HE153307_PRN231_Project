@@ -71,6 +71,21 @@ $('#player').on('click', '#btn-purchase', function () {
     $('#modal-content').data('id', id);
     $('#btn-do-purchcase').click();
 });
+$('#player').on('click', '#upgrade-plan-btn', function () {
+    window.location.href = `https://localhost:7180/Plan/Upgrade`;
+});
+$('#player').on('click', '#btn-purchase', function () {
+    var id = $(this).data('id');
+    var name = $(this).data('name');
+    var price = $(this).data('price');
+    var img = $(this).data('img');
+
+    $('#modal-content').find('#purchase-img-movie').prop('src', img);
+    $('#modal-content').find('#purchase-name').html(name);
+    $('#modal-content').find('#purchase-price').html(price);
+    $('#modal-content').data('id', id);
+    $('#btn-do-purchcase').click();
+});
 $('#purchaseModal').on('click', '#purchase-confirmation', function () {
     var a = {
         movieId: $('#modal-content').data('id')
