@@ -38,12 +38,51 @@ namespace DataAccess
             {
                 using (var context = new MyDbContext())
                 {
+                    //listMovies = context.Movies
+                    //    .Include(x => x.Categories)
+                    //    .Include(x => x.MovieSeasons)
+                    //    .ThenInclude(x => x.MovieEpisodes)
+                    //    .ThenInclude(x => x.MovieViews.Where(mv => mv.ViewedDate >= startDate && mv.ViewedDate < endDate))
+                    //    .ToList();
+
                     listMovies = context.Movies
-                        .Include(x => x.Categories)
-                        .Include(x => x.MovieSeasons)
-                        .ThenInclude(x => x.MovieEpisodes)
-                        .ThenInclude(x => x.MovieViews.Where(mv => mv.ViewedDate >= startDate && mv.ViewedDate < endDate))
-                        .ToList();
+                        .Select(x => new Movie
+                        {
+                            MovieId = x.MovieId,
+                            Title = x.Title,
+                            Description = x.Description,
+                            ReleaseDate = x.ReleaseDate,
+                            IsSingleEpisode = x.IsSingleEpisode,
+                            Price = x.Price,
+                            IsActive = x.IsActive,
+                            MovieImage = x.MovieImage,
+                            UpdatedDate = x.UpdatedDate,
+                            TrailerUrl = x.TrailerUrl,
+                            MovieSeasons = x.MovieSeasons.Select(season => new MovieSeason
+                            {
+                                MovieSeasonId = season.MovieSeasonId,
+                                Title = season.Title,
+                                Description = season.Description,
+                                ReleasedDate = season.ReleasedDate,
+                                IsActive = season.IsActive,
+                                MovieId = season.MovieId,
+                                MovieEpisodes = season.MovieEpisodes
+                                                .Where(episode => episode.MovieViews
+                                                                        .Any(mv => mv.ViewedDate >= startDate && mv.ViewedDate < endDate))
+                                                .Select(me => new MovieEpisode
+                                                {
+                                                    EpisodeId = me.EpisodeId,
+                                                    Title = me.Title,
+                                                    Description = me.Description,
+                                                    Duration = me.Duration,
+                                                    EpisodeImage = me.EpisodeImage,
+                                                    MovieSeasonId = me.MovieSeasonId,
+                                                    UrlSource = me.UrlSource,
+                                                    MovieViews = me.MovieViews.Where(mv => mv.ViewedDate >= startDate && mv.ViewedDate < endDate).ToList()
+                                                })
+                                                .ToList()
+                            }).ToList()
+                        }).ToList();
                 }
             }
             catch (Exception ex)
