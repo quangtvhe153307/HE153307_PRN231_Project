@@ -18,5 +18,6 @@ namespace APIProject.DTO.User
         public string LastName { get; set; }
         public bool EmailConfirmed { get; set; }
         public double Balance { get; set; }
+        public DateTime? ExpirationDate { get; set; }
     }
 }

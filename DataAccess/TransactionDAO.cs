@@ -25,6 +25,24 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
             return listTransactions;
+        }        
+        public static List<Transaction> GetMyTransactions(int userId)
+        {
+            var listTransactions = new List<Transaction>();
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    listTransactions = context.Transactions
+                        .Where(x => x.UserId == userId)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listTransactions;
         }
         public static Transaction FindTransactionById(int prodId)
         {

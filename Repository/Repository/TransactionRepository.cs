@@ -17,5 +17,7 @@ namespace Repository.Repository
         public Transaction GetTransactionById(int id) => TransactionDAO.FindTransactionById(id);
 
         public void DeleteTransaction(Transaction transaction) => TransactionDAO.DeleteTransaction(transaction);
+
+        public List<Transaction> GetMyTransactions(int userId) => TransactionDAO.GetMyTransactions(userId);
     }
 }

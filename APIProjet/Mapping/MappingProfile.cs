@@ -28,7 +28,9 @@ namespace APIProject.Mapping
             CreateMap<UpdateRoleRequestDTO, Role>();
             
             //Transaction
-            CreateMap<Transaction, GetTransactionResponseDTO>();
+            CreateMap<Transaction, GetTransactionResponseDTO>()
+                .ForMember(dest => dest.TransactionDateStr,
+                options => options.MapFrom(source => source.TransactionDate.ToShortDateString()));
             CreateMap<CreateTransactionRequestDTO, Transaction>();
             CreateMap<UpdateTransactionRequestDTO, Transaction>();
             
@@ -80,7 +82,9 @@ namespace APIProject.Mapping
             //PurchasedMovie
             CreateMap<CreatePurchasedMovieRequestDTO, PurchasedMovie>();
             CreateMap<UpdatePurchasedMovieRequestDTO, PurchasedMovie>();
-            CreateMap<PurchasedMovie, GetPurchasedMovieResponseDTO>();
+            CreateMap<PurchasedMovie, GetPurchasedMovieResponseDTO>()
+                .ForMember(dest => dest.PurchasedTimeStr,
+                options => options.MapFrom(source => (source.PurchasedTime != null ? source.PurchasedTime.Value.ToShortDateString() : "")));
         }
     }
 }

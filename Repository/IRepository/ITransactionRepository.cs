@@ -14,5 +14,6 @@ namespace Repository.IRepository
         void DeleteTransaction(Transaction transaction);
         void UpdateTransaction(Transaction transaction);
         List<Transaction> GetTransactions();
+        List<Transaction> GetMyTransactions(int userId);
     }
 }

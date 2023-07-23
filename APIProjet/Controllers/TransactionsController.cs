@@ -11,7 +11,7 @@ using Repository.Repository;
 
 namespace APIProject.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator,VIP,Normal")]
     public class TransactionsController : ODataController
     {
         private ITransactionRepository repository;
@@ -22,13 +22,24 @@ namespace APIProject.Controllers
             _mapper = mapper;
             repository= transactionRepository;
         }
-        [EnableQuery(PageSize = 10)]
+        [Authorize(Roles = "Administrator,VIP,Normal")]
+        [EnableQuery(PageSize = 5)]
         public ActionResult<IQueryable<GetTransactionResponseDTO>> Get()
         {
             List<Transaction> transactions = repository.GetTransactions();
             List<GetTransactionResponseDTO> getTransactionResponseDTOs = _mapper.Map<List<GetTransactionResponseDTO>>(transactions);
             return Ok(getTransactionResponseDTOs);
         }
+        //[Authorize(Roles = "Administrator,VIP,Normal")]
+        //[HttpGet("/MyTransaction")]
+        //[EnableQuery(PageSize = 5)]
+        //public IQue GetMyTransaction()
+        //{
+        //    List<Transaction> transactions = repository.GetMyTransactions(LoggedUserId());
+        //    List<GetTransactionResponseDTO> getTransactionResponseDTOs = _mapper.Map<List<GetTransactionResponseDTO>>(transactions);
+        //    return getTransactionResponseDTOs.AsQueryable();
+        //}
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult<GetTransactionResponseDTO> Get([FromRoute] int key)
         {
@@ -40,6 +51,7 @@ namespace APIProject.Controllers
             GetTransactionResponseDTO getTransactionResponseDTO = _mapper.Map<GetTransactionResponseDTO>(transaction);
             return Ok(getTransactionResponseDTO);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public IActionResult Post([FromBody] CreateTransactionRequestDTO createTransactionRequestDTO)
         {
@@ -56,6 +68,7 @@ namespace APIProject.Controllers
                 return BadRequest(new {message = "error"});
             }
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult Put([FromRoute] int key, [FromBody] UpdateTransactionRequestDTO updateTransactionRequestDTO)
         {
@@ -83,6 +96,7 @@ namespace APIProject.Controllers
             }
 
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult Delete([FromRoute] int key)
         {

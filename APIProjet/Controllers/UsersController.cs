@@ -58,6 +58,20 @@ namespace api.Controllers
             GetUserResponseDTO getUserResponseDTO = _mapper.Map<GetUserResponseDTO>(user);
             return Ok(getUserResponseDTO);
         }
+        [Authorize(Roles = "Administrator,VIP,Normal")]
+        [EnableQuery]
+        [HttpGet("/Profile")]
+        public ActionResult<GetUserResponseDTO> Details()
+        {
+            User user = _repository.GetUserById(LoggedUserId());
+            user.PurchasedMovies = null;
+            if (user == null)
+            {
+                return NotFound();
+            }
+            GetUserResponseDTO getUserResponseDTO = _mapper.Map<GetUserResponseDTO>(user);
+            return Ok(getUserResponseDTO);
+        }
         [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public IActionResult Post([FromBody] CreateUserRequestDTO createUserRequestDTO)

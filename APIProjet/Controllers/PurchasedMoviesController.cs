@@ -27,8 +27,8 @@ namespace APIProject.Controllers
             this.movieRepository = movieRepository;
             this.userRepository = userRepository;
         }
-        [Authorize(Roles = "Administrator")]
-        [EnableQuery(PageSize = 10)]
+        [Authorize(Roles = "Administrator,VIP,Normal")]
+        [EnableQuery(PageSize = 5)]
         public ActionResult<IQueryable<GetPurchasedMovieResponseDTO>> Get()
         {
             List<PurchasedMovie> purchasedmovies = repository.GetPurchasedMovies();
@@ -45,6 +45,7 @@ namespace APIProject.Controllers
         }
         [Authorize(Roles = "Administrator,VIP,Normal")]
         [HttpGet("/MyPurchase")]
+        [EnableQuery(PageSize = 5)]
         public ActionResult<IQueryable<GetPurchasedMovieResponseDTO>> GetMyPurchase()
         {
             try

@@ -11,6 +11,7 @@ namespace APIProject.DTO.PurchasedMovie
         public int UserId { get; set; }
         public int MovieId { get; set; }
         public DateTime? PurchasedTime { get; set; }
+        public string PurchasedTimeStr { get; set; }
         public virtual GetUserResponseDTO User { get; set; }
         public virtual GetMovieResponseDTO Movie { get; set; }
     }
