@@ -160,3 +160,182 @@ h2.account-section-heading {
 .btn:hover {
     color: #fff;
 }
+
+
+
+/*//change password*/
+.responsive-account-container {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    color: #333;
+    display: block;
+    /* font-size: 1em; */
+    margin: 0 auto;
+    min-height: 400px;
+    min-width: 300px;
+    overflow-wrap: anywhere;
+    position: relative;
+    /* width: 90%; */
+    font-size: 1em;
+    max-width: 1024px;
+    width: 95%;
+}
+
+.change-password-form h1 {
+    font-size: 34px;
+    font-weight: 900;
+    margin-bottom: 32px;
+}
+
+ul.structural {
+    margin: 0;
+    padding: 0;
+}
+
+.nfFormSpace {
+    margin-bottom: 10px;
+}
+
+.nfFormSpace {
+    margin-bottom: 5%;
+}
+
+    .nfFormSpace:first-child {
+        margin-bottom: 4%;
+    }
+
+ul.structural > li {
+    list-style: none;
+    margin-left: 0;
+}
+
+.nfInput {
+    max-width: 500px;
+}
+
+    .nfInput, .nfInput .nfInputPlacement {
+        position: relative;
+    }
+
+.nfTextField {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #8c8c8c;
+    border-radius: 2px;
+    box-sizing: border-box;
+    color: #000;
+    display: block;
+    font-size: 16px;
+    height: 44px;
+    padding: 10px 11px;
+    width: 100%;
+}
+
+    .nfTextField:invalid, .nfTextField:valid {
+        box-shadow: none;
+    }
+
+.nfInput .nfTextField {
+    height: 48px;
+    padding: 10px 10px 0;
+    width: 100%;
+}
+
+.change-password-form .nfTextField, .change-password-form .ui-binary-input input[type=checkbox] + label:before {
+    border-radius: 4px;
+}
+
+.nfInput .placeLabel {
+    color: #8c8c8c;
+    font-size: 14px;
+    left: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: font .1s ease,top .1s ease,transform .1s ease;
+/*    font-size: 11px;
+    top: 4px;*/
+}
+
+.nfInput .inputCaption {
+    color: #8c8c8c;
+    font-size: 13px;
+}
+
+.nfFormSpace {
+    margin-bottom: 5%;
+}
+
+.nfInput .hasText + .placeLabel, .nfInput .nfTextField:focus + .placeLabel {
+    font-size: 11px;
+    top: 4px;
+    transform: translateY(0);
+}
+
+.change-password-buttons {
+    margin-top: 2.25em;
+}
+
+.nf-btn {
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.25);
+    box-sizing: border-box;
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+    letter-spacing: .025rem;
+    line-height: 1rem;
+    text-align: center;
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+    -webkit-appearance: button;
+    text-transform: none;
+    overflow: visible;
+    font: inherit;
+}
+
+.nf-btn-retro {
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.nf-btn {
+    font-size: 1rem;
+    min-height: 48px;
+    min-width: 74px;
+    padding: .75rem 1.33333333rem;
+    position: relative;
+    width: 100%;
+}
+
+.nf-btn-retro.nf-btn-primary {
+    background-color: #0071eb;
+    color: #fff;
+    cursor: pointer;
+    padding: 13px 2rem;
+    text-decoration: none;
+}
+
+.nf-btn.nf-btn-small {
+    display: block;
+    line-height: 50px;
+    padding: 0;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 1rem;
+    margin-right: .5rem;
+    min-height: 37px;
+    min-width: 98px;
+    padding: .75rem 1rem;
+    width: auto;
+    margin: 0 10px 0 0;
+    font-weight: 500;
+}
+.nfInputPlacement .input_id {
+    width: 100%;
+}

@@ -105,3 +105,10 @@ function appendTransaction(data) {
     tbody.empty();
     tbody.html(row);
 }
+$('input').on('change', function () {
+    if ($(this).val() != undefined && $(this).val() != '') {
+        $(this).addClass('hasText');
+    } else {
+        $(this).removeClass('hasText');
+    }
+})

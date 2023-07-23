@@ -458,3 +458,6 @@ h1.film-info-title {
     background: rgb(77 77 77);
     color: #fff;
 }
+.movie-item-active {
+    background: #4040404d;
+}

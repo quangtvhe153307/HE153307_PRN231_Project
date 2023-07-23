@@ -18,8 +18,8 @@ if (isPermitted) {
     $('.movie-section').on('click', '.movie-item', function () {
         var movieId = $(this).data('movieid');
         var episodeId = $(this).data('episodeid');
-        console.log(movieId);
-        console.log(episodeId);
+        $('.movie-item').removeClass('movie-item-active');
+        $(this).addClass('movie-item-active');
         $('#play-movie').prop('src', '')
         $.ajax({
             url: 'https://localhost:7038/MovieSource/' + episodeId,

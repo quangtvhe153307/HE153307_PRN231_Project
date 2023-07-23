@@ -1,4 +1,5 @@
-﻿using APIProject.DTO.Category;
+﻿using APIProject.Controllers;
+using APIProject.DTO.Category;
 using APIProject.DTO.Comment;
 using APIProject.DTO.Movie;
 using APIProject.DTO.PurchasedMovie;
@@ -7,6 +8,8 @@ using APIProject.DTO.User;
 using Client.Models;
 using Client.Utils;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System.Text.Json;
 
 namespace Client.Controllers
 {
@@ -34,6 +37,35 @@ namespace Client.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
+        }
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword([FromForm] ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            try
+            {
+                GetUserResponseDTO responseDTO = await HttpUtils.PostAsync<GetUserResponseDTO>("ChangePassword", new StringContent(JsonSerializer.Serialize(new UserChangePasswordRequestDTO
+                {
+                    Password = model.Password,
+                    NewPassword = model.NewPassword
+                }), Encoding.UTF8, "application/json"));
+                ModelState.AddModelError("ConfirmNewPassword", "Success");
+                return View();
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                string message = StringUtils.GetMessageFromErrorResponse(ex.Message);
+                ModelState.AddModelError("ConfirmNewPassword", message);
+            }
+            return View(model);
         }
     }
 }

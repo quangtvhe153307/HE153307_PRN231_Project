@@ -1,4 +1,5 @@
-﻿using APIProject.DTO;
+﻿using APIProject.Controllers;
+using APIProject.DTO;
 using APIProject.DTO.User;
 using APIProject.Util;
 using AutoMapper;
@@ -110,6 +111,26 @@ namespace api.Controllers
             user.Balance -= 100;
             user.ExpirationDate = DateTime.Today.AddMonths(1);
             _repository.UpdateUser(user);
+            user.PurchasedMovies = null;
+            GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
+            return Ok(responseDTO);
+        }        
+        [Authorize(Roles = "Administrator,VIP,Normal")]
+        [HttpPost("/ChangePassword")]
+        public IActionResult ChangePassword([FromBody] UserChangePasswordRequestDTO model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            User user = _repository.GetUserById(LoggedUserId());
+            if(!user.Password.Equals(model.Password))
+            {
+                return BadRequest(new { message = "Wrong password"});
+            }
+            user.Password = model.NewPassword;
+            _repository.UpdateUser(user);
+            user.PurchasedMovies = null;
             GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
             return Ok(responseDTO);
         }
@@ -129,6 +150,7 @@ namespace api.Controllers
             User user = _mapper.Map<User>(updateUserRequestDTO);
             tempUser.Email= user.Email;
             _repository.UpdateUser(tempUser);
+            user.PurchasedMovies = null;
             return Updated(tempUser);
         }
         [Authorize(Roles = "Administrator")]

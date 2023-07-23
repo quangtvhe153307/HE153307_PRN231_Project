@@ -9,6 +9,7 @@
     font-weight: bold;
 }
 </style>
+<link rel="stylesheet" href="~/css/profile.css" />
 <div class="container mt-5">
         @if (HttpContextAccessor.HttpContext.Session.GetString("orderurl") != null)
         {
@@ -66,7 +67,7 @@
         }
         else
         {
-            <form action="/Balance/Add" method="post">
+@*            <form action="/Balance/Add" method="post">
                 <div class="form-group">
                     <label for="exampleInputPassword1">Amount <span class="text-danger">*</span></label>
                     <input type="number" class="form-control" name="amount" placeholder="Amount" value="1000">
@@ -74,7 +75,23 @@
                 </div>
             <span asp-validation-for="Amount" class="text-danger" style="width: 40%;"></span>
                 <button type="submit" class="btn btn-primary">Add</button>
+            </form>*@
+
+        <div action="/Balance/Add" method="post">
+            <form class="change-password-form" method="post">
+                <h1>Add Balance</h1>
+                <ul class="simpleForm structural ui-grid">
+                    <li class="nfFormSpace">
+                        <div class="nfInput">
+                            <div class="nfInputPlacement"><label class="input_id" placeholder="currentPassword"><input type="number" name="amount" class="nfTextField hasText" id="" value="1000" tabindex="0" autocomplete="off" dir="" placeholder=""><label for="id_currentPassword" class="placeLabel">Amount</label></label></div>
+                            <div id="" class="inputCaption" data-uia=""><a data-ui="action_forgot_password">The minimun amount of money is 1000</a></div>
+                        </div>
+                    </li>
+                </ul>
+                <span asp-validation-for="Amount" class="text-danger" style="width: 40%;"></span>
+                <div class="nf-btn-bar change-password-buttons"><button id="btn-save" type="submit" autocomplete="off" tabindex="0" class="nf-btn nf-btn-primary nf-btn-retro nf-btn-small" placeholder="">Add</button><button id="btn-cancel" type="button" autocomplete="off" tabindex="0" class="nf-btn nf-btn-secondary nf-btn-retro nf-btn-small" placeholder="">Cancel</button></div>
             </form>
+        </div>
         }
 </div>
 @if (HttpContextAccessor.HttpContext.Session.GetString("apptransid") != null)
@@ -111,3 +128,4 @@
 
     HttpContextAccessor.HttpContext.Session.Remove("apptransid");
 }
+<script src="~/js/account.js"></script>

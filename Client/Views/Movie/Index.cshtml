@@ -88,7 +88,7 @@
                                 </div>
                                 @foreach (var item in ((Model.MovieSeasons as List<GetMovieSeasonResponseDTO>)[i].MovieEpisodes))
                                 {
-                                    <div class="titleCardList--container movie-item episode-selector movie-episode-list" data-movieid="@Model.MovieId" data-episodeid="@item.EpisodeId">
+                                    <div class="titleCardList--container movie-item episode-selector movie-episode-list @(item.EpisodeId == (int)ViewData["episodeId"] ? "movie-item-active" : "")" data-movieid="@Model.MovieId" data-episodeid="@item.EpisodeId">
                                         @*<div class="titleCard-title_index" id="episode-order">1</div>*@
                                         <div class="titleCard-imageWrapper titleCard-imageWrapper1">
                                             <div class="ptrack-content"><img src="@item.EpisodeImage"></div>

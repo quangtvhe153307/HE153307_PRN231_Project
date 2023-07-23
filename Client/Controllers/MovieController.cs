@@ -18,9 +18,14 @@ namespace Client.Controllers
                 //movie
                 var movie = await HttpUtils.GetObject<GetMovieResponseDTO>($"odata/Movies/{id}?$expand=Categories,MovieSeasons($expand=MovieEpisodes)");
 
+                if (episodeId == 0 || episodeId == null)
+                {
+                    episodeId = movie.MovieSeasons.ToList()[0].MovieEpisodes.ToList()[0].EpisodeId;
+                }
                 //comment
                 var comment = await HttpUtils.GetObject<ODataReponseModel<GetCommentResponseDTO>>($"/odata/Comments/{id}?$expand=User&$orderby=CommentedDate desc");
                 ViewData["comment"] = comment;
+                ViewData["episodeId"] = episodeId;
 
                 //incase user is not permitted
                 try
