@@ -27,20 +27,27 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        <li class="nav-item" style="display: flex;align-items: center;">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item"  style="display: flex;align-items: center;">
                             <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Movies</a>
                         </li>                        
-                        <li class="nav-item">
+                        <li class="nav-item" style="display: flex;align-items: center;">
                             <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">TV Shows</a>
                         </li>                        
-                        <li class="nav-item">
+@*                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Plan</a>
-                        </li>                          
+                        </li>   *@                       
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Categories</a>
+                              <div class="dropdown">
+                                <button class="dropbtn">Categories</button>
+                              <div class="dropdown-content" id="cate-dropdown">
+                                <a href="/Movie/Search?Categories=1">Link 1</a>
+                                <a href="/Movie/Search?Categories=2">Link 2</a>
+                                <a href="/Movie/Search?Categories=3">Link 3</a>
+                              </div>
+                            </div>
                         </li>                        
                         <li class="nav-item flex-1">
                         </li>
@@ -231,6 +238,29 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/PlayMovie.js"></script>
     <script src="~/js/plan.js"></script>
+    <script>
+        $.ajax({
+        url: 'https://localhost:7038/odata/Categories',
+        method: 'GET',
+        dataType: 'json',
+        headers: { "Authorization": "Bearer " + getAccessToken() },
+        success: function (response) {
+            var data = response.value;
+                var tbody = $('#cate-dropdown');
+                var row = ``;
+                for (var i = 0; i < data.length; i++) {
+                    row += `<a href="/Movie/Search?Categories=${data[i].CategoryId}">${data[i].CategoryName}</a>`;
+                }
+                tbody.empty();
+                tbody.html(row);
+        },
+        error: function (xhr, status, error) {
+            // Handle the error here
+            console.log('Error:', error);
+            appendAlert('Error', 'danger');
+        }
+    });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
