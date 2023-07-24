@@ -14,7 +14,7 @@ $('.comment-input').on('click', '#comment-add', function () {
     addComment();
 });
 
-if (isPermitted) {
+if (isPermitted != undefined && isPermitted == true) {
     $('.movie-section').on('click', '.movie-item', function () {
         var movieId = $(this).data('movieid');
         var episodeId = $(this).data('episodeid');

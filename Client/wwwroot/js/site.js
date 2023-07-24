@@ -172,7 +172,7 @@ function appendPreviewData(data) {
 
     var categoriesRow = ``;
     for (var i = 0; i < data.Categories.length; i++) {
-        categoriesRow += `<span class="tag-item">${data.Categories[i].CategoryName}` + ((i < data.Categories.length - 1) ? `,` : ``)+ `</span>`;
+        categoriesRow += `<a style="text-decoration: none;" href="/Movie/Search?Categories=${data.Categories[i].CategoryId}"><span class="tag-item">${data.Categories[i].CategoryName}` + ((i < data.Categories.length - 1) ? `,` : ``) + `</span></a>`;
     }
     categoriesContainer.append(categoriesRow);
 

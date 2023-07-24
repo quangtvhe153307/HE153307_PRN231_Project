@@ -1,5 +1,8 @@
-﻿using Quartz;
+﻿using BusinessObjects;
+using DataAccess;
+using Quartz;
 using Repository.IRepository;
+using Repository.Repository;
 
 namespace APIProject.Jobs
 {
@@ -8,11 +11,12 @@ namespace APIProject.Jobs
     {
         private readonly ILogger<UpdatePlanJob> _logger;
         private readonly IUserRepository repository;
-
-        public UpdatePlanJob(ILogger<UpdatePlanJob> logger, IUserRepository userRepository)
+        private readonly ITransactionRepository transactionRepository;
+        public UpdatePlanJob(ILogger<UpdatePlanJob> logger, IUserRepository userRepository, ITransactionRepository transactionRepository)
         {
             _logger = logger;
             repository = userRepository;
+            this.transactionRepository = transactionRepository;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -26,6 +30,14 @@ namespace APIProject.Jobs
                     {
                         usersList[i].Balance -= 100;
                         usersList[i].ExpirationDate = ((DateTime)usersList[i].ExpirationDate).AddMonths(1);
+                        transactionRepository.SaveTransaction(new BusinessObjects.Transaction
+                        {
+                            TransactionDescription = "Subtract 100 for maintain premium plan",
+                            TransactionDate = DateTime.Now,
+                            TransactionType = TransactionType.Purchase,
+                            UserId = usersList[i].UserId,
+                            CreatedBy = 1
+                        });
                     } else
                     {
                         usersList[i].RoleId = 3;

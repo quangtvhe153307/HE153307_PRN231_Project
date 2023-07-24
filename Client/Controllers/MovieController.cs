@@ -65,12 +65,16 @@ namespace Client.Controllers
             {
                 model.Title = "";
             }
+            ViewData["searchKey"] = model.Title;
             var categories = await HttpUtils.GetObject<ODataReponseModel<GetCategoryResponseDTO>>($"odata/Categories");
-            foreach (var item in categories.Value)
+            if(model.Categories != null)
             {
-                if (model.Categories.Contains(item.CategoryId))
+                foreach (var item in categories.Value)
                 {
-                    item.Selected = true;
+                    if (model.Categories.Contains(item.CategoryId))
+                    {
+                        item.Selected = true;
+                    }
                 }
             }
             ViewData["categories"] = categories;
@@ -90,7 +94,9 @@ namespace Client.Controllers
                 str = " and Categories/any(c: " + relatedMovieQuery + ")";
             }
 
-            var movies = await HttpUtils.GetObject<ODataReponseModel<GetMovieResponseDTO>>($"odata/Movies?$filter=contains(tolower(Title), tolower('{model.Title}'))"+ str + "&$orderby=UpdatedDate desc&$top=8");
+            var movies = await HttpUtils.GetObject<ODataReponseModel<GetMovieResponseDTO>>($"odata/Movies?$filter=IsSingleEpisode eq false and contains(tolower(Title), tolower('{model.Title}'))"+ str + "&$orderby=UpdatedDate desc&$top=8");
+            var movieCount = await HttpUtils.GetObject<int>($"odata/Movies/$count?$filter=IsSingleEpisode eq false and contains(tolower(Title), tolower('{model.Title}'))"+ str);
+            ViewData["movieCount"] = ((int)Math.Ceiling(movieCount * 1.0 / 8));
             return View(movies);
         }
     }

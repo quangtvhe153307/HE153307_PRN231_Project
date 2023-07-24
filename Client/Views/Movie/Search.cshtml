@@ -15,7 +15,7 @@
             <div class="Categories-select flex">
                 <label class="flex" style="align-items: center;">Categories:</label>
                 <div class="col-lg-4 d-flex" style="align-items: center;">
-                    <select class="js-select2" multiple="multiple">
+                    <select class="js-select2" multiple="multiple" id="categories-select">
                         @foreach (var item in ((ODataReponseModel<GetCategoryResponseDTO>)ViewData["categories"]).Value)
                         {
                             <option value="@item.CategoryId" data-badge="" selected="@item.Selected">@item.CategoryName</option>
@@ -26,27 +26,35 @@
             <div class="type-select flex">
                 <label class="flex" style="align-items: center;">Type:</label>
                 <div class="col-lg-4 d-flex" style="align-items: center;">
-                    <select class="js-select2" multiple="multiple">
-                        <option value="O1" data-badge="" selected>TV Shows</option>
-                        <option value="O2" data-badge="">Movies</option>
+                    <select class="js-select2" multiple="multiple" id="type-select">
+                        <option value="1" data-badge="" selected>TV Shows</option>
+                        <option value="2" data-badge="">Movies</option>
                     </select>
                 </div>
             </div>            
             <div class="sort-select flex" style="place-content: flex-end;width: 100%;    align-items: center;">
                 <label class="flex" style="align-items: center;">Sort by:</label>
                 <div class="col-lg-6 d-flex" style="margin-bottom: 10px;float: right;">
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" id="sort-option">
                         <option value="0" selected>Updated date</option>
                         <option value="1">View count</option>
                     </select>
                 </div>
+            </div>
+            <div class="search-btn-container">
+                <button class="search-btn" id="search-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+
             </div>
         </div>
 	</div>
 
 </div>
 <div class="search-result-container">
-    <div class="popular-movies-item">
+    <div class="popular-movies-item" id="search-result">
         @foreach (var item in Model.Value)
         {
             <div class="movie-items" data-id="@item.MovieId">
@@ -90,19 +98,20 @@
         }
     </div>
 </div>
-<div class="pagination">
+<div class="pagination" id="search-movie-pagination" data-currentpage="1" data-totalpage="@(ViewData["movieCount"])">
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+            <li class="page-item previous-page disabled">
+                <a class="page-link" data-id="previous" href="" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+            @for (int i = 0; i < (int)ViewData["movieCount"]; i++)
+            {
+                <li class="page-item"><a class="page-link" href="" data-id="@(i + 1)">@(i + 1)</a></li>
+            }
+            <li class="page-item next-page">
+                <a class="page-link" href="" data-id="next" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -110,19 +119,9 @@
     </nav>
 </div>
 <script>
-    var lst = `@ViewData["selectedCategories"]`;
-    if(lst != ''){
-        lst = JSON.parse(lst);
-        //var options = $('.Categories-select option')
-        //for (int i = 0; i < lst.length; i++) {
-        //    for (int j = 0; j < options.length; j++) {
-        //        if(options[i].val() == lst[i]){
-        //            options[i].prop('selected', 'true');
-        //        }
-        //    }
-        //}
-    }
+
 </script>
 <script src="~/js/popper.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script src="~/js/movieSearch.js"></script>
+<script src="~/js/search.js"></script>

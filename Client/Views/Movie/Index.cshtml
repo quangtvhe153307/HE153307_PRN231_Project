@@ -169,7 +169,7 @@
             <span class="previewModal--tags-label">Genres:</span>
             @foreach (var item in Model.Categories)
             {
-                <span class="item-value btn-primary"><a>@item.CategoryName</a></span>
+                <span class="item-value btn-primary"><a href="/Movie/Search?Categories=@item.CategoryId" style="text-decoration: none; color: #fff;">@item.CategoryName</a></span>
             }
         </div>        
         <div class="information-item">

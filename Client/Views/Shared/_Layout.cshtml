@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="~/css/moviePopup.css" />
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
+<style>
+    #search-form svg:hover{
+        background: #4040404a;
+    }
+</style>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -39,25 +44,16 @@
                         </li>                        
                         <li class="nav-item flex-1">
                         </li>
-                        <li style="position: relative;">
-                            <input class="search-input" />
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search search-input-icon" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                            </svg>
-                        </li>                        
-@*                        <li style="margin-left: 50px;">
-                            <!-- Default dropstart button -->
-                            <div class="btn-group dropstart">
-                                <img class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" src="https://my.alfred.edu/zoom/_images/foster-lake.jpg"/ style="border-radius: 50%; width: 40px; height: 40px;">
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item active" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                                </ul>
-                            </div>
-                        </li>   *@                     
+                        <li>
+                            <form style="position: relative;" id="search-form" action="/Movie/Search">
+                                <input class="search-input" value="@ViewData["searchKey"]" id="search-key" name="Title"/>
+                                @*<button>*@
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search search-input-icon" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                    </svg>
+                                @*</button>*@
+                            </form>
+                        </li>                                        
                         <li class="nav-item" style="margin-left: 50px;">
                             <div class="active account-menu-item btn-group dropstart">
                                 <div class="account-dropdown-button dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,33 +70,17 @@
                                     <div class="ptrack-content">
                                         <div class="topbar"></div>
                                         <ul class="account-links sub-menu-list" aria-label="Account">
-                                            <li class="sub-menu-item profile-link" role="listitem">
-                                                <a aria-label="Manage Profiles" class="sub-menu-link sub-menu-link-icon" href="#">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-mirrorinrtl="true" class="ltr-0 e1mhci4z1" data-name="Pencil" aria-hidden="true">
-                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.1213 1.7071C17.9497 0.535532 16.0503 0.53553 14.8787 1.7071L13.2929 3.29289L12.5858 4L1.58579 15C1.21071 15.3751 1 15.8838 1 16.4142V21C1 22.1046 1.89543 23 3 23H7.58579C8.11622 23 8.62493 22.7893 9 22.4142L20 11.4142L20.7071 10.7071L22.2929 9.12132C23.4645 7.94975 23.4645 6.05025 22.2929 4.87868L19.1213 1.7071ZM15.5858 7L14 5.41421L3 16.4142L3 19C3.26264 19 3.52272 19.0517 3.76537 19.1522C4.00802 19.2527 4.2285 19.4001 4.41421 19.5858C4.59993 19.7715 4.74725 19.992 4.84776 20.2346C4.94827 20.4773 5 20.7374 5 21L7.58579 21L18.5858 10L17 8.41421L6.70711 18.7071L5.29289 17.2929L15.5858 7ZM16.2929 3.12132C16.6834 2.73079 17.3166 2.73079 17.7071 3.12132L20.8787 6.29289C21.2692 6.68341 21.2692 7.31658 20.8787 7.7071L20 8.58578L15.4142 4L16.2929 3.12132Z" fill="currentColor"></path>
-                                                    </svg>
-                                                    <span>Manage Profiles</span>
-                                                </a>
-                                            </li>
                                             <li class="sub-menu-item">
-                                                <a class="sub-menu-link sub-menu-link-icon" href="#">
+                                                <a class="sub-menu-link sub-menu-link-icon" href="/Account">
                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ltr-0 e1mhci4z1" data-name="User" aria-hidden="true">
                                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M15 5C15 6.65685 13.6569 8 12 8C10.3431 8 9 6.65685 9 5C9 3.34315 10.3431 2 12 2C13.6569 2 15 3.34315 15 5ZM17 5C17 7.76142 14.7614 10 12 10C9.23858 10 7 7.76142 7 5C7 2.23858 9.23858 0 12 0C14.7614 0 17 2.23858 17 5ZM4 21C4 16.5817 7.58172 13 12 13C16.4183 13 20 16.5817 20 21V21.5136C19.5678 21.5667 18.9844 21.6327 18.2814 21.6988C16.6787 21.8495 14.461 22 12 22C9.53901 22 7.32131 21.8495 5.71861 21.6988C5.01564 21.6327 4.43224 21.5667 4 21.5136V21ZM21.1508 23.3775C21.1509 23.3774 21.151 23.3774 21 22.3889L21.151 23.3774C21.6393 23.3028 22 22.8829 22 22.3889V21C22 15.4772 17.5228 11 12 11C6.47715 11 2 15.4772 2 21V22.3889C2 22.8829 2.36067 23.3028 2.84897 23.3774L3 22.3889C2.84897 23.3774 2.84908 23.3774 2.8492 23.3775L2.84952 23.3775L2.85043 23.3776L2.85334 23.3781L2.86352 23.3796L2.90103 23.3852C2.93357 23.3899 2.98105 23.3968 3.04275 23.4055C3.16613 23.4228 3.3464 23.4472 3.57769 23.4765C4.04018 23.535 4.7071 23.6126 5.5314 23.6901C7.1787 23.8449 9.461 24 12 24C14.539 24 16.8213 23.8449 18.4686 23.6901C19.2929 23.6126 19.9598 23.535 20.4223 23.4765C20.6536 23.4472 20.8339 23.4228 20.9573 23.4055C21.0189 23.3968 21.0664 23.3899 21.099 23.3852L21.1365 23.3796L21.1467 23.3781L21.1496 23.3776L21.1505 23.3775L21.1508 23.3775Z" fill="currentColor"></path>
                                                     </svg>
                                                     <span>Account</span>
                                                 </a>
                                             </li>
-                                            <li class="sub-menu-item">
-                                                <a class="sub-menu-link sub-menu-link-icon" href="https://help.netflix.com/">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ltr-0 e1mhci4z1" data-name="CircleQuestionMark" aria-hidden="true">
-                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM12 8C10.6831 8 10 8.74303 10 9.5H8C8 7.25697 10.0032 6 12 6C13.9968 6 16 7.25697 16 9.5C16 10.8487 14.9191 11.7679 13.8217 12.18C13.5572 12.2793 13.3322 12.4295 13.1858 12.5913C13.0452 12.7467 13 12.883 13 13V14H11V13C11 11.5649 12.1677 10.6647 13.1186 10.3076C13.8476 10.0339 14 9.64823 14 9.5C14 8.74303 13.3169 8 12 8ZM13.5 16.5C13.5 17.3284 12.8284 18 12 18C11.1716 18 10.5 17.3284 10.5 16.5C10.5 15.6716 11.1716 15 12 15C12.8284 15 13.5 15.6716 13.5 16.5Z" fill="currentColor"></path>
-                                                    </svg>
-                                                    <span>Help Center</span>
-                                                </a>
-                                            </li>
                                         </ul>
                                         <ul class="sub-menu-list sign-out-links">
-                                            <li class="sub-menu-item"><a class="sub-menu-link " href="#">Sign out</a></li>
+                                            <li class="sub-menu-item"><a class="sub-menu-link " href="/SignOut/Index">Sign out</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -124,7 +104,7 @@
     <!-- Modal -->
     <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" style="background: #181818;">
                 <div class="modal-header">
                     <div class="previewModal--player_container" id="previewModal--player_container"></div>
                 </div>
@@ -161,7 +141,7 @@
                                     <div class="episodeSelector">
                                         <div class="episodeSelector-header">
                                             <div>
-                                                <h3 class="previewModal--section-header episodeSelector-label">Episodes</h3>
+                                                <h3 class="previewModal--section-header episodeSelector-label" style="    color: #fff;">Episodes</h3>
                                             </div>
                                             <div class="episodeSelector-dropdown">
                                                 <div class="dropdown">

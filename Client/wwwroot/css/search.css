@@ -114,3 +114,15 @@ span.movie-item-view-count {
 .pagination {
     margin-top: 20px;
 }
+button.search-btn {
+    width: 40px;
+    height: 40px;
+    /* display: flex; */
+    background: #4040404a;
+    border-color: #4040404a;
+    cursor: pointer;
+}
+.search-btn-container {
+    align-items: center;
+    display: flex;
+}
