@@ -1,0 +1,129 @@
+﻿@using APIProject.DTO.Category;
+@model ODataReponseModel<GetCategoryResponseDTO>
+@{
+    Layout = "_AdminLayout";
+}
+<style>
+    th {
+        height: 50px;
+        line-height: 50px;
+        width: 150px;
+    }</style>
+<h3>
+    Categories
+</h3>
+<div>
+    <button id="add-btn" class="btn-primary">Create new</button>
+</div>
+<div class="table-responsive small">
+    <table class="table table-striped table-sm table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Category ID
+                </th>
+                <th scope="col">
+                    Category Name
+                </th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody id="cate-table">
+            @foreach (var item in Model.Value)
+            {
+                <tr data-id="@item.CategoryId" data-name="@item.CategoryName">
+                    <td>@item.CategoryId</td>
+                    <td>@item.CategoryName</td>
+                    <td style="text-align: center;"><button class="item-action btn-primary btn-edit" data-id="@item.CategoryId">Edit</button>|<button class="item-action btn-danger btn-delete" data-id="@item.CategoryId">Delete</button></td>
+                </tr>
+            }
+    </table>
+</div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal" id="btn-do-delete" style="display: none;">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete confirmation?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-content">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="delete-done">Close</button>
+                <button type="button" class="btn btn-danger" id="delete-confirmation">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" id="btn-do-edit" style="display: none;">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="edit-modal">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">AuthorId</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="AuthorId" value="10" readonly /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">FirstName</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="FirstName" value="Tran" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">AuthorId</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="LastName" value="Quang" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">AuthorId</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="City" value="VinhPhuc" /></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="edit-done">Close</button>
+                <button type="button" class="btn btn-danger" id="edit-confirmation">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" id="btn-do-add" style="display: none;">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="edit-modal">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">Category Name</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="Category Name" value="" id="category-add-name"/></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="add-done">Close</button>
+                <button type="button" class="btn btn-danger" id="add-confirmation">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/categories.js"></script>

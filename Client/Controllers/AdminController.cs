@@ -1,4 +1,6 @@
-﻿using APIProject.DTO.Comment;
+﻿using APIProject.DTO.Category;
+using APIProject.DTO.Comment;
+using APIProject.DTO.PurchasedMovie;
 using APIProject.DTO.Transaction;
 using BusinessObjects;
 using Client.Models;
@@ -40,6 +42,36 @@ namespace Client.Controllers
                 var commentCount = 0;
                 commentCount = await HttpUtils.GetObject<int>($"odata/Transactions/$count");
                 ViewData["transactionCount"] = ((int)Math.Ceiling(commentCount * 1.0 / 10));
+                return View(comment);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }        
+        public async Task<IActionResult> Purchased()
+        {
+            try
+            {
+                var comment = await HttpUtils.GetObject<ODataReponseModel<GetPurchasedMovieResponseDTO>>($"/odata/PurchasedMovies?$expand=User,Movie&$Orderby= TransactionId desc");
+                var commentCount = 0;
+                commentCount = await HttpUtils.GetObject<int>($"odata/Transactions/$count");
+                ViewData["transactionCount"] = ((int)Math.Ceiling(commentCount * 1.0 / 10));
+                return View(comment);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }        
+        public async Task<IActionResult> Categories()
+        {
+            try
+            {
+                var comment = await HttpUtils.GetObject<ODataReponseModel<GetCategoryResponseDTO>>($"/odata/Categories?&$Orderby= CategoryId asc");
+                var commentCount = 0;
+                commentCount = await HttpUtils.GetObject<int>($"odata/Categories/$count");
+                ViewData["categoriesCount"] = ((int)Math.Ceiling(commentCount * 1.0 / 10));
                 return View(comment);
             }
             catch (Exception ex)
