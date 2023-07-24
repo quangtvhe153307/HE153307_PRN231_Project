@@ -11,7 +11,7 @@ using Repository.Repository;
 
 namespace APIProject.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize]
     public class CategoriesController : ODataController
     {
         private ICategoryRepository repository;
@@ -40,6 +40,7 @@ namespace APIProject.Controllers
             GetCategoryResponseDTO getCategoryResponseDTO = _mapper.Map<GetCategoryResponseDTO>(category);
             return Ok(getCategoryResponseDTO);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public IActionResult Post([FromBody] CreateCategoryRequestDTO createCategoryRequestDTO)
         {
@@ -49,6 +50,7 @@ namespace APIProject.Controllers
             GetCategoryResponseDTO responseDTO = _mapper.Map<GetCategoryResponseDTO>(category);
             return Created(responseDTO);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult Put([FromRoute] int key, [FromBody] UpdateCategoryRequestDTO updateCategoryRequestDTO)
         {
@@ -66,6 +68,7 @@ namespace APIProject.Controllers
             repository.UpdateCategory(category);
             return Updated(category);
         }
+        [Authorize(Roles = "Administrator")]
         [EnableQuery]
         public ActionResult Delete([FromRoute] int key)
         {

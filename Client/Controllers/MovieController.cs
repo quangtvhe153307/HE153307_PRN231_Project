@@ -5,6 +5,7 @@ using BusinessObjects;
 using Client.Models;
 using Client.Utils;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Client.Controllers
 {
@@ -56,6 +57,41 @@ namespace Client.Controllers
             }
 
             return RedirectPermanent("/Home/Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Search(MovieSearchModel model)
+        {
+            if(model.Title is null)
+            {
+                model.Title = "";
+            }
+            var categories = await HttpUtils.GetObject<ODataReponseModel<GetCategoryResponseDTO>>($"odata/Categories");
+            foreach (var item in categories.Value)
+            {
+                if (model.Categories.Contains(item.CategoryId))
+                {
+                    item.Selected = true;
+                }
+            }
+            ViewData["categories"] = categories;
+            //ViewData["selectedCategories"] = model.Categories != null ? model.Categories : new List<int>();
+            string str = "";
+            if(model.Categories != null)
+            {
+                var relatedMovieQuery = "";
+                if(model.Categories != null && model.Categories.Count > 0)
+                {
+                    relatedMovieQuery += $"c/CategoryId eq {model.Categories[0]} ";
+                }
+                for (int i = 1; i < model.Categories.Count; i++)
+                {
+                    relatedMovieQuery += $"or c/CategoryId eq {model.Categories[i]}";
+                }
+                str = " and Categories/any(c: " + relatedMovieQuery + ")";
+            }
+
+            var movies = await HttpUtils.GetObject<ODataReponseModel<GetMovieResponseDTO>>($"odata/Movies?$filter=contains(tolower(Title), tolower('{model.Title}'))"+ str + "&$orderby=UpdatedDate desc&$top=8");
+            return View(movies);
         }
     }
 }
