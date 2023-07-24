@@ -87,6 +87,22 @@ namespace api.Controllers
 
             GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
             return Created(responseDTO);
+        }        
+        [Authorize(Roles = "Administrator")]
+        [EnableQuery]
+        [HttpPost("/AddUser")]
+        public IActionResult AddUser([FromBody] AddUserDTO createUserRequestDTO)
+        {
+            User existUser = _repository.GetUserByEmail(createUserRequestDTO.Email);
+            if (existUser != null)
+            {
+                return BadRequest(new { message = "User already exist!" });
+            }
+            User user = _mapper.Map<User>(createUserRequestDTO);
+            _repository.SaveUser(user);
+
+            GetUserResponseDTO responseDTO = _mapper.Map<GetUserResponseDTO>(user);
+            return Created(responseDTO);
         }
         [Authorize(Roles = "Administrator,VIP,Normal")]
         [HttpPost("/Upgrade")]

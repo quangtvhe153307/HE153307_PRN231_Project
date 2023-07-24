@@ -41,8 +41,11 @@ namespace APIProject.Mapping
             CreateMap<CreateCategoryMovieRequestDTO, Category>();
             
             //User
-            CreateMap<User, GetUserResponseDTO>();
+            CreateMap<User, GetUserResponseDTO>()
+                .ForMember(dest => dest.ExpirationDateStr,
+                options => options.MapFrom(source => (source.ExpirationDate != null ? source.ExpirationDate.Value.ToShortDateString() : "")));
             CreateMap<CreateUserRequestDTO, User>();
+            CreateMap<AddUserDTO, User>();
             CreateMap<UpdateUserRequestDTO, User>();
 
             //Movie

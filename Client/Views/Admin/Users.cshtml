@@ -1,0 +1,219 @@
+﻿@using APIProject.DTO.User;
+@model ODataReponseModel<GetUserResponseDTO>
+@{
+    Layout = "_AdminLayout";
+}
+<style>
+    th {
+        height: 50px;
+        line-height: 50px;
+        width: 150px;
+    }</style>
+<h3>
+    Users
+</h3>
+<div>
+    <button id="add-btn" class="btn-primary">Create new</button>
+</div>
+<div class="table-responsive small">
+    <table class="table table-striped table-sm table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    User ID
+                    <input type="number" placeholder="Search" class="header-search" id="user-id" />
+                </th>
+                <th scope="col">
+                    Email
+                    <input type="text" placeholder="Search" class="header-search" id="email" />
+                </th>
+                <th scope="col">
+                    Role
+                    <input type="text" placeholder="Search" class="header-search" id="user-role" />
+                </th>                
+                <th scope="col">
+                    EmailConfirmed
+                </th>                
+                <th scope="col">
+                    First Name
+                    <input type="text" placeholder="Search" class="header-search" id="first-name" />
+                </th>                
+                <th scope="col">
+                    Last Name
+                    <input type="text" placeholder="Search" class="header-search" id="last-name" />
+                </th>                
+                <th scope="col">
+                    Balance
+                </th>                
+                <th scope="col">
+                    Expiration Date
+                </th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody id="user-table">
+            @foreach (var item in Model.Value)
+            {
+                <tr data-id="@item.UserId" data-email="@item.Email" data-role="@item.RoleId" data-emailconfirmed="@item.EmailConfirmed" data-firstname="@item.FirstName" data-lastname="@item.LastName" data-balance="@item.Balance" data-expirationdate="@item.ExpirationDate">
+                    <td>@item.UserId</td>
+                    <td>@item.Email</td>
+                    <td>@item.Role.RoleName</td>
+                    <td>@item.EmailConfirmed</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Balance</td>
+                    <td>@item.ExpirationDateStr</td>
+                    <td style="text-align: center;"><button class="item-action btn-primary btn-edit" data-id="@item.UserId">Edit</button>|<button class="item-action btn-danger btn-delete" data-id="@item.UserId">Delete</button></td>
+                </tr>
+            }
+    </table>
+    <nav aria-label="Page navigation example" id="user-pagination-section" data-currentpage="1" data-totalpage="@(ViewData["userCount"])">
+        <ul class="pagination">
+            <li class="page-item previous-page disabled">
+                <a class="page-link" data-id="previous" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 0; i < (int)ViewData["userCount"]; i++)
+            {
+                <li class="page-item"><a class="page-link" data-id="@(i + 1)">@(i + 1)</a></li>
+            }
+            <li class="page-item next-page">
+                <a class="page-link" data-id="next" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal" id="btn-do-delete" style="display: none;">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete confirmation?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-content">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="delete-done">Close</button>
+                <button type="button" class="btn btn-danger" id="delete-confirmation">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" id="btn-do-edit" style="display: none;">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="edit-modal">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">AuthorId</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="AuthorId" value="10" readonly /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">FirstName</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="FirstName" value="Tran" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">AuthorId</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="LastName" value="Quang" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">AuthorId</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="City" value="VinhPhuc" /></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="edit-done">Close</button>
+                <button type="button" class="btn btn-danger" id="edit-confirmation">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" id="btn-do-add" style="display: none;">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="edit-modal">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">Email</span></div>
+                        <div class="col-md-8"><input type="text" class="edit-input-fields" placeholder="Email" value="" id="user-add-name" /></div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">Role</span></div>
+                        <div class="col-md-8">
+                            <select id="user-add-role">
+                                <option value="3">Normal</option>
+                                <option value="2">VIP</option>
+                                <option value="1">Admin</option>
+                            </select>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">Email confirmed</span></div>
+                        <div class="col-md-8">
+                            <select id="email-confirm">
+                                <option value="0">False</option>
+                                <option value="1">True</option>
+                            </select>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">First Name</span></div>
+                        <div class="col-md-8">
+                            <input type="text" name="email-confirm" id="user-add-first-name"/>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">Last Name</span></div>
+                        <div class="col-md-8">
+                            <input type="text" name="email-confirm" id="user-add-last-name"/>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">Balance</span></div>
+                        <div class="col-md-8">
+                            <input type="number" name="email-confirm" id="user-add-balance"/>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-4"><span class="edit-fields">Expiration Date</span></div>
+                        <div class="col-md-8">
+                            <input type="date" name="email-confirm" id="user-add-expiration"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="add-done">Close</button>
+                <button type="button" class="btn btn-danger" id="add-confirmation">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/adminUser.js"></script>

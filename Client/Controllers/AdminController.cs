@@ -2,6 +2,7 @@
 using APIProject.DTO.Comment;
 using APIProject.DTO.PurchasedMovie;
 using APIProject.DTO.Transaction;
+using APIProject.DTO.User;
 using BusinessObjects;
 using Client.Models;
 using Client.Utils;
@@ -72,6 +73,21 @@ namespace Client.Controllers
                 var commentCount = 0;
                 commentCount = await HttpUtils.GetObject<int>($"odata/Categories/$count");
                 ViewData["categoriesCount"] = ((int)Math.Ceiling(commentCount * 1.0 / 10));
+                return View(comment);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }        
+        public async Task<IActionResult> Users()
+        {
+            try
+            {
+                var comment = await HttpUtils.GetObject<ODataReponseModel<GetUserResponseDTO>>($"/odata/Users?$expand= Role &$Orderby= UserId desc");
+                var commentCount = 0;
+                commentCount = await HttpUtils.GetObject<int>($"odata/Users/$count");
+                ViewData["userCount"] = ((int)Math.Ceiling(commentCount * 1.0 / 10));
                 return View(comment);
             }
             catch (Exception ex)
