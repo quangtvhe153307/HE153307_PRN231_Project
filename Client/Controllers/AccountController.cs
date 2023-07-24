@@ -5,6 +5,8 @@ using APIProject.DTO.Movie;
 using APIProject.DTO.PurchasedMovie;
 using APIProject.DTO.Transaction;
 using APIProject.DTO.User;
+using AutoMapper;
+using BusinessObjects;
 using Client.Models;
 using Client.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -59,11 +61,38 @@ namespace Client.Controllers
                 }), Encoding.UTF8, "application/json"));
                 ModelState.AddModelError("ConfirmNewPassword", "Success");
                 return View();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 string message = StringUtils.GetMessageFromErrorResponse(ex.Message);
                 ModelState.AddModelError("ConfirmNewPassword", message);
+            }
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var profile = await HttpUtils.GetObject<GetUserResponseDTO>($"/Profile");
+            ViewData["profile"] = profile;
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Profile([FromForm] UpdateProfileModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            try
+            {
+                ModelState.AddModelError("LastName", "success");
+                return View();
+            } catch (Exception ex)
+            {
+                //Console.WriteLine(ex.Message);
+                //string message = StringUtils.GetMessageFromErrorResponse(ex.Message);
+                //ModelState.AddModelError("ConfirmNewPassword", message);
             }
             return View(model);
         }

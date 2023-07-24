@@ -39,7 +39,7 @@ namespace APIProject.Controllers
             DateTime endDate = DateTimeUtils.GetEndDateRanking();
             List<Movie> movies = repository.GetMoviesByRank(startDate, endDate);
             List<GetMovieResponseDTO> getMovieResponseDTOs = _mapper.Map<List<GetMovieResponseDTO>>(movies);
-            getMovieResponseDTOs = getMovieResponseDTOs.OrderByDescending(x => x.ViewCount).Take(10).ToList();
+            getMovieResponseDTOs = getMovieResponseDTOs.OrderByDescending(x => x.ViewCount).Take(8).ToList();
             List<GetMovieByRankResponseDTO> responseDTOs = _mapper.Map<List<GetMovieByRankResponseDTO>>(getMovieResponseDTOs);
             return Ok(responseDTOs);
         }

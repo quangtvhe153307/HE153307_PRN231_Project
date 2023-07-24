@@ -122,7 +122,34 @@ function appendMovieRanking(data) {
                     <div class="img-container">
                         <img src="${data[index].movieImage}" class="rankedMovieImage">
                     </div>
-
+                                        <div class="movie-item-info" style="">
+                        <div class="movie-item-info-sub" style="">
+                            <div class="movie-item-price-wrapper">
+                                <span class="coin">`;
+        if (data[index].price > 0) {
+            result += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-coin" viewBox="0 0 16 16">
+                                            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"></path>
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
+                                        </svg>
+                                        <span class="movie-item-price">${data[index].price}</span>`;
+        } else {
+            result += `<span class="movie-item-price">Free</span>`;
+        }
+           result += `</span>
+                            </div>
+                            <div class="movie-item-view">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
+                                </svg>
+                                <span class="movie-item-view-count">${data[index].viewCount}</span>
+                            </div>
+                        </div>
+                        <div class="movie-item-title-wrapper" style="">
+                            <div class="movie-item-title">${data[index].title}</div>
+                        </div>
+                    </div>
                 </div>`;
     }
     a.html(result);

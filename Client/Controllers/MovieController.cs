@@ -49,7 +49,7 @@ namespace Client.Controllers
                 {
                     relatedMovieQuery += $"or c/CategoryId eq {movieCategories[i].CategoryId}";
                 }
-                var relatedMovies = await HttpUtils.GetObject<ODataReponseModel<GetMovieResponseDTO>>("https://localhost:7038/odata/Movies?$filter=Categories/any(c: " + relatedMovieQuery + ")&$orderby=ViewCount desc&$top=10");
+                var relatedMovies = await HttpUtils.GetObject<ODataReponseModel<GetMovieResponseDTO>>("https://localhost:7038/odata/Movies?$filter=Categories/any(c: " + relatedMovieQuery + ")&$orderby=ViewCount desc&$top=8");
                 ViewData["relatedMovies"] = relatedMovies.Value;
 
                 return View(movie);

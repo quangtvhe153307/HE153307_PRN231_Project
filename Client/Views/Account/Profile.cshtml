@@ -1,0 +1,33 @@
+﻿@using APIProject.DTO.User;
+@{
+    ViewData["Title"] = "Update Profile";
+}
+@model UpdateProfileModel
+<link rel="stylesheet" href="~/css/profile.css" />
+<div class="responsive-account-container">
+    <form class="change-password-form" method="post">
+        <h1>Update Profile</h1>
+        <ul class="simpleForm structural ui-grid">
+            <li class="nfFormSpace">
+                <div class="nfInput">
+                    <div class="nfInputPlacement"><label class="input_id" placeholder="currentPassword"><input type="text" name="Email" class="nfTextField hasText" id="id_currentPassword" value="@(ViewData["profile"] != null ? ((GetUserResponseDTO)ViewData["profile"]).Email : "")" readonly tabindex="0" autocomplete="off" dir="" placeholder=""><label for="id_currentPassword" class="placeLabel">Email</label></label></div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </li>
+            <li class="nfFormSpace">
+                <div class="nfInput">
+                    <div class="nfInputPlacement"><label class="input_id" placeholder="newPassword"><input type="text" data-uia="field-newPassword" name="FirstName" class="nfTextField @(ViewData["profile"] != null ? "hasText" : "")" id="id_newPassword" value="@(ViewData["profile"] != null ? ((GetUserResponseDTO)ViewData["profile"]).FirstName : "")" tabindex="0" autocomplete="off" dir="" placeholder=""><label for="id_newPassword" class="placeLabel">First Name</label></label></div>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </li>
+            <li class="nfFormSpace">
+                <div class="nfInput">
+                    <div class="nfInputPlacement"><label class="input_id" placeholder="confirmNewPassword"><input type="text" data-uia="field-confirmNewPassword" name="LastName" class="nfTextField @(ViewData["profile"] != null ? "hasText" : "")" id="id_confirmNewPassword" value="@(ViewData["profile"] != null ? ((GetUserResponseDTO)ViewData["profile"]).LastName: "")" tabindex="0" autocomplete="off" dir="" placeholder=""><label for="id_confirmNewPassword" class="placeLabel">Last Name</label></label></div>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </li>
+        </ul>
+        <div class="nf-btn-bar change-password-buttons"><button id="btn-save" type="submit" autocomplete="off" tabindex="0" class="nf-btn nf-btn-primary nf-btn-retro nf-btn-small" placeholder="">Save</button><button id="btn-cancel" type="button" autocomplete="off" tabindex="0" class="nf-btn nf-btn-secondary nf-btn-retro nf-btn-small" placeholder="">Cancel</button></div>
+    </form>
+</div>
+<script src="~/js/account.js"></script>
