@@ -19,7 +19,25 @@ namespace DataAccess
                 {
                     listComments = context.Comments
                         .Include(x => x.User)
+                        .Include(x => x.Movie)
                         .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listComments;
+        }        
+        public static Comment GetComment(int userId, int movieId, DateTime time)
+        {
+            Comment listComments = null;
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    listComments = context.Comments
+                        .SingleOrDefault(x => x.UserId == userId && x.MovieId == movieId && x.CommentedDate == time);
                 }
             }
             catch (Exception ex)

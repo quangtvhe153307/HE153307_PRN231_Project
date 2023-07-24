@@ -214,3 +214,25 @@ function appendPreviewData(data) {
     container.empty();
     container.html(result);
 }
+function render(data) {
+    var pag = $('.pagination');
+    var row = ``;
+
+
+    row += `    <li class="page-item previous-page disabled">
+        <a class="page-link" data-id="previous" href="" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>`;
+    for (var i = 0; i < data; i++) {
+        row += `<li class="page-item"><a class="page-link" href="" data-id="${i + 1}">${i + 1}</a></li>`;
+    }
+    row += `<li class="page-item next-page">
+        <a class="page-link" href="" data-id="next" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>`;
+
+    pag.empty();
+    pag.html(row);
+}

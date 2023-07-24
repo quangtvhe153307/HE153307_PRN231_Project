@@ -72,7 +72,9 @@ namespace APIProject.Mapping
             CreateMap<UpdateCommentRequestDTO, Comment>();
             CreateMap<Comment, GetCommentResponseDTO>()
                 .ForMember(destination => destination.CommentedTimeInterval,
-                options => options.MapFrom<TimeSpanFormatterConverter>());
+                options => options.MapFrom<TimeSpanFormatterConverter>())
+                .ForMember(destination => destination.CommentedDateStr,
+                options => options.MapFrom(source => source.CommentedDate.ToShortDateString()));
 
             //MovieRate
             CreateMap<CreateMovieRatedRequestDTO, MovieRated>();

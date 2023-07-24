@@ -17,5 +17,7 @@ namespace Repository.Repository
         public List<Comment> GetCommentByMovieId(int id) => CommentDAO.GetCommentsByMovie(id);
 
         public void DeleteComment(Comment comment) => CommentDAO.DeleteComment(comment);
+
+        public Comment GetComment(int userId, int movieId, DateTime time) => CommentDAO.GetComment( userId,  movieId, time);
     }
 }

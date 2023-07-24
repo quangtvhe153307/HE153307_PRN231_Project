@@ -14,5 +14,6 @@ namespace Repository.IRepository
         void DeleteComment(Comment comment);
         void UpdateComment(Comment comment);
         List<Comment> GetComments();
+        Comment GetComment(int userId, int movieId, DateTime time);
     }
 }

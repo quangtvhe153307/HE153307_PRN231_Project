@@ -97,17 +97,18 @@ namespace APIProject.Controllers
         //    repository.UpdateComment(comment);
         //    return Updated(comment);
         //}
-        //[EnableQuery]
-        //public ActionResult Delete([FromRoute] int key)
-        //{
-        //    Comment tempComment = repository.GetCommentById(key);
-        //    if (tempComment == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    repository.DeleteComment(tempComment);
-        //    return NoContent();
-        //}
+        [EnableQuery]
+        [HttpDelete("/DeleteComment")]
+        public ActionResult DeleteComment([FromBody] UpdateCommentRequestDTO req)
+        {
+            Comment tempComment = repository.GetComment(req.UserId, req.MovieId ,req.CommentedDate);
+            if (tempComment == null)
+            {
+                return NotFound();
+            }
+            repository.DeleteComment(tempComment);
+            return NoContent();
+        }
         private int LoggedUserId()
         {
             var userIdString = User.Claims.ToList()[4].Value;
