@@ -144,6 +144,8 @@ function appendComment(data) {
 
     if (data["@odata.nextLink"] == undefined) {
         $('.more-comment').remove();
+    } else {
+        $('#more-comment-btn').data('link', data["@odata.nextLink"]);
     }
 }
 function addComment() {
