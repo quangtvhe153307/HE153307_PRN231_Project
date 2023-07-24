@@ -14,7 +14,7 @@ namespace Client.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("DashBoard", "Admin");
+            return RedirectToAction("Comments", "Admin");
         }
         public IActionResult DashBoard()
         {
