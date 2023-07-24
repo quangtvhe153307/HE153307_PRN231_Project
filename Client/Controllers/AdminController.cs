@@ -1,4 +1,5 @@
 ﻿using APIProject.DTO.Comment;
+using APIProject.DTO.Transaction;
 using BusinessObjects;
 using Client.Models;
 using Client.Utils;
@@ -24,6 +25,21 @@ namespace Client.Controllers
                 var commentCount = 0;
                 commentCount = await HttpUtils.GetObject<int>($"odata/Comments/$count");
                 ViewData["commentCount"] = ((int)Math.Ceiling(commentCount * 1.0 / 10));
+                return View(comment);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }        
+        public async Task<IActionResult> Transactions()
+        {
+            try
+            {
+                var comment = await HttpUtils.GetObject<ODataReponseModel<GetTransactionResponseDTO>>($"/odata/Transactions?$expand=User&$Orderby= TransactionId desc");
+                var commentCount = 0;
+                commentCount = await HttpUtils.GetObject<int>($"odata/Transactions/$count");
+                ViewData["transactionCount"] = ((int)Math.Ceiling(commentCount * 1.0 / 10));
                 return View(comment);
             }
             catch (Exception ex)

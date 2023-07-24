@@ -1,0 +1,104 @@
+﻿@using APIProject.DTO.Transaction;
+
+@model ODataReponseModel<GetTransactionResponseDTO>
+@{
+    Layout = "_AdminLayout";
+}
+<style>
+    th {
+        height: 50px;
+        line-height: 50px;
+        width: 150px;
+    }</style>
+<h3>
+    Transactions
+</h3>
+<div class="table-responsive small">
+    <table class="table table-striped table-sm table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Transaction ID
+                    <input type="text" placeholder="Search" class="header-search" id="transaction-id" />
+                </th>                <th scope="col">
+                    User Email
+                    <input type="text" placeholder="Search" class="header-search" id="userEmail" />
+                </th>
+                <th scope="col">
+                    Description
+                </th>
+                <th scope="col">
+                    Transaction Date
+                    <div>
+                    </div>
+                    <div style="display: flex;flex-direction: row;">
+                        <input type="date" placeholder="Search" class="header-search" id="start-date" />
+                        <span style="
+                                height: 30px;
+                                align-items: center;
+                                display: flex;
+                                margin-left: 5px;
+                                margin-right: 5px;
+                            ">-</span>
+                        <input type="date" placeholder="Search" class="header-search" id="end-date" />
+                    </div>
+                </th>
+                <th scope="col">
+                    TransactionType
+                @*</th>
+                <th scope="col">Action</th>*@
+            </tr>
+        </thead>
+        <tbody id="trans-table">
+            @foreach (var item in Model.Value)
+            {
+                <tr data-userid="@item.UserId" data-id="@item.TransactionId" data-transactiondate="@item.TransactionDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffffzzz")">
+                    <td>@item.TransactionId</td>
+                    <td>@item.User.Email</td>
+                    <td>@item.TransactionDescription</td>
+                    <td>@item.TransactionDateStr</td>
+                    <td>@(item.TransactionType == 0 ? "Add" : "Subtract")</td>
+                    @*<td style="text-align: center;"><button class="item-action btn-danger btn-delete">Delete</button></td>*@
+                </tr>
+            }
+    </table>
+    <nav aria-label="Page navigation example" id="trans-pagination-section" data-currentpage="1" data-totalpage="@(ViewData["transactionCount"])">
+        <ul class="pagination">
+            <li class="page-item previous-page disabled">
+                <a class="page-link" data-id="previous" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 0; i < (int)ViewData["transactionCount"]; i++)
+            {
+                <li class="page-item"><a class="page-link" data-id="@(i + 1)">@(i + 1)</a></li>
+            }
+            <li class="page-item next-page">
+                <a class="page-link" data-id="next" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal" id="btn-do-delete" style="display: none;">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete confirmation?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-content">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="delete-done">Close</button>
+                <button type="button" class="btn btn-danger" id="delete-confirmation">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/adminTransactions.js"></script>

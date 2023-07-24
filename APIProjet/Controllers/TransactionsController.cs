@@ -23,7 +23,7 @@ namespace APIProject.Controllers
             repository= transactionRepository;
         }
         [Authorize(Roles = "Administrator,VIP,Normal")]
-        [EnableQuery(PageSize = 5)]
+        [EnableQuery(PageSize = 10)]
         public ActionResult<IQueryable<GetTransactionResponseDTO>> Get()
         {
             List<Transaction> transactions = repository.GetTransactions();
